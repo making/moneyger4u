@@ -13,11 +13,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,12 +29,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "role")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
-    @NamedQuery(name = "Role.findByRoleName", query = "SELECT r FROM Role r WHERE r.roleName = :roleName"),
-    @NamedQuery(name = "Role.findByCreatetedAt", query = "SELECT r FROM Role r WHERE r.createtedAt = :createtedAt"),
-    @NamedQuery(name = "Role.findByUpdatedAt", query = "SELECT r FROM Role r WHERE r.updatedAt = :updatedAt"),
-    @NamedQuery(name = "Role.findByVersion", query = "SELECT r FROM Role r WHERE r.version = :version")})
 public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,9 +39,9 @@ public class Role implements Serializable {
     private String roleName;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CREATETED_AT")
+    @Column(name = "CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createtedAt;
+    private Date createdAt;
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPDATED_AT")
@@ -56,6 +49,7 @@ public class Role implements Serializable {
     private Date updatedAt;
     @Basic(optional = false)
     @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @ManyToMany(mappedBy = "roleList", fetch = FetchType.LAZY)
@@ -68,9 +62,9 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
-    public Role(String roleName, Date createtedAt, Date updatedAt, int version) {
+    public Role(String roleName, Date createdAt, Date updatedAt, int version) {
         this.roleName = roleName;
-        this.createtedAt = createtedAt;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.version = version;
     }
@@ -83,12 +77,12 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
-    public Date getCreatetedAt() {
-        return createtedAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatetedAt(Date createtedAt) {
-        this.createtedAt = createtedAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {

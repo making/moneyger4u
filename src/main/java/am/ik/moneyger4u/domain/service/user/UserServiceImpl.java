@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.domain.service.template_user;
+package am.ik.moneyger4u.domain.service.user;
 
 import java.util.Date;
 
@@ -11,8 +11,8 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import am.ik.moneyger4u.domain.model.TemplateUser;
-import am.ik.moneyger4u.domain.repository.template_user.UserRepository;
+import am.ik.moneyger4u.domain.model.User;
+import am.ik.moneyger4u.domain.repository.user.UserRepository;
 
 @Service
 @Transactional
@@ -25,9 +25,9 @@ public class UserServiceImpl implements UserService {
     protected PasswordEncoder passwordEncoder;
 
     @Override
-    public void save(TemplateUser user, String rawPassword) {
+    public void save(User user, String rawPassword) {
         String password = passwordEncoder.encodePassword(rawPassword, user
-                .getName());
+                .getEmail());
         user.setPassword(password);
         Date now = new DateTime().toDate();
         if (user.getCreatedAt() == null) {
@@ -39,28 +39,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public TemplateUser findOne(Integer id) {
-        TemplateUser user = userRepository.findOne(id);
+    public User findOne(Integer id) {
+        User user = userRepository.findOne(id);
         return user;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TemplateUser> findAll(Pageable pageable) {
-        Page<TemplateUser> page = userRepository.findAll(pageable);
+    public Page<User> findAll(Pageable pageable) {
+        Page<User> page = userRepository.findAll(pageable);
         return page;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TemplateUser> findByNameLike(String name, Pageable pageable) {
+    public Page<User> findByNameLike(String name, Pageable pageable) {
         String query = name + "%"; // TODO escape
-        Page<TemplateUser> page = userRepository.findByNameLike(query, pageable);
+        // Page<User> page = userRepository.findByNameLike(query, pageable);
+        Page<User> page = userRepository.findAll(pageable);
         return page;
     }
 
     @Override
-    public void delete(TemplateUser user) {
+    public void delete(User user) {
         userRepository.delete(user);
     }
 

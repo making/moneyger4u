@@ -135,11 +135,6 @@
             <url>http://amateras.sourceforge.jp/mvn/</url>
         </repository>
         <repository>
-            <id>spring-milestone</id>
-            <name>Spring Maven MILESTONE Repository</name>
-            <url>http://maven.springframework.org/milestone</url>
-        </repository>
-        <repository>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -585,10 +580,10 @@
             <version>1</version>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${com.h2database.version}</version>
-            <!-- <scope>provided</scope> -->
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>0.11.6</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -605,12 +600,6 @@
             <groupId>org.jboss.spec.javax.servlet.jsp</groupId>
             <artifactId>jboss-jsp-api_2.2_spec</artifactId>
             <version>${org.jboss.spec.javax.servlet.jsp.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

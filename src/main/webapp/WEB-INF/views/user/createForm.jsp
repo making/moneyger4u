@@ -4,24 +4,31 @@
     <form:form action="${pageContext.request.contextPath}/user/create"
       modelAttribute="userForm" class="form-horizontal">
       <div class="control-group">
-        <form:label path="name" class="control-label">User Name</form:label>
+        <form:label path="firstName" class="control-label">First Name</form:label>
         <div class="controls">
-          <form:input path="name" type="text" />
-          <form:errors path="name" cssClass="text-error" />
+          <form:input path="firstName" type="text" />
+          <form:errors path="firstName" cssClass="text-error" />
+        </div>
+      </div>
+      <div class="control-group">
+        <form:label path="firstName" class="control-label">Last Name</form:label>
+        <div class="controls">
+          <form:input path="lastName" type="text" />
+          <form:errors path="lastName" cssClass="text-error" />
+        </div>
+      </div>
+      <div class="control-group">
+        <form:label path="familyId" class="control-label">Family</form:label>
+        <div class="controls">
+          <form:select path="familyId" items="${familyMap}" />
+          <form:errors path="familyId" cssClass="text-error" />
         </div>
       </div>
       <div class="control-group">
         <form:label path="email" class="control-label">E-mail</form:label>
         <div class="controls">
           <form:input path="email" type="text" />
-          <form:errors path="email" cssClass="text-error" /> (* yyyy/MM/dd)
-        </div>
-      </div>
-      <div class="control-group">
-        <form:label path="birth" class="control-label">User Birth</form:label>
-        <div class="controls">
-          <form:input path="birth" type="text" />
-          <form:errors path="birth" cssClass="text-error" />
+          <form:errors path="email" cssClass="text-error" />
         </div>
       </div>
       <div class="control-group">

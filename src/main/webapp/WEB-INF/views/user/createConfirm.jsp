@@ -4,10 +4,24 @@
     <form:form action="${pageContext.request.contextPath}/user/create"
       modelAttribute="userForm" class="form-horizontal">
       <div class="control-group">
-        <form:label path="name" class="control-label">User Name</form:label>
+        <form:label path="firstName" class="control-label">First Name</form:label>
         <div class="controls">
-          ${f:h(userForm.name)}
-          <form:hidden path="name" />
+          ${f:h(userForm.firstName)}
+          <form:hidden path="firstName" />
+        </div>
+      </div>
+      <div class="control-group">
+        <form:label path="lastName" class="control-label">Last Name</form:label>
+        <div class="controls">
+          ${f:h(userForm.lastName)}
+          <form:hidden path="lastName" />
+        </div>
+      </div>
+      <div class="control-group">
+        <form:label path="familyId" class="control-label">Family</form:label>
+        <div class="controls">
+          ${f:h(familyMap[userForm.familyId])}
+          <form:hidden path="familyId" />
         </div>
       </div>
       <div class="control-group">
@@ -15,13 +29,6 @@
         <div class="controls">
           ${f:h(userForm.email)}
           <form:hidden path="email" />
-        </div>
-      </div>
-      <div class="control-group">
-        <form:label path="birth" class="control-label">User Birth</form:label>
-        <div class="controls">
-          ${f:h(userForm.birth)}
-          <form:hidden path="birth" />
         </div>
       </div>
       <div class="control-group">

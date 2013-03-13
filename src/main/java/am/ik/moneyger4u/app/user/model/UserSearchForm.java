@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.app.template_user.model;
+package am.ik.moneyger4u.app.user.model;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 import javax.validation.constraints.NotNull;
 
-public class TemplateUserSearchForm implements Serializable {
+public class UserSearchForm implements Serializable {
 
     /**
      * serial version uid.

@@ -1,11 +1,8 @@
-package am.ik.moneyger4u.domain.repository.user;
+package am.ik.moneyger4u.domain.repository.outcome;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.junit.After;
@@ -13,9 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,8 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import am.ik.moneyger4u.domain.model.User;
-import am.ik.moneyger4u.domain.repository.user.UserRepository;
+import am.ik.moneyger4u.domain.model.DailyOutcomeCategory;
+import am.ik.moneyger4u.domain.model.ParentOutcomeCategory;
 
 import static org.hamcrest.CoreMatchers.*;
 
@@ -32,12 +26,12 @@ import static org.hamcrest.CoreMatchers.*;
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class UserRepositoryTest {
+public class ParentOutcomeCategoryRepositoryTest {
     @Autowired
     protected JdbcTemplate jdbcTemplate;
 
     @Autowired
-    protected UserRepository userRepository;
+    protected ParentOutcomeCategoryRepository parentOutcomeCategoryRepository;
 
     private DateTime now = new DateTime();
 
@@ -52,10 +46,13 @@ public class UserRepositoryTest {
 
     @Test
     public void testFindAll01() {
-        Page<User> page = userRepository.findAll(new PageRequest(0, 20));
-        for (User user : page) {
-            System.out.println(user.getLastName());
-            System.out.println(user.getRoleList());
+        List<ParentOutcomeCategory> categories = parentOutcomeCategoryRepository
+                .findAll();
+        for (ParentOutcomeCategory c : categories) {
+            System.out.println(c.getCategoryName());
+            for (DailyOutcomeCategory dc : c.getDailyOutcomeCategoryList()) {
+                System.out.println("\t" + dc.getCategoryName());
+            }
         }
     }
 

@@ -17,12 +17,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,13 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "daily_outcome_category")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "DailyOutcomeCategory.findAll", query = "SELECT d FROM DailyOutcomeCategory d"),
-    @NamedQuery(name = "DailyOutcomeCategory.findByDailyOutcomeCategoryId", query = "SELECT d FROM DailyOutcomeCategory d WHERE d.dailyOutcomeCategoryId = :dailyOutcomeCategoryId"),
-    @NamedQuery(name = "DailyOutcomeCategory.findByCategoryName", query = "SELECT d FROM DailyOutcomeCategory d WHERE d.categoryName = :categoryName"),
-    @NamedQuery(name = "DailyOutcomeCategory.findByCreatetedAt", query = "SELECT d FROM DailyOutcomeCategory d WHERE d.createtedAt = :createtedAt"),
-    @NamedQuery(name = "DailyOutcomeCategory.findByUpdatedAt", query = "SELECT d FROM DailyOutcomeCategory d WHERE d.updatedAt = :updatedAt"),
-    @NamedQuery(name = "DailyOutcomeCategory.findByVersion", query = "SELECT d FROM DailyOutcomeCategory d WHERE d.version = :version")})
 public class DailyOutcomeCategory implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,9 +48,9 @@ public class DailyOutcomeCategory implements Serializable {
     private String categoryName;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CREATETED_AT")
+    @Column(name = "CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createtedAt;
+    private Date createdAt;
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPDATED_AT")
@@ -66,6 +58,7 @@ public class DailyOutcomeCategory implements Serializable {
     private Date updatedAt;
     @Basic(optional = false)
     @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dailyOutcomeCategoryId", fetch = FetchType.LAZY)
@@ -81,10 +74,10 @@ public class DailyOutcomeCategory implements Serializable {
         this.dailyOutcomeCategoryId = dailyOutcomeCategoryId;
     }
 
-    public DailyOutcomeCategory(Integer dailyOutcomeCategoryId, String categoryName, Date createtedAt, Date updatedAt, int version) {
+    public DailyOutcomeCategory(Integer dailyOutcomeCategoryId, String categoryName, Date createdAt, Date updatedAt, int version) {
         this.dailyOutcomeCategoryId = dailyOutcomeCategoryId;
         this.categoryName = categoryName;
-        this.createtedAt = createtedAt;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.version = version;
     }
@@ -105,12 +98,12 @@ public class DailyOutcomeCategory implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public Date getCreatetedAt() {
-        return createtedAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatetedAt(Date createtedAt) {
-        this.createtedAt = createtedAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {

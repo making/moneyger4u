@@ -19,12 +19,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,16 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "user")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId"),
-    @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
-    @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
-    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
-    @NamedQuery(name = "User.findByCreatetedAt", query = "SELECT u FROM User u WHERE u.createtedAt = :createtedAt"),
-    @NamedQuery(name = "User.findByUpdatedAt", query = "SELECT u FROM User u WHERE u.updatedAt = :updatedAt"),
-    @NamedQuery(name = "User.findByVersion", query = "SELECT u FROM User u WHERE u.version = :version")})
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -77,9 +66,9 @@ public class User implements Serializable {
     private String password;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CREATETED_AT")
+    @Column(name = "CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createtedAt;
+    private Date createdAt;
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPDATED_AT")
@@ -87,6 +76,7 @@ public class User implements Serializable {
     private Date updatedAt;
     @Basic(optional = false)
     @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @JoinTable(name = "user_role", joinColumns = {
@@ -111,13 +101,13 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public User(Integer userId, String firstName, String lastName, String email, String password, Date createtedAt, Date updatedAt, int version) {
+    public User(Integer userId, String firstName, String lastName, String email, String password, Date createdAt, Date updatedAt, int version) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.createtedAt = createtedAt;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.version = version;
     }
@@ -162,12 +152,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Date getCreatetedAt() {
-        return createtedAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatetedAt(Date createtedAt) {
-        this.createtedAt = createtedAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {

@@ -72,6 +72,7 @@
         </property>
         <property name="defaultStatusCode" value="500" />
         <property name="defaultErrorView" value="systemError" />
+        <property name="warnLogCategory" value="am.ik.moneyger4u.app.SimpleMappingExceptionResolver" />
     </bean>
 
 

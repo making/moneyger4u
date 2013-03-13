@@ -15,12 +15,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,14 +32,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "monthly_outcome_category")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "MonthlyOutcomeCategory.findAll", query = "SELECT m FROM MonthlyOutcomeCategory m"),
-    @NamedQuery(name = "MonthlyOutcomeCategory.findByMonthlyOutcomeCategoryId", query = "SELECT m FROM MonthlyOutcomeCategory m WHERE m.monthlyOutcomeCategoryId = :monthlyOutcomeCategoryId"),
-    @NamedQuery(name = "MonthlyOutcomeCategory.findByCategoryName", query = "SELECT m FROM MonthlyOutcomeCategory m WHERE m.categoryName = :categoryName"),
-    @NamedQuery(name = "MonthlyOutcomeCategory.findByUnitName", query = "SELECT m FROM MonthlyOutcomeCategory m WHERE m.unitName = :unitName"),
-    @NamedQuery(name = "MonthlyOutcomeCategory.findByCreatetedAt", query = "SELECT m FROM MonthlyOutcomeCategory m WHERE m.createtedAt = :createtedAt"),
-    @NamedQuery(name = "MonthlyOutcomeCategory.findByUpdatedAt", query = "SELECT m FROM MonthlyOutcomeCategory m WHERE m.updatedAt = :updatedAt"),
-    @NamedQuery(name = "MonthlyOutcomeCategory.findByVersion", query = "SELECT m FROM MonthlyOutcomeCategory m WHERE m.version = :version")})
 public class MonthlyOutcomeCategory implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,9 +49,9 @@ public class MonthlyOutcomeCategory implements Serializable {
     private String unitName;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CREATETED_AT")
+    @Column(name = "CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createtedAt;
+    private Date createdAt;
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPDATED_AT")
@@ -68,6 +59,7 @@ public class MonthlyOutcomeCategory implements Serializable {
     private Date updatedAt;
     @Basic(optional = false)
     @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monthlyOutcomeCategoryId", fetch = FetchType.LAZY)
@@ -80,10 +72,10 @@ public class MonthlyOutcomeCategory implements Serializable {
         this.monthlyOutcomeCategoryId = monthlyOutcomeCategoryId;
     }
 
-    public MonthlyOutcomeCategory(Integer monthlyOutcomeCategoryId, String categoryName, Date createtedAt, Date updatedAt, int version) {
+    public MonthlyOutcomeCategory(Integer monthlyOutcomeCategoryId, String categoryName, Date createdAt, Date updatedAt, int version) {
         this.monthlyOutcomeCategoryId = monthlyOutcomeCategoryId;
         this.categoryName = categoryName;
-        this.createtedAt = createtedAt;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.version = version;
     }
@@ -112,12 +104,12 @@ public class MonthlyOutcomeCategory implements Serializable {
         this.unitName = unitName;
     }
 
-    public Date getCreatetedAt() {
-        return createtedAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatetedAt(Date createtedAt) {
-        this.createtedAt = createtedAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {

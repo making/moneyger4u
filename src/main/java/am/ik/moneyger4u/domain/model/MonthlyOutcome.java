@@ -16,11 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,17 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "monthly_outcome")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "MonthlyOutcome.findAll", query = "SELECT m FROM MonthlyOutcome m"),
-    @NamedQuery(name = "MonthlyOutcome.findByMonthlyOutcomeId", query = "SELECT m FROM MonthlyOutcome m WHERE m.monthlyOutcomeId = :monthlyOutcomeId"),
-    @NamedQuery(name = "MonthlyOutcome.findByOutcomeDate", query = "SELECT m FROM MonthlyOutcome m WHERE m.outcomeDate = :outcomeDate"),
-    @NamedQuery(name = "MonthlyOutcome.findByOutcomeName", query = "SELECT m FROM MonthlyOutcome m WHERE m.outcomeName = :outcomeName"),
-    @NamedQuery(name = "MonthlyOutcome.findByAmount", query = "SELECT m FROM MonthlyOutcome m WHERE m.amount = :amount"),
-    @NamedQuery(name = "MonthlyOutcome.findByQuantity", query = "SELECT m FROM MonthlyOutcome m WHERE m.quantity = :quantity"),
-    @NamedQuery(name = "MonthlyOutcome.findByRemarks", query = "SELECT m FROM MonthlyOutcome m WHERE m.remarks = :remarks"),
-    @NamedQuery(name = "MonthlyOutcome.findByCreatetedAt", query = "SELECT m FROM MonthlyOutcome m WHERE m.createtedAt = :createtedAt"),
-    @NamedQuery(name = "MonthlyOutcome.findByUpdatedAt", query = "SELECT m FROM MonthlyOutcome m WHERE m.updatedAt = :updatedAt"),
-    @NamedQuery(name = "MonthlyOutcome.findByVersion", query = "SELECT m FROM MonthlyOutcome m WHERE m.version = :version")})
 public class MonthlyOutcome implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -70,9 +58,9 @@ public class MonthlyOutcome implements Serializable {
     private String remarks;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CREATETED_AT")
+    @Column(name = "CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createtedAt;
+    private Date createdAt;
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPDATED_AT")
@@ -80,6 +68,7 @@ public class MonthlyOutcome implements Serializable {
     private Date updatedAt;
     @Basic(optional = false)
     @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @JoinColumn(name = "MONTHLY_OUTCOME_CATEGORY_ID", referencedColumnName = "MONTHLY_OUTCOME_CATEGORY_ID")
@@ -99,11 +88,11 @@ public class MonthlyOutcome implements Serializable {
         this.monthlyOutcomeId = monthlyOutcomeId;
     }
 
-    public MonthlyOutcome(Integer monthlyOutcomeId, Date outcomeDate, int amount, Date createtedAt, Date updatedAt, int version) {
+    public MonthlyOutcome(Integer monthlyOutcomeId, Date outcomeDate, int amount, Date createdAt, Date updatedAt, int version) {
         this.monthlyOutcomeId = monthlyOutcomeId;
         this.outcomeDate = outcomeDate;
         this.amount = amount;
-        this.createtedAt = createtedAt;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.version = version;
     }
@@ -156,12 +145,12 @@ public class MonthlyOutcome implements Serializable {
         this.remarks = remarks;
     }
 
-    public Date getCreatetedAt() {
-        return createtedAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatetedAt(Date createtedAt) {
-        this.createtedAt = createtedAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {

@@ -4,17 +4,31 @@
     <form:form action="${pageContext.request.contextPath}/user/update"
       modelAttribute="userForm" class="form-horizontal">
       <div class="control-group">
-        <form:label path="id" class="control-label">User Id</form:label>
+        <form:label path="userId" class="control-label">User Id</form:label>
         <div class="controls">
-          ${f:h(userForm.id)}
-          <form:input path="id" type="hidden" />
+          ${f:h(userForm.userId)}
+          <form:input path="userId" type="hidden" />
         </div>
       </div>
       <div class="control-group">
-        <form:label path="name" class="control-label">User Name</form:label>
+        <form:label path="firstName" class="control-label">First Name</form:label>
         <div class="controls">
-          ${f:h(userForm.name)}
-          <form:input path="name" type="hidden" />
+          ${f:h(userForm.firstName)}
+          <form:input path="firstName" type="hidden" />
+        </div>
+      </div>
+      <div class="control-group">
+        <form:label path="lastName" class="control-label">Last Name</form:label>
+        <div class="controls">
+          ${f:h(userForm.lastName)}
+          <form:input path="lastName" type="hidden" />
+        </div>
+      </div>
+      <div class="control-group">
+        <form:label path="familyId" class="control-label">Family</form:label>
+        <div class="controls">
+          ${f:h(familyMap[userForm.familyId])}
+          <form:hidden path="familyId" />
         </div>
       </div>
       <div class="control-group">
@@ -22,13 +36,6 @@
         <div class="controls">
           ${f:h(userForm.email)}
           <form:hidden path="email" />
-        </div>
-      </div>
-      <div class="control-group">
-        <form:label path="birth" class="control-label">User Birth</form:label>
-        <div class="controls">
-          ${f:h(userForm.birth)}
-          <form:input path="birth" type="hidden" />
         </div>
       </div>
       <div class="control-group">
@@ -46,7 +53,7 @@
         </div>
       </div>
       <div class="form-actions">
-        <form:hidden path="id" />
+        <form:hidden path="userId" />
         <form:hidden path="version" />
         <input type="submit" class="btn btn-primary" name="update"
           value="Update" /> <input type="submit" class="btn"

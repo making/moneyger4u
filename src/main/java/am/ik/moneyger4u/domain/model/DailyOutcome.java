@@ -15,11 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,18 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "daily_outcome")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "DailyOutcome.findAll", query = "SELECT d FROM DailyOutcome d"),
-    @NamedQuery(name = "DailyOutcome.findByDailyOutcomeId", query = "SELECT d FROM DailyOutcome d WHERE d.dailyOutcomeId = :dailyOutcomeId"),
-    @NamedQuery(name = "DailyOutcome.findByOutcomeDate", query = "SELECT d FROM DailyOutcome d WHERE d.outcomeDate = :outcomeDate"),
-    @NamedQuery(name = "DailyOutcome.findByOutcomeName", query = "SELECT d FROM DailyOutcome d WHERE d.outcomeName = :outcomeName"),
-    @NamedQuery(name = "DailyOutcome.findByAmount", query = "SELECT d FROM DailyOutcome d WHERE d.amount = :amount"),
-    @NamedQuery(name = "DailyOutcome.findByPayment", query = "SELECT d FROM DailyOutcome d WHERE d.payment = :payment"),
-    @NamedQuery(name = "DailyOutcome.findByIsWaste", query = "SELECT d FROM DailyOutcome d WHERE d.isWaste = :isWaste"),
-    @NamedQuery(name = "DailyOutcome.findByRemarks", query = "SELECT d FROM DailyOutcome d WHERE d.remarks = :remarks"),
-    @NamedQuery(name = "DailyOutcome.findByCreatetedAt", query = "SELECT d FROM DailyOutcome d WHERE d.createtedAt = :createtedAt"),
-    @NamedQuery(name = "DailyOutcome.findByUpdatedAt", query = "SELECT d FROM DailyOutcome d WHERE d.updatedAt = :updatedAt"),
-    @NamedQuery(name = "DailyOutcome.findByVersion", query = "SELECT d FROM DailyOutcome d WHERE d.version = :version")})
 public class DailyOutcome implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -78,9 +65,9 @@ public class DailyOutcome implements Serializable {
     private String remarks;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CREATETED_AT")
+    @Column(name = "CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createtedAt;
+    private Date createdAt;
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPDATED_AT")
@@ -88,6 +75,7 @@ public class DailyOutcome implements Serializable {
     private Date updatedAt;
     @Basic(optional = false)
     @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @JoinColumn(name = "UPDATED_BY", referencedColumnName = "USER_ID")
@@ -107,14 +95,14 @@ public class DailyOutcome implements Serializable {
         this.dailyOutcomeId = dailyOutcomeId;
     }
 
-    public DailyOutcome(Integer dailyOutcomeId, Date outcomeDate, String outcomeName, int amount, String payment, boolean isWaste, Date createtedAt, Date updatedAt, int version) {
+    public DailyOutcome(Integer dailyOutcomeId, Date outcomeDate, String outcomeName, int amount, String payment, boolean isWaste, Date createdAt, Date updatedAt, int version) {
         this.dailyOutcomeId = dailyOutcomeId;
         this.outcomeDate = outcomeDate;
         this.outcomeName = outcomeName;
         this.amount = amount;
         this.payment = payment;
         this.isWaste = isWaste;
-        this.createtedAt = createtedAt;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.version = version;
     }
@@ -175,12 +163,12 @@ public class DailyOutcome implements Serializable {
         this.remarks = remarks;
     }
 
-    public Date getCreatetedAt() {
-        return createtedAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatetedAt(Date createtedAt) {
-        this.createtedAt = createtedAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {

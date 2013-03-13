@@ -15,12 +15,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,13 +32,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "family")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Family.findAll", query = "SELECT f FROM Family f"),
-    @NamedQuery(name = "Family.findByFamilyId", query = "SELECT f FROM Family f WHERE f.familyId = :familyId"),
-    @NamedQuery(name = "Family.findByFamilyName", query = "SELECT f FROM Family f WHERE f.familyName = :familyName"),
-    @NamedQuery(name = "Family.findByCreatetedAt", query = "SELECT f FROM Family f WHERE f.createtedAt = :createtedAt"),
-    @NamedQuery(name = "Family.findByUpdatedAt", query = "SELECT f FROM Family f WHERE f.updatedAt = :updatedAt"),
-    @NamedQuery(name = "Family.findByVersion", query = "SELECT f FROM Family f WHERE f.version = :version")})
 public class Family implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,9 +46,9 @@ public class Family implements Serializable {
     private String familyName;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CREATETED_AT")
+    @Column(name = "CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createtedAt;
+    private Date createdAt;
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPDATED_AT")
@@ -64,6 +56,7 @@ public class Family implements Serializable {
     private Date updatedAt;
     @Basic(optional = false)
     @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "familyId", fetch = FetchType.LAZY)
@@ -80,10 +73,10 @@ public class Family implements Serializable {
         this.familyId = familyId;
     }
 
-    public Family(Integer familyId, String familyName, Date createtedAt, Date updatedAt, int version) {
+    public Family(Integer familyId, String familyName, Date createdAt, Date updatedAt, int version) {
         this.familyId = familyId;
         this.familyName = familyName;
-        this.createtedAt = createtedAt;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.version = version;
     }
@@ -104,12 +97,12 @@ public class Family implements Serializable {
         this.familyName = familyName;
     }
 
-    public Date getCreatetedAt() {
-        return createtedAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatetedAt(Date createtedAt) {
-        this.createtedAt = createtedAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {

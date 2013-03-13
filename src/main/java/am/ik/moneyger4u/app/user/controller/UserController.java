@@ -1,9 +1,13 @@
-package am.ik.moneyger4u.app.template_user.controller;
+package am.ik.moneyger4u.app.user.controller;
+
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.validation.groups.Default;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,32 +18,67 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import am.ik.moneyger4u.app.template_user.model.TemplateUserForm;
-import am.ik.moneyger4u.app.template_user.model.TemplateUserForm.UserCreateGroup;
-import am.ik.moneyger4u.app.template_user.model.TemplateUserForm.UserDeleteGroup;
-import am.ik.moneyger4u.app.template_user.model.TemplateUserForm.UserUpdateGroup;
-import am.ik.moneyger4u.domain.model.TemplateUser;
-import am.ik.moneyger4u.domain.service.template_user.UserService;
+import com.google.common.collect.Maps;
+
+import am.ik.moneyger4u.app.user.model.UserForm;
+import am.ik.moneyger4u.app.user.model.UserForm.UserCreateGroup;
+import am.ik.moneyger4u.app.user.model.UserForm.UserDeleteGroup;
+import am.ik.moneyger4u.app.user.model.UserForm.UserUpdateGroup;
+import am.ik.moneyger4u.common.bean.BeanConverter;
+import am.ik.moneyger4u.common.bean.IgnoreOption;
+import am.ik.moneyger4u.domain.model.Family;
+import am.ik.moneyger4u.domain.model.User;
+import am.ik.moneyger4u.domain.service.user.FamilyService;
+import am.ik.moneyger4u.domain.service.user.UserService;
 
 @Controller
 @RequestMapping("user")
-public class TemplateUserController {
+public class UserController {
     @Inject
     protected UserService userService;
 
+    @Inject
+    protected FamilyService familyService;
+
+    protected BeanConverter beanConverter;
+
+    public UserController() {
+        beanConverter = new BeanConverter(new Converter<Family, Integer>() {
+            @Override
+            public Integer convert(Family source) {
+                return (source == null) ? null : source.getFamilyId();
+            }
+        }, new Converter<Integer, Family>() {
+            @Override
+            public Family convert(Integer source) {
+                return new Family(source);
+            }
+        });
+    }
+
     @ModelAttribute
-    public TemplateUserForm setUpUserForm() {
-        return new TemplateUserForm();
+    public UserForm setUpUserForm() {
+        return new UserForm();
+    }
+
+    @ModelAttribute("familyMap")
+    public Map<Integer, String> getFamilies() {
+        List<Family> families = familyService.findAll();
+        Map<Integer, String> map = Maps.newLinkedHashMap();
+        for (Family f : families) {
+            map.put(f.getFamilyId(), f.getFamilyName());
+        }
+        return map;
     }
 
     @RequestMapping(value = "create", params = "form")
-    public String createForm(TemplateUserForm form) {
+    public String createForm(UserForm form) {
         return "user/createForm";
     }
 
     @RequestMapping(value = "create", params = "confirm", method = RequestMethod.POST)
     public String createConfirm(@Validated({ Default.class,
-            UserCreateGroup.class }) TemplateUserForm form, BindingResult result) {
+            UserCreateGroup.class }) UserForm form, BindingResult result) {
         if (result.hasErrors()) {
             return "user/createForm";
         }
@@ -48,14 +87,14 @@ public class TemplateUserController {
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String create(
-            @Validated({ Default.class, UserCreateGroup.class }) TemplateUserForm form,
+            @Validated({ Default.class, UserCreateGroup.class }) UserForm form,
             BindingResult result) {
         if (result.hasErrors()) {
             return "user/createForm";
         }
 
-        TemplateUser user = new TemplateUser();
-        BeanUtils.copyProperties(form, user);
+        User user = beanConverter.populate(form, User.class,
+                IgnoreOption.NULL_SOURCE);
         userService.save(user, form.getPassword());
 
         return "redirect:/user/create?complete";
@@ -67,21 +106,20 @@ public class TemplateUserController {
     }
 
     @RequestMapping(value = "update", params = "form")
-    public String updateForm(@RequestParam("id") Integer id, TemplateUserForm form,
-            Model model) {
+    public String updateForm(@RequestParam("userId") Integer userId,
+            UserForm form, Model model) {
 
-        if (form.getVersion() == null) {
-            TemplateUser user = userService.findOne(id);
-            BeanUtils.copyProperties(user, form, new String[] { "password" });
-            model.addAttribute(user);
-        }
+        User user = userService.findOne(userId);
+        beanConverter.convert(user, form, IgnoreOption.NOT_NULL_TARGET,
+                new String[] { "password" });
+        model.addAttribute(user);
 
         return "user/updateForm";
     }
 
     @RequestMapping(value = "update", params = "confirm", method = RequestMethod.POST)
     public String updateConfirm(@Validated({ Default.class,
-            UserUpdateGroup.class }) TemplateUserForm form, BindingResult result) {
+            UserUpdateGroup.class }) UserForm form, BindingResult result) {
         if (result.hasErrors()) {
             return "user/updateForm";
         }
@@ -90,14 +128,14 @@ public class TemplateUserController {
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(
-            @Validated({ Default.class, UserUpdateGroup.class }) TemplateUserForm form,
+            @Validated({ Default.class, UserUpdateGroup.class }) UserForm form,
             BindingResult result) {
         if (result.hasErrors()) {
             return "user/updateForm";
         }
 
-        TemplateUser user = userService.findOne(form.getId());
-        BeanUtils.copyProperties(form, user);
+        User user = userService.findOne(form.getUserId());
+        beanConverter.convert(form, user, IgnoreOption.NULL_SOURCE);
         userService.save(user, form.getPassword());
 
         return "redirect:/user/update?complete";
@@ -109,11 +147,11 @@ public class TemplateUserController {
     }
 
     @RequestMapping(value = "delete", params = "confirm")
-    public String deleteConfirm(@RequestParam("id") Integer id, TemplateUserForm form,
-            Model model) {
+    public String deleteConfirm(@RequestParam("userId") Integer userId,
+            UserForm form, Model model) {
 
-        TemplateUser user = userService.findOne(id);
-        BeanUtils.copyProperties(user, form);
+        User user = userService.findOne(userId);
+        beanConverter.convert(form, user, IgnoreOption.NOT_NULL_TARGET);
 
         model.addAttribute(user);
         return "user/deleteConfirm";
@@ -121,14 +159,14 @@ public class TemplateUserController {
 
     @RequestMapping(value = "delete", method = RequestMethod.POST)
     public String delete(
-            @Validated({ Default.class, UserDeleteGroup.class }) TemplateUserForm form,
+            @Validated({ Default.class, UserDeleteGroup.class }) UserForm form,
             BindingResult result, RedirectAttributes attr) {
         if (result.hasErrors()) {
             attr.addFlashAttribute("errorMessage", "Illegal Access!");
             return "redirect:/user/list";
         }
 
-        TemplateUser user = userService.findOne(form.getId());
+        User user = userService.findOne(form.getUserId());
         BeanUtils.copyProperties(form, user);
 
         userService.delete(user);

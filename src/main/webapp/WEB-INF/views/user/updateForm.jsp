@@ -4,18 +4,32 @@
     <form:form action="${pageContext.request.contextPath}/user/update"
       modelAttribute="userForm" class="form-horizontal">
       <div class="control-group">
-        <form:label path="id" class="control-label">User Id</form:label>
+        <form:label path="userId" class="control-label">User Id</form:label>
         <div class="controls">
-          ${f:h(userForm.id)}
-          <form:input path="id" type="hidden" />
-          <form:errors path="id" cssClass="text-error" />
+          ${f:h(userForm.userId)}
+          <form:input path="userId" type="hidden" />
+          <form:errors path="userId" cssClass="text-error" />
         </div>
       </div>
       <div class="control-group">
-        <form:label path="name" class="control-label">User Name</form:label>
+        <form:label path="firstName" class="control-label">First Name</form:label>
         <div class="controls">
-          <form:input path="name" type="text" />
-          <form:errors path="name" cssClass="text-error" />
+          <form:input path="firstName" type="text" />
+          <form:errors path="firstName" cssClass="text-error" />
+        </div>
+      </div>
+      <div class="control-group">
+        <form:label path="lastName" class="control-label">Last Name</form:label>
+        <div class="controls">
+          <form:input path="lastName" type="text" />
+          <form:errors path="firstName" cssClass="text-error" />
+        </div>
+      </div>
+      <div class="control-group">
+        <form:label path="familyId" class="control-label">Family</form:label>
+        <div class="controls">
+          <form:select path="familyId" items="${familyMap}" />
+          <form:errors path="familyId" cssClass="text-error" />
         </div>
       </div>
       <div class="control-group">
@@ -23,14 +37,6 @@
         <div class="controls">
           <form:input path="email" type="text" />
           <form:errors path="email" cssClass="text-error" />
-          (* yyyy/MM/dd)
-        </div>
-      </div>
-      <div class="control-group">
-        <form:label path="birth" class="control-label">User Birth</form:label>
-        <div class="controls">
-          <form:input path="birth" type="text" />
-          <form:errors path="birth" cssClass="text-error" />
         </div>
       </div>
       <div class="control-group">

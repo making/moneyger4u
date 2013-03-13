@@ -15,11 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,15 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "income")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Income.findAll", query = "SELECT i FROM Income i"),
-    @NamedQuery(name = "Income.findByIncomeId", query = "SELECT i FROM Income i WHERE i.incomeId = :incomeId"),
-    @NamedQuery(name = "Income.findByIncomeName", query = "SELECT i FROM Income i WHERE i.incomeName = :incomeName"),
-    @NamedQuery(name = "Income.findByAmount", query = "SELECT i FROM Income i WHERE i.amount = :amount"),
-    @NamedQuery(name = "Income.findByIncomeDate", query = "SELECT i FROM Income i WHERE i.incomeDate = :incomeDate"),
-    @NamedQuery(name = "Income.findByCreatetedAt", query = "SELECT i FROM Income i WHERE i.createtedAt = :createtedAt"),
-    @NamedQuery(name = "Income.findByUpdatedAt", query = "SELECT i FROM Income i WHERE i.updatedAt = :updatedAt"),
-    @NamedQuery(name = "Income.findByVersion", query = "SELECT i FROM Income i WHERE i.version = :version")})
 public class Income implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,9 +53,9 @@ public class Income implements Serializable {
     private Date incomeDate;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CREATETED_AT")
+    @Column(name = "CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createtedAt;
+    private Date createdAt;
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPDATED_AT")
@@ -73,6 +63,7 @@ public class Income implements Serializable {
     private Date updatedAt;
     @Basic(optional = false)
     @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @JoinColumn(name = "FAMILY_ID", referencedColumnName = "FAMILY_ID")
@@ -89,12 +80,12 @@ public class Income implements Serializable {
         this.incomeId = incomeId;
     }
 
-    public Income(Integer incomeId, String incomeName, int amount, Date incomeDate, Date createtedAt, Date updatedAt, int version) {
+    public Income(Integer incomeId, String incomeName, int amount, Date incomeDate, Date createdAt, Date updatedAt, int version) {
         this.incomeId = incomeId;
         this.incomeName = incomeName;
         this.amount = amount;
         this.incomeDate = incomeDate;
-        this.createtedAt = createtedAt;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.version = version;
     }
@@ -131,12 +122,12 @@ public class Income implements Serializable {
         this.incomeDate = incomeDate;
     }
 
-    public Date getCreatetedAt() {
-        return createtedAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatetedAt(Date createtedAt) {
-        this.createtedAt = createtedAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {

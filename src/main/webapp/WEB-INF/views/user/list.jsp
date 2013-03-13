@@ -21,24 +21,24 @@
     <table class="table table-striped table-bordered table-condensed">
       <thead>
         <tr>
-          <th>id</th>
-          <th>name</th>
-          <th>email</th>
-          <th>birth</th>
-          <th>actions</th>
+          <th>User Id</th>
+          <th>User Name</th>
+          <th>Family Name</th>
+          <th>Email</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <c:forEach var="user" items="${page.content}">
           <tr>
-            <td>${f:h(user.id)}</td>
-            <td>${f:h(user.name)}</td>
+            <td>${f:h(user.userId)}</td>
+            <td>${f:h(user.lastName)} ${f:h(user.firstName)}</td>
+            <td>${f:h(user.familyId.familyName)}</td>
             <td>${f:h(user.email)}</td>
-            <td>${f:h(user.birth)}</td>
             <td><form:form
                 action="${pageContext.request.contextPath}/user"
                 class="form-inline">
-                <input type="hidden" name="id" value="${f:h(user.id)}" />
+                <input type="hidden" name="userId" value="${f:h(user.userId)}" />
                 <input type="submit" class="btn" name="redirectToUpdate"
                   value="Update" />
                 <input type="submit" class="btn btn-danger"
