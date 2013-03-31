@@ -5,9 +5,27 @@
 		});
 	});
 </script>
+<c:if test="${not empty updated}">
+  <script type="text/javascript">
+		<!--
+			$(function() {
+				$('.top-right').notify({
+					message : {
+						text : '${f:h(updated)}を登録しました!'
+					},
+					fadeOut : {
+						enabled : true,
+						delay : 1000
+					}
+				}).show();
+			});
+		//-->
+		</script>
+</c:if>
 <div class="row">
   <div class="span12">
     <h2>支出詳細</h2>
+    <div class='notifications top-right'></div>
 
     <table class="table table-bordered table-striped table-condensed">
       <tr>

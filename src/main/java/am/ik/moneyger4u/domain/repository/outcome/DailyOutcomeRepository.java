@@ -12,7 +12,7 @@ import am.ik.moneyger4u.domain.model.Family;
 
 public interface DailyOutcomeRepository extends
                                        JpaRepository<DailyOutcome, Integer> {
-    @Query("SELECT x FROM DailyOutcome x WHERE x.userId.familyId = :family AND x.outcomeDate = :date ORDER BY x.dailyOutcomeCategoryId ASC, x.dailyOutcomeCategoryId.parentOutcomeCategoryId ASC")
+    @Query("SELECT x FROM DailyOutcome x WHERE x.userId.familyId = :family AND x.outcomeDate = :date ORDER BY x.dailyOutcomeCategoryId.dailyOutcomeCategoryId ASC, x.dailyOutcomeCategoryId.parentOutcomeCategoryId.parentOutcomeCategoryId ASC")
     List<DailyOutcome> findFamilyDailyOutcomeByUserAndDate(
             @Param("family") Family family, @Param("date") Date date);
 
@@ -21,7 +21,7 @@ public interface DailyOutcomeRepository extends
             @Param("family") Family family, @Param("start") Date start,
             @Param("end") Date end);
 
-    @Query("SELECT NEW am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByParentOutcomeCategoryId(x.dailyOutcomeCategoryId.parentOutcomeCategoryId, SUM(x.amount * x.quantity)) FROM DailyOutcome x WHERE x.userId.familyId = :family AND x.outcomeDate BETWEEN :start AND :end GROUP BY x.dailyOutcomeCategoryId.parentOutcomeCategoryId ORDER BY x.dailyOutcomeCategoryId.parentOutcomeCategoryId ASC")
+    @Query("SELECT NEW am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByParentOutcomeCategoryId(x.dailyOutcomeCategoryId.parentOutcomeCategoryId, SUM(x.amount * x.quantity)) FROM DailyOutcome x WHERE x.userId.familyId = :family AND x.outcomeDate BETWEEN :start AND :end GROUP BY x.dailyOutcomeCategoryId.parentOutcomeCategoryId ORDER BY x.dailyOutcomeCategoryId.parentOutcomeCategoryId.parentOutcomeCategoryId ASC")
     List<DailyOutcomeReportGroupByParentOutcomeCategoryId> findFamilyReportGroupByParentOutcomeCategoryId(
             @Param("family") Family family, @Param("start") Date start,
             @Param("end") Date end);

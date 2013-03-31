@@ -40,23 +40,6 @@
 	});
 //-->
 </script>
-<c:if test="${not empty created}">
-  <script type="text/javascript">
-		<!--
-			$(function() {
-				$('.top-right').notify({
-					message : {
-						text : '${f:h(created)}を登録しました!'
-					},
-					fadeOut : {
-						enabled : true,
-						delay : 1000
-					}
-				}).show();
-			});
-		//-->
-		</script>
-</c:if>
 <div class="row">
   <div class="span12">
     <h2>支出修正</h2>

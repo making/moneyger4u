@@ -28,6 +28,7 @@ public class MoneygerUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(username + " is not found.");
         }
+        user.getFamilyId().getFamilyName(); // eager fetch
         return new MoneygerUserDetails(user);
     }
 
