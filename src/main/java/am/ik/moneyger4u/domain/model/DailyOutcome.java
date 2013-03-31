@@ -9,6 +9,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +26,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
  * @author maki
  */
 @Entity
@@ -32,58 +33,76 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class DailyOutcome implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "DAILY_OUTCOME_ID")
     private Integer dailyOutcomeId;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "OUTCOME_DATE")
     @Temporal(TemporalType.DATE)
     private Date outcomeDate;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "OUTCOME_NAME")
     private String outcomeName;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "AMOUNT")
     private int amount;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Column(name = "QUANTITY")
+    private int quantity;
+
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "PAYMENT")
-    private String payment;
+    @Enumerated(EnumType.STRING)
+    private Payment payment;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "IS_WASTE")
     private boolean isWaste;
+
     @Size(max = 256)
     @Column(name = "REMARKS")
     private String remarks;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPDATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
     @Basic(optional = false)
     @NotNull
     @Version
     @Column(name = "VERSION")
     private int version;
+
     @JoinColumn(name = "UPDATED_BY", referencedColumnName = "USER_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User updatedBy;
+
     @JoinColumn(name = "DAILY_OUTCOME_CATEGORY_ID", referencedColumnName = "DAILY_OUTCOME_CATEGORY_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DailyOutcomeCategory dailyOutcomeCategoryId;
+
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User userId;
@@ -95,11 +114,14 @@ public class DailyOutcome implements Serializable {
         this.dailyOutcomeId = dailyOutcomeId;
     }
 
-    public DailyOutcome(Integer dailyOutcomeId, Date outcomeDate, String outcomeName, int amount, String payment, boolean isWaste, Date createdAt, Date updatedAt, int version) {
+    public DailyOutcome(Integer dailyOutcomeId, Date outcomeDate,
+            String outcomeName, int amount, int quantity, Payment payment,
+            boolean isWaste, Date createdAt, Date updatedAt, int version) {
         this.dailyOutcomeId = dailyOutcomeId;
         this.outcomeDate = outcomeDate;
         this.outcomeName = outcomeName;
         this.amount = amount;
+        this.quantity = quantity;
         this.payment = payment;
         this.isWaste = isWaste;
         this.createdAt = createdAt;
@@ -139,11 +161,19 @@ public class DailyOutcome implements Serializable {
         this.amount = amount;
     }
 
-    public String getPayment() {
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Payment getPayment() {
         return payment;
     }
 
-    public void setPayment(String payment) {
+    public void setPayment(Payment payment) {
         this.payment = payment;
     }
 
@@ -199,7 +229,8 @@ public class DailyOutcome implements Serializable {
         return dailyOutcomeCategoryId;
     }
 
-    public void setDailyOutcomeCategoryId(DailyOutcomeCategory dailyOutcomeCategoryId) {
+    public void setDailyOutcomeCategoryId(
+            DailyOutcomeCategory dailyOutcomeCategoryId) {
         this.dailyOutcomeCategoryId = dailyOutcomeCategoryId;
     }
 
@@ -225,7 +256,9 @@ public class DailyOutcome implements Serializable {
             return false;
         }
         DailyOutcome other = (DailyOutcome) object;
-        if ((this.dailyOutcomeId == null && other.dailyOutcomeId != null) || (this.dailyOutcomeId != null && !this.dailyOutcomeId.equals(other.dailyOutcomeId))) {
+        if ((this.dailyOutcomeId == null && other.dailyOutcomeId != null)
+                || (this.dailyOutcomeId != null && !this.dailyOutcomeId
+                        .equals(other.dailyOutcomeId))) {
             return false;
         }
         return true;
@@ -233,7 +266,8 @@ public class DailyOutcome implements Serializable {
 
     @Override
     public String toString() {
-        return "am.ik.moneyger4u.domain.model.DailyOutcome[ dailyOutcomeId=" + dailyOutcomeId + " ]";
+        return "am.ik.moneyger4u.domain.model.DailyOutcome[ dailyOutcomeId="
+                + dailyOutcomeId + " ]";
     }
-    
+
 }

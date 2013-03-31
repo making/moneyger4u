@@ -16,42 +16,49 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.springframework.security.core.GrantedAuthority;
+
 /**
- *
  * @author maki
  */
 @Entity
 @Table(name = "role")
 @XmlRootElement
-public class Role implements Serializable {
+public class Role implements Serializable, GrantedAuthority {
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "ROLE_NAME")
     private String roleName;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "CREATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "UPDATED_AT")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
     @Basic(optional = false)
     @NotNull
     @Version
     @Column(name = "VERSION")
     private int version;
+
     @ManyToMany(mappedBy = "roleList", fetch = FetchType.LAZY)
     private List<User> userList;
 
@@ -111,6 +118,12 @@ public class Role implements Serializable {
     }
 
     @Override
+    @Transient
+    public String getAuthority() {
+        return roleName;
+    }
+
+    @Override
     public int hashCode() {
         int hash = 0;
         hash += (roleName != null ? roleName.hashCode() : 0);
@@ -124,7 +137,9 @@ public class Role implements Serializable {
             return false;
         }
         Role other = (Role) object;
-        if ((this.roleName == null && other.roleName != null) || (this.roleName != null && !this.roleName.equals(other.roleName))) {
+        if ((this.roleName == null && other.roleName != null)
+                || (this.roleName != null && !this.roleName
+                        .equals(other.roleName))) {
             return false;
         }
         return true;
@@ -132,7 +147,8 @@ public class Role implements Serializable {
 
     @Override
     public String toString() {
-        return "am.ik.moneyger4u.domain.model.Role[ roleName=" + roleName + " ]";
+        return "am.ik.moneyger4u.domain.model.Role[ roleName=" + roleName
+                + " ]";
     }
-    
+
 }

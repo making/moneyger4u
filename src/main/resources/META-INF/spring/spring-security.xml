@@ -6,5 +6,21 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- <sec:http auto-config="true"></sec:http> -->
+    <sec:http auto-config="true" use-expressions="true">
+        <sec:intercept-url pattern="/login" access="permitAll" />
+        <sec:intercept-url pattern="/resources/**" access="permitAll" />
+        <sec:intercept-url pattern="/**" access="isAuthenticated()" />
+        <sec:form-login login-page="/login"
+            default-target-url="/" authentication-failure-url="/login?error=true" />
+        <sec:logout logout-url="/logout" logout-success-url="/" />
+    </sec:http>
+
+    <sec:authentication-manager>
+        <sec:authentication-provider
+            user-service-ref="moneygerUserDetailsService">
+            <sec:password-encoder ref="passwordEncoder">
+                <sec:salt-source user-property="username" />
+            </sec:password-encoder>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
 </beans>

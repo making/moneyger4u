@@ -28,6 +28,7 @@ CREATE TABLE `daily_outcome` (
   `DAILY_OUTCOME_CATEGORY_ID` int(3) unsigned NOT NULL,
   `OUTCOME_NAME` varchar(100) NOT NULL,
   `AMOUNT` int(10) unsigned NOT NULL,
+  `QUANTITY` int(10) unsigned NOT NULL DEFAULT 1,
   `PAYMENT` varchar(10) NOT NULL,
   `IS_WASTE` tinyint(1) NOT NULL,
   `REMARKS` varchar(256) DEFAULT NULL,
@@ -325,7 +326,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Toshiaki','Maki','maki@example.com','password','2013-03-12 15:00:00','2013-03-12 15:00:00',0,1),(2,'Taro','Yamada','yamada@example.com','password','2013-03-12 15:00:00','2013-03-12 15:00:00',0,1);
+INSERT INTO `user` VALUES (1,'Toshiaki','Maki','user1@example.com','41860320669cec340520dde9879e56f0b650c6c9ab46f38d2fd824d56520ab6a1f3f415e29181ba60366227f8efd74e007e86497eeeb70e8dee0155d3a32a891','2013-03-12 15:00:00','2013-03-12 15:00:00',0,1),(2,'Taro','Yamada','user2@example.com','8fcde674c97717246957147668f1d244c293e48e710e5ed2a4baeb50a977dc869a9b95aa0f99371c7929482aba4a33752f648bb725912e5e57de7b111090acaa','2013-03-12 15:00:00','2013-03-12 15:00:00',0,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

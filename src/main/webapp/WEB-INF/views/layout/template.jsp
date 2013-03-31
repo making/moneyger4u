@@ -12,7 +12,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width" />
 <link rel="stylesheet"
-  href="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.2.1/css/bootstrap.css" />
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.3.1/css/bootstrap.css" />
 <link rel="stylesheet"
   href="${pageContext.request.contextPath}/resources/vendor/jquery-ui-1.8.21/css/redmond/jquery-ui-1.8.21.custom.css" />
 <style type="text/css">
@@ -22,10 +22,15 @@ body {
 }
 </style>
 <script type="text/javascript"
-  src="${pageContext.request.contextPath}/resources/vendor/js/jquery-1.7.2.js"></script>
-<script type="text/javascript">
-    
-</script>
+  src="${pageContext.request.contextPath}/resources/vendor/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/vendor/js/jquery.validate-1.9.0.js"></script>
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/vendor/bootstrap-notify/js/bootstrap-notify.js"></script>
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/vendor/jquery-ui-1.8.21/js/jquery-ui-1.8.21.custom.min.js"></script>
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.3.1/js/bootstrap.min.js"></script>
 <c:set var="titleKey">
   <tiles:insertAttribute name="title" ignore="true" />
 </c:set>
