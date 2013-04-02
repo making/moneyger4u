@@ -52,7 +52,6 @@ public class DailyOutcomeForm {
 
     @NotNull(groups = { DailyOutcomeUpdateGroup.class,
             DailyOutcomeCreateGroup.class })
-    @Min(0)
     private Integer amount;
 
     @NotNull(groups = { DailyOutcomeUpdateGroup.class,

@@ -17,8 +17,7 @@
 							rangelength : [ 1, 100 ]
 						},
 						amount : {
-							required : true,
-							min : 0
+							required : true
 						},
 						quantity : {
 							required : true,
