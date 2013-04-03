@@ -1,3 +1,8 @@
+## Prerequisites
+
+* JDK7+
+* MySQL
+
 ## Install
 
     $ mysql -u root
@@ -8,6 +13,10 @@
 
 ## Run
 
-    $ export JDBC_CONNECTION_STRING=mysql://user:pass@rdshostname.amazonaws.com:port/databasename
-    (or set JDBC_CONNECTION_STRING=mysql://user:pass@rdshostname.amazonaws.com:port/databasename)
+    $ export JDBC_CONNECTION_STRING=mysql://user:pass@hostname:port/databasename
+    (or "set JDBC_CONNECTION_STRING=mysql://user:pass@hostname:port/databasename" for windows)
     $ mvn compile run:jetty 
+    
+## License
+
+Licensed under the Apache License, Version 2.0.
