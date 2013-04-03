@@ -118,6 +118,10 @@
                     <xmlOutput>true</xmlOutput>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
     <repositories>
