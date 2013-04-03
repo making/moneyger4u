@@ -15,7 +15,7 @@
 
     $ export JDBC_CONNECTION_STRING=mysql://user:pass@hostname:port/databasename
     (or "set JDBC_CONNECTION_STRING=mysql://user:pass@hostname:port/databasename" for windows)
-    $ mvn compile run:jetty 
+    $ mvn jetty:run-war 
     
 ## License
 
