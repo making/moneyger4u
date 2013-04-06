@@ -5,8 +5,8 @@
         data-target=".nav-collapse"> <span class="icon-bar"></span>
         <span class="icon-bar"></span> <span class="icon-bar"></span>
       </a> <a class="brand" href="${pageContext.request.contextPath}/">家計簿</a>
-      <div class="nav-collapse collapse">
-        <sec:authorize access="isAuthenticated()">
+      <sec:authorize access="isAuthenticated()">
+        <div class="nav-collapse collapse">
           <ul class="nav">
             <li class="active"><a
               href="${pageContext.request.contextPath}/">Home</a></li>
@@ -33,8 +33,8 @@
                 </ul></li>
             </ul>
           </div>
-        </sec:authorize>
-      </div>
+        </div>
+      </sec:authorize>
       <!--/.nav-collapse -->
     </div>
   </div>

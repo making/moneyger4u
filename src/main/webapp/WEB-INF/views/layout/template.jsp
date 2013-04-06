@@ -37,7 +37,6 @@ body {
   <tiles:insertAttribute name="title" ignore="true" />
 </c:set>
 <title><spring:message code="${titleKey}" text="moneyger4u" /></title>
-<tiles:insertAttribute name="header" />
 </head>
 <body>
   <div class="container">
