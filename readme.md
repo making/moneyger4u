@@ -1,6 +1,6 @@
 ## Prerequisites
 
-* JDK7+
+* JDK6+
 * MySQL
 
 ## Install
@@ -13,9 +13,11 @@
 
 ## Run
 
-    $ export JDBC_CONNECTION_STRING=mysql://user:pass@hostname:port/databasename
-    (or "set JDBC_CONNECTION_STRING=mysql://user:pass@hostname:port/databasename" for windows)
-    $ mvn jetty:run-war 
+    $ export DATABASE_URL=mysql://user:pass@hostname:port/databasename
+    (or "set DATABASE_URL=mysql://user:pass@hostname:port/databasename" for windows)
+    $ mvn jetty:run
+    or
+    $ mvm tomcat7:run
     
 ## License
 
