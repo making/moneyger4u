@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width" />
 <link rel="stylesheet"
   href="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.3.1/css/bootstrap.css" />
+<link rel="stylesheet"
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.3.1/css/bootstrap-responsive.css" />
 <style type="text/css">
 body {
   padding-top: 60px;
