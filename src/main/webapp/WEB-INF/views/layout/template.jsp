@@ -18,9 +18,11 @@
 <link rel="stylesheet"
   href="${pageContext.request.contextPath}/resources/vendor/jquery-ui-1.8.21/css/redmond/jquery-ui-1.8.21.custom.css" />
 <style type="text/css">
-body {
-  padding-top: 60px;
-  /* 60px to make the container go all the way to the bottom of the topbar */
+@media ( min-width : 768px) {
+  body {
+    padding-top: 60px;
+    /* 60px to make the container go all the way to the bottom of the topbar */
+  }
 }
 </style>
 <script type="text/javascript"
