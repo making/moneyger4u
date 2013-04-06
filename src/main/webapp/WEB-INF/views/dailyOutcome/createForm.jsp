@@ -2,7 +2,8 @@
 <!--
 	$(function() {
 		$('#outcomeDate').datepicker({
-			dateFormat : 'yy-mm-dd'
+			dateFormat : 'yy-mm-dd',
+			autoSize : true
 		});
 		$('#dailyOutcomeForm').validate(
 				{

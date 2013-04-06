@@ -9,20 +9,23 @@
         <ul class="nav">
           <li class="active"><a
             href="${pageContext.request.contextPath}/">Home</a></li>
+          <li><a
+            href="${pageContext.request.contextPath}/dailyOutcome?form">支出登録</a></li>
         </ul>
         <sec:authorize access="isAuthenticated()">
           <div class="pull-right">
             <ul class="nav pull-right">
+              <li class="divider-vertical"></li>
               <li class="dropdown"><a href="#"
-                class="dropdown-toggle" data-toggle="dropdown">ようこそ,
-                  <sec:authentication property="principal.displayName" />さん
-                  <b class="caret"></b>
-              </a>
+                class="dropdown-toggle" data-toggle="dropdown"><i
+                  class="icon-user"></i> <sec:authentication
+                    property="principal.displayName" /> <b
+                  class="caret"></b> </a>
                 <ul class="dropdown-menu">
                   <li><a
                     href="${pageContext.request.contextPath}/user/update?form&userId=<sec:authentication
                   property="principal.user.userId" />"><i
-                      class="icon-cog"></i> Edit</a></li>
+                      class="icon-edit"></i> Edit</a></li>
                   <li class="divider"></li>
                   <li><a
                     href="${pageContext.request.contextPath}/logout"><i

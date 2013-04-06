@@ -10,9 +10,11 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet"
   href="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.3.1/css/bootstrap.css" />
+<link rel="stylesheet"
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.3.1/css/bootstrap-responsive.css" />
 <link rel="stylesheet"
   href="${pageContext.request.contextPath}/resources/vendor/jquery-ui-1.8.21/css/redmond/jquery-ui-1.8.21.custom.css" />
 <style type="text/css">
