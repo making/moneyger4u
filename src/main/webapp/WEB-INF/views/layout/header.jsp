@@ -6,13 +6,13 @@
         <span class="icon-bar"></span> <span class="icon-bar"></span>
       </a> <a class="brand" href="${pageContext.request.contextPath}/">家計簿</a>
       <div class="nav-collapse collapse">
-        <ul class="nav">
-          <li class="active"><a
-            href="${pageContext.request.contextPath}/">Home</a></li>
-          <li><a
-            href="${pageContext.request.contextPath}/dailyOutcome?form">支出登録</a></li>
-        </ul>
         <sec:authorize access="isAuthenticated()">
+          <ul class="nav">
+            <li class="active"><a
+              href="${pageContext.request.contextPath}/">Home</a></li>
+            <li><a
+              href="${pageContext.request.contextPath}/dailyOutcome?form">支出登録</a></li>
+          </ul>
           <div class="pull-right">
             <ul class="nav pull-right">
               <li class="divider-vertical"></li>
