@@ -6,8 +6,10 @@
 
     <jpa:repositories base-package="am.ik.moneyger4u.domain.repository" />
 
-<!--     <bean -->
-<!--         class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" /> -->
-
+    <!-- <bean -->
+    <!-- class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" 
+        /> -->
+    <bean
+        class="org.springframework.orm.hibernate4.HibernateExceptionTranslator" />
     <import resource="env.xml" />
 </beans>
