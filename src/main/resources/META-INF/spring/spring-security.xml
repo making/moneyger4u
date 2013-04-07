@@ -13,6 +13,7 @@
         <sec:form-login login-page="/login"
             default-target-url="/" authentication-failure-url="/login?error=true" />
         <sec:logout logout-url="/logout" logout-success-url="/" />
+        <sec:remember-me key="moneyger4u_remember_me" />
     </sec:http>
 
     <sec:authentication-manager>
