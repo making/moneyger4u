@@ -23,6 +23,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -60,6 +61,7 @@ public class Role implements Serializable, GrantedAuthority {
     private int version;
 
     @ManyToMany(mappedBy = "roleList", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<User> userList;
 
     public Role() {

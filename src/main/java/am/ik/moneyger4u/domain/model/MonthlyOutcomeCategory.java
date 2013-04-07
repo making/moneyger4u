@@ -25,6 +25,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author maki
@@ -63,6 +65,7 @@ public class MonthlyOutcomeCategory implements Serializable {
     @Column(name = "VERSION")
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monthlyOutcomeCategoryId", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<MonthlyOutcome> monthlyOutcomeList;
 
     public MonthlyOutcomeCategory() {

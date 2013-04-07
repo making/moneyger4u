@@ -10,12 +10,22 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
 
+    <bean id="objectMapeer"
+        class="am.ik.moneyger4u.common.json.HibernateAwareObjectMapper" />
+
     <mvc:annotation-driven>
         <mvc:argument-resolvers>
             <bean
                 class="org.springframework.data.web.PageableArgumentResolver">
             </bean>
         </mvc:argument-resolvers>
+        <mvc:message-converters
+            register-defaults="true">
+            <bean
+                class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="objectMapeer" />
+            </bean>
+        </mvc:message-converters>
     </mvc:annotation-driven>
 
 
@@ -54,14 +64,15 @@
                 </bean>
                 <bean
                     class="org.springframework.web.servlet.view.tiles2.TilesViewResolver">
-
                 </bean>
             </list>
         </property>
         <property name="defaultViews">
             <list>
                 <bean
-                    class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+                    class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+                    <property name="objectMapper" ref="objectMapeer" />
+                </bean>
             </list>
         </property>
         <property name="order" value="1" />

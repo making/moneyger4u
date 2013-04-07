@@ -25,6 +25,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author maki
  */
@@ -97,14 +99,17 @@ public class DailyOutcome implements Serializable {
 
     @JoinColumn(name = "UPDATED_BY", referencedColumnName = "USER_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonIgnore
     private User updatedBy;
 
     @JoinColumn(name = "DAILY_OUTCOME_CATEGORY_ID", referencedColumnName = "DAILY_OUTCOME_CATEGORY_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonIgnore
     private DailyOutcomeCategory dailyOutcomeCategoryId;
 
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonIgnore
     private User userId;
 
     public DailyOutcome() {

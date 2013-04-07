@@ -29,6 +29,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author maki
@@ -85,10 +87,13 @@ public class User implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Role> roleList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<DailyOutcome> dailyOutcomeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<DailyOutcome> dailyOutcomeList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<MonthlyOutcome> monthlyOutcomeList;
     @JoinColumn(name = "FAMILY_ID", referencedColumnName = "FAMILY_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

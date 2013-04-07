@@ -80,9 +80,13 @@ public class DailyOutcomeServiceImpl implements DailyOutcomeService {
     @Transactional(readOnly = true)
     public List<DailyOutcomeReportGroupByParentOutcomeCategoryId> findFamilyReportGroupByParentOutcomeCategoryId(
             User user, DateTime start, DateTime end) {
-        return dailyOutcomeRepository
+        List<DailyOutcomeReportGroupByParentOutcomeCategoryId> result = dailyOutcomeRepository
                 .findFamilyReportGroupByParentOutcomeCategoryId(user
                         .getFamilyId(), start.toDate(), end.toDate());
+        for (DailyOutcomeReportGroupByParentOutcomeCategoryId report : result) {
+            report.getParentOutcomeCategory().getCategoryName();
+        }
+        return result;
     }
 
     @Override
