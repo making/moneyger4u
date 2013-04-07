@@ -1,3 +1,4 @@
+<%@ page isErrorPage="true" import="java.io.*"%>
 <html>
 <head>
 <meta charset="utf-8" />
@@ -26,9 +27,16 @@ body {
             <c:when test="${not empty param.exceptionCode}">[${f:h(param.exceptionCode)}]</c:when>
             <c:otherwise>[e.tm.9999]</c:otherwise>
           </c:choose>
-          System Error...<br /> <a
-            href="${pageContext.request.contextPath}" class="btn">Go
-            to TOP</a>
+          System Error...<br />
+          <%
+              // if there is an exception
+              if (exception != null) {
+                  // print the stack trace hidden in the HTML source code for debug
+                  exception.printStackTrace(new PrintWriter(out));
+              }
+          %>
+          <br /> <a href="${pageContext.request.contextPath}/"
+            class="btn">Go to TOP</a>
         </p>
       </div>
     </div>

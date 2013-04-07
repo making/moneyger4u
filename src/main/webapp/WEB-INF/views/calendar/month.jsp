@@ -1,4 +1,17 @@
-
+<style type="text/css">
+@media ( min-width : 500px) {
+  #chart1 {
+    height: 300px;
+    width: 500px;
+  }
+}
+@media ( max-width : 499px) {
+  #chart1 {
+    height: 200px;
+    width: 280px;
+  }
+}
+</style>
 <h2>${today.toString('yyyy-MM')}の家計簿</h2>
 
 <ul class="pager">
@@ -30,6 +43,7 @@
         </tr>
       </c:forEach>
     </table>
+    <div id="chart1"></div>
     <table class="table table-bordered table-striped table-condensed">
       <tr>
         <th>カテゴリ</th>
@@ -44,6 +58,9 @@
         </tr>
       </c:forEach>
     </table>
+    <span id="graph-data"
+      data-category='<c:forEach items="${reportsByParentOutcomeCategoryId}"
+        var="report">["${f:h(report.parentOutcomeCategory.categoryName)}", ${f:h(report.amount)}],</c:forEach>'></span>
     <table class="table table-bordered table-condensed">
       <tr>
         <th>支出合計</th>
@@ -74,5 +91,44 @@
 			e.preventDefault();
 			$(this).tab('show');
 		});
+
+		// pie chart
+		var ajaxDataRenderer = function(url, plot, options) {
+			var ret = null;
+			$.ajax({
+				async : false,
+				url : url,
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					ret = [ _.map(data.reportsByParentOutcomeCategoryId,
+							function(x) {
+								return [ x.parentOutcomeCategory.categoryName,
+										x.amount ];
+							}) ];
+				}
+			});
+			console.log(ret);
+			return ret;
+		};
+
+		var jsonurl = location.href + '.json';
+		try {
+			$.jqplot('chart1', jsonurl, {
+				dataRenderer : ajaxDataRenderer,
+				seriesDefaults : {
+					renderer : $.jqplot.PieRenderer,
+					rendererOptions : {
+						showDataLabels : true
+					}
+				},
+				legend : {
+					show : true,
+					location : 'e'
+				}
+			});
+		} catch (e) {
+			// no data
+		}
 	});
 </script>
