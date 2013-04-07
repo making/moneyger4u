@@ -38,29 +38,46 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <bean
+        class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json" />
+                <entry key="html" value="text/html" />
+            </map>
+        </property>
+        <property name="viewResolvers">
+            <list>
+                <bean
+                    class="org.springframework.web.servlet.view.BeanNameViewResolver">
+                    <property name="order" value="1" />
+                </bean>
+                <bean
+                    class="org.springframework.web.servlet.view.tiles2.TilesViewResolver">
 
-    <bean id="viewResolver"
+                </bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean
+                    class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+            </list>
+        </property>
+        <property name="order" value="1" />
+    </bean>
+    <bean
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".jsp" />
         <property name="order" value="2" />
     </bean>
-
-    <bean
-        class="org.springframework.web.servlet.view.tiles2.TilesViewResolver">
-        <property name="order" value="1" />
-    </bean>
-
     <bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
         <property name="definitions">
             <list>
                 <value>/WEB-INF/tiles/tiles-definitions.xml</value>
             </list>
         </property>
-    </bean>
-
-    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-        <property name="order" value="1" />
     </bean>
 
     <bean
@@ -72,7 +89,8 @@
         </property>
         <property name="defaultStatusCode" value="500" />
         <property name="defaultErrorView" value="systemError" />
-        <property name="warnLogCategory" value="am.ik.moneyger4u.app.SimpleMappingExceptionResolver" />
+        <property name="warnLogCategory"
+            value="am.ik.moneyger4u.app.SimpleMappingExceptionResolver" />
     </bean>
 
 
