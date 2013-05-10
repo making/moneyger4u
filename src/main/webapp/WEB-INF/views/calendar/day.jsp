@@ -8,9 +8,9 @@
 <p>
   <a
     href="${pageContext.request.contextPath}/dailyOutcome?form&date=${today.toString('yyyy-MM-dd')}"
-    class="btn"><i class="icon-edit"></i> 支出登録する</a> <a
+    class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> 支出登録する</a> <a
     href="${pageContext.request.contextPath}/calendar/${today.toString('yyyy/MM')}"
-    class="btn btn-success"><i class="icon-list icon-white"></i>
+    class="btn btn-success"><span class="glyphicon glyphicon-list"></span>
     ${today.toString('yyyy-MM')}の支出</a>
 </p>
 <table class="table table-bordered table-striped table-condensed">
@@ -27,10 +27,10 @@
         href="${pageContext.request.contextPath}/dailyOutcome/${f:h(outcome.dailyOutcomeId)}">${f:h(outcome.outcomeName)}</a>
         <c:if test="${outcome.payment == 'CREDITCARD'}">
           <span class="label label-info"><i
-            class="icon-check icon-white"></i> クレジットカード</span>
+            class="glyphicon glyphicon-check"></i> クレジットカード</span>
         </c:if> <c:if test="${outcome.isWaste}">
           <span class="label label-warning"><i
-            class="icon-warning-sign icon-white"></i> 無駄</span>
+            class="glyphicon glyphicon-warning-sign"></i> 無駄</span>
         </c:if></td>
       <td><fmt:formatNumber
           value="${outcome.amount * outcome.quantity}" pattern="###,###" />

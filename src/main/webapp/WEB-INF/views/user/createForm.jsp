@@ -7,42 +7,42 @@
         <form:label path="firstName" class="control-label">First Name</form:label>
         <div class="controls">
           <form:input path="firstName" type="text" />
-          <form:errors path="firstName" cssClass="text-error" />
+          <form:errors path="firstName" cssClass="text-danger" />
         </div>
       </div>
       <div class="control-group">
         <form:label path="firstName" class="control-label">Last Name</form:label>
         <div class="controls">
           <form:input path="lastName" type="text" />
-          <form:errors path="lastName" cssClass="text-error" />
+          <form:errors path="lastName" cssClass="text-danger" />
         </div>
       </div>
       <div class="control-group">
         <form:label path="familyId" class="control-label">Family</form:label>
         <div class="controls">
           <form:select path="familyId" items="${familyMap}" />
-          <form:errors path="familyId" cssClass="text-error" />
+          <form:errors path="familyId" cssClass="text-danger" />
         </div>
       </div>
       <div class="control-group">
         <form:label path="email" class="control-label">E-mail</form:label>
         <div class="controls">
           <form:input path="email" type="text" />
-          <form:errors path="email" cssClass="text-error" />
+          <form:errors path="email" cssClass="text-danger" />
         </div>
       </div>
       <div class="control-group">
         <form:label path="password" class="control-label">User Password</form:label>
         <div class="controls">
           <form:input path="password" type="password" />
-          <form:errors path="password" cssClass="text-error" />
+          <form:errors path="password" cssClass="text-danger" />
         </div>
       </div>
       <div class="control-group">
         <form:label path="confirmPassword" class="control-label">User Password (Confirm)</form:label>
         <div class="controls">
           <form:input path="confirmPassword" type="password" />
-          <form:errors path="confirmPassword" cssClass="text-error" />
+          <form:errors path="confirmPassword" cssClass="text-danger" />
         </div>
       </div>
       <div class="form-actions">

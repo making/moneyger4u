@@ -11,11 +11,10 @@
 			$(function() {
 				$('.top-right').notify({
 					message : {
-						text : '${f:h(updated)}を登録しました!'
+						text : '${f:h(updated)}を更新しました!'
 					},
 					fadeOut : {
-						enabled : true,
-						delay : 1000
+						enabled : false
 					}
 				}).show();
 			});
@@ -90,17 +89,22 @@
         action="${pageContext.request.contextPath}/dailyOutcome/${f:h(dailyOutcome.dailyOutcomeId)}">
         <a
           href="${pageContext.request.contextPath}/calendar/${date.toString('yyyy/MM/dd')}"
-          class="btn btn-success"><i class="icon-list icon-white"></i>
+          class="btn btn-success"><span
+          class="glyphicon glyphicon-list"></span>
           ${date.toString('yyyy-MM-dd')}の支出</a>
         <a
           href="${pageContext.request.contextPath}/dailyOutcome/${f:h(dailyOutcome.dailyOutcomeId)}?form"
-          class="btn btn-info"><i class="icon-edit icon-white"></i>
+          class="btn btn-info"><span
+          class="glyphicon glyphicon-edit"></span>
           修正</a>
         <button type="submit" class="btn btn-danger">
-          <i class="icon-remove icon-white"></i> 削除
+          <span
+            class="glyphicon glyphicon-remove"></span>
+          削除
         </button>
-        <a href="${pageContext.request.contextPath}/" class="btn"><i
-          class="icon-home"></i> HOME</a>
+        <a href="${pageContext.request.contextPath}/"
+          class="btn btn-default"><span
+          class="glyphicon glyphicon-home"></span> HOME</a>
       </form:form>
     </p>
   </div>

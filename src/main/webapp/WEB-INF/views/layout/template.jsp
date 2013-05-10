@@ -14,20 +14,18 @@
 <link rel="apple-touch-icon"
   href="${pageContext.request.contextPath}/apple-touch-icon.png" />
 <link rel="stylesheet"
-  href="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.3.1/css/bootstrap.css" />
-<link rel="stylesheet"
-  href="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.3.1/css/bootstrap-responsive.css" />
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap-3/css/bootstrap.css" />
+<!-- <link rel="stylesheet" -->
+<%--   href="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.3.1/css/bootstrap-responsive.css" /> --%>
 <link rel="stylesheet"
   href="${pageContext.request.contextPath}/resources/vendor/jquery-ui-1.8.21/css/redmond/jquery-ui-1.8.21.custom.css" />
 <link rel="stylesheet"
   href="${pageContext.request.contextPath}/resources/vendor/jqplot/jquery.jqplot.min.css" />
 <style type="text/css">
-@media ( min-width : 979px) {
   body {
     padding-top: 60px;
     /* 60px to make the container go all the way to the bottom of the topbar */
   }
-}
 </style>
 <script type="text/javascript"
   src="${pageContext.request.contextPath}/resources/vendor/js/jquery-1.7.2.min.js"></script>
@@ -38,7 +36,7 @@
 <script type="text/javascript"
   src="${pageContext.request.contextPath}/resources/vendor/jquery-ui-1.8.21/js/jquery-ui-1.8.21.custom.min.js"></script>
 <script type="text/javascript"
-  src="${pageContext.request.contextPath}/resources/vendor/bootstrap-2.3.1/js/bootstrap.min.js"></script>
+  src="${pageContext.request.contextPath}/resources/vendor/bootstrap-3/js/bootstrap.min.js"></script>
 <script type="text/javascript"
   src="${pageContext.request.contextPath}/resources/vendor/js/underscore-1.4.4.min.js"></script>
 <script type="text/javascript"
