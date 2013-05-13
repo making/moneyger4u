@@ -19,6 +19,9 @@ public interface DailyOutcomeService {
 
     List<DailyOutcome> findFamilyDailyOutcomeByUserAndDate(User user, Date date);
 
+    List<DailyOutcome> findFamilyDailyOutcomeLikeOutcomeName(
+            String outcomeName, User user);
+
     List<DailyOutcomeReportGroupByOutcomeDate> findFamilyReportGroupByOutcomeDate(
             User user, DateTime start, DateTime end);
 

@@ -39,8 +39,10 @@ import am.ik.moneyger4u.domain.model.DailyOutcome;
 import am.ik.moneyger4u.domain.model.DailyOutcomeCategory;
 import am.ik.moneyger4u.domain.model.ParentOutcomeCategory;
 import am.ik.moneyger4u.domain.model.Payment;
+import am.ik.moneyger4u.domain.model.User;
 import am.ik.moneyger4u.domain.service.outcome.DailyOutcomeService;
 import am.ik.moneyger4u.domain.service.outcome.ParentOutcomeCategoryService;
+import am.ik.moneyger4u.domain.service.user_details.UserDetailsUtils;
 
 @Controller
 @RequestMapping("dailyOutcome")
@@ -119,6 +121,17 @@ public class DailyOutcomeController {
             form.setQuantity(1);
         }
         return "dailyOutcome/createForm";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "outcomeName")
+    public String searchByOutcomeName(
+            @RequestParam("outcomeName") String outcomeName, Model model) {
+        User user = UserDetailsUtils.getUserDetails().getUser();
+        List<DailyOutcome> outcomes = dailyOutcomeService
+                .findFamilyDailyOutcomeLikeOutcomeName(outcomeName, user);
+        model.addAttribute("outcomes", outcomes);
+        model.addAttribute("outcomeName", outcomeName);
+        return "dailyOutcome/searchList";
     }
 
     @RequestMapping(method = RequestMethod.POST)

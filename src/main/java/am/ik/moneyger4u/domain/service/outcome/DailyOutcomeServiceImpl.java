@@ -70,6 +70,16 @@ public class DailyOutcomeServiceImpl implements DailyOutcomeService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<DailyOutcome> findFamilyDailyOutcomeLikeOutcomeName(
+            String outcomeName, User user) {
+        List<DailyOutcome> outcomes = dailyOutcomeRepository
+                .findFamilyDailyOutcomeLikeOutcomeName("%" + outcomeName + "%",
+                        user.getFamilyId());
+        return outcomes;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<DailyOutcomeReportGroupByOutcomeDate> findFamilyReportGroupByOutcomeDate(
             User user, DateTime start, DateTime end) {
         return dailyOutcomeRepository.findFamilyReportGroupByOutcomeDate(user
