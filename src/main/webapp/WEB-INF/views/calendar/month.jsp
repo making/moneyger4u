@@ -5,6 +5,7 @@
     width: 500px;
   }
 }
+
 @media ( max-width : 499px) {
   #chart1 {
     height: 200px;
@@ -37,7 +38,8 @@
       <c:forEach items="${reportsByOutcomeDate}" var="report">
         <tr>
           <td><a
-            href="${pageContext.request.contextPath}/calendar/${report.date.toString('yyyy/MM/dd')}">${report.date.toString('yyyy-MM-dd')}</a></td>
+            href="${pageContext.request.contextPath}/calendar/${report.date.toString('yyyy/MM/dd')}">${report.date.toString('yyyy-MM-dd')}
+              (${f:h(weekArray[report.date.dayOfWeek])})</a></td>
           <td><fmt:formatNumber value="${f:h(report.amount)}"
               pattern="###,###" />円</td>
         </tr>

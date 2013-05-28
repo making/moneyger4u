@@ -3,6 +3,7 @@ package am.ik.moneyger4u.app.calendar.controller;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,6 +21,7 @@ import am.ik.moneyger4u.domain.model.Payment;
 import am.ik.moneyger4u.domain.model.User;
 import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByOutcomeDate;
 import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByParentOutcomeCategoryId;
+import am.ik.moneyger4u.domain.service.calendar.CalendarService;
 import am.ik.moneyger4u.domain.service.outcome.DailyOutcomeService;
 import am.ik.moneyger4u.domain.service.user_details.UserDetailsUtils;
 
@@ -30,6 +33,15 @@ public class CalendarController {
 
     @Inject
     protected DailyOutcomeService dailyOutcomeService;
+
+    @Inject
+    protected CalendarService calendarService;
+
+
+    @ModelAttribute("weekArray")
+    public String[] getWeekArray(Locale locale) {
+        return calendarService.getWeekArray(locale);
+    }
 
     @RequestMapping
     public String thisMonth(Model model) {

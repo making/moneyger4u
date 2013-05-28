@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <bean id="messageSource"
-        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>
                 <value>i18n/application-messages</value>
