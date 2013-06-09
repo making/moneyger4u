@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.app.daily_outcome.model;
+package am.ik.moneyger4u.app.daily_outcome;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.app.home.controller;
+package am.ik.moneyger4u.app.home;
 
 import java.util.Map;
 

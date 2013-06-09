@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.app.daily_outcome.controller;
+package am.ik.moneyger4u.app.daily_outcome;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,9 +30,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Maps;
 
-import am.ik.moneyger4u.app.daily_outcome.model.DailyOutcomeForm;
-import am.ik.moneyger4u.app.daily_outcome.model.DailyOutcomeForm.DailyOutcomeCreateGroup;
-import am.ik.moneyger4u.app.daily_outcome.model.DailyOutcomeForm.DailyOutcomeUpdateGroup;
+import am.ik.moneyger4u.app.daily_outcome.DailyOutcomeForm.DailyOutcomeCreateGroup;
+import am.ik.moneyger4u.app.daily_outcome.DailyOutcomeForm.DailyOutcomeUpdateGroup;
 import am.ik.moneyger4u.common.bean.BeanConverter;
 import am.ik.moneyger4u.common.bean.IgnoreOption;
 import am.ik.moneyger4u.domain.model.DailyOutcome;

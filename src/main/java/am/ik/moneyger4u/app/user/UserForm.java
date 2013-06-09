@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.app.user.model;
+package am.ik.moneyger4u.app.user;
 
 import java.io.Serializable;
 import javax.validation.constraints.Min;

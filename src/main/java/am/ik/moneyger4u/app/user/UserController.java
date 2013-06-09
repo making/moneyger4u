@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.app.user.controller;
+package am.ik.moneyger4u.app.user;
 
 import java.util.List;
 import java.util.Map;
@@ -20,10 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Maps;
 
-import am.ik.moneyger4u.app.user.model.UserForm;
-import am.ik.moneyger4u.app.user.model.UserForm.UserCreateGroup;
-import am.ik.moneyger4u.app.user.model.UserForm.UserDeleteGroup;
-import am.ik.moneyger4u.app.user.model.UserForm.UserUpdateGroup;
+import am.ik.moneyger4u.app.user.UserForm.UserCreateGroup;
+import am.ik.moneyger4u.app.user.UserForm.UserDeleteGroup;
+import am.ik.moneyger4u.app.user.UserForm.UserUpdateGroup;
 import am.ik.moneyger4u.common.bean.BeanConverter;
 import am.ik.moneyger4u.common.bean.IgnoreOption;
 import am.ik.moneyger4u.domain.model.Family;

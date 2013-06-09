@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.app.calendar.controller;
+package am.ik.moneyger4u.app.calendar;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

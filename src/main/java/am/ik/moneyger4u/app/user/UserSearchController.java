@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.app.user.controller;
+package am.ik.moneyger4u.app.user;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import am.ik.moneyger4u.app.user.model.UserSearchForm;
 import am.ik.moneyger4u.domain.model.User;
 import am.ik.moneyger4u.domain.service.user.UserService;
 
