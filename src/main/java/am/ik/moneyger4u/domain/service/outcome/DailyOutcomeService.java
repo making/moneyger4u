@@ -13,7 +13,7 @@ import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByParen
 public interface DailyOutcomeService {
     DailyOutcome findOne(Integer dailyOutcomeId);
 
-    void save(DailyOutcome outcome);
+    void save(DailyOutcome outcome, User user);
 
     void delete(Integer dailyOutcomeId);
 

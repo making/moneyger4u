@@ -141,10 +141,12 @@ public class DailyOutcomeController {
         if (result.hasErrors()) {
             return "dailyOutcome/createForm";
         }
+
+        User user = UserDetailsUtils.getUserDetails().getUser();
         DailyOutcome dailyOutcome = beanConverter.populate(form,
                 DailyOutcome.class);
         dailyOutcome.setIsWaste(form.isWaste()); // TODO
-        dailyOutcomeService.save(dailyOutcome);
+        dailyOutcomeService.save(dailyOutcome, user);
         attributes.addFlashAttribute("created", dailyOutcome.getOutcomeName());
         attributes.addAttribute("date", new DateTime(dailyOutcome
                 .getOutcomeDate()).toString("yyyy-MM-dd"));
@@ -179,10 +181,13 @@ public class DailyOutcomeController {
         if (result.hasErrors()) {
             return "dailyOutcome/updateForm";
         }
+
+        User user = UserDetailsUtils.getUserDetails().getUser();
         DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
         beanConverter.convert(form, dailyOutcome, IgnoreOption.NULL_SOURCE);
         dailyOutcome.setIsWaste(form.isWaste()); // TODO
-        dailyOutcomeService.save(dailyOutcome);
+
+        dailyOutcomeService.save(dailyOutcome, user);
         attributes.addFlashAttribute("updated", dailyOutcome.getOutcomeName());
         attributes.addAttribute("dailyOutcomeId", dailyOutcome
                 .getDailyOutcomeId());

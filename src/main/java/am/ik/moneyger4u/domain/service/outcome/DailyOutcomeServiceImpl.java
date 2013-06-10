@@ -18,7 +18,6 @@ import am.ik.moneyger4u.domain.model.User;
 import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByOutcomeDate;
 import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByParentOutcomeCategoryId;
 import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeRepository;
-import am.ik.moneyger4u.domain.service.user_details.UserDetailsUtils;
 
 @Service
 @Transactional
@@ -36,9 +35,8 @@ public class DailyOutcomeServiceImpl implements DailyOutcomeService {
     }
 
     @Override
-    public void save(DailyOutcome outcome) {
+    public void save(DailyOutcome outcome, User user) {
         Date now = new Date();
-        User user = UserDetailsUtils.getUserDetails().getUser();
 
         if (outcome.getCreatedAt() == null) {
             outcome.setCreatedAt(now);
