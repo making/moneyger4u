@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import am.ik.moneyger4u.domain.model.DailyOutcome;
+import am.ik.moneyger4u.domain.model.DailyOutcomeReportGroupByOutcomeDate;
+import am.ik.moneyger4u.domain.model.DailyOutcomeReportGroupByParentOutcomeCategoryId;
 import am.ik.moneyger4u.domain.model.User;
-import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByOutcomeDate;
-import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByParentOutcomeCategoryId;
 import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeRepository;
 
 @Service

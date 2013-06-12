@@ -1,6 +1,5 @@
-package am.ik.moneyger4u.domain.repository.outcome;
+package am.ik.moneyger4u.domain.model;
 
-import am.ik.moneyger4u.domain.model.ParentOutcomeCategory;
 
 import lombok.Getter;
 import lombok.ToString;

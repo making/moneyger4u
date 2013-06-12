@@ -6,9 +6,9 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import am.ik.moneyger4u.domain.model.DailyOutcome;
+import am.ik.moneyger4u.domain.model.DailyOutcomeReportGroupByOutcomeDate;
+import am.ik.moneyger4u.domain.model.DailyOutcomeReportGroupByParentOutcomeCategoryId;
 import am.ik.moneyger4u.domain.model.User;
-import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByOutcomeDate;
-import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByParentOutcomeCategoryId;
 
 public interface DailyOutcomeService {
     DailyOutcome findOne(Integer dailyOutcomeId);

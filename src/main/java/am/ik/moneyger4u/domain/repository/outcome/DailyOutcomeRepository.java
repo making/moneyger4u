@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import am.ik.moneyger4u.domain.model.DailyOutcome;
+import am.ik.moneyger4u.domain.model.DailyOutcomeReportGroupByOutcomeDate;
+import am.ik.moneyger4u.domain.model.DailyOutcomeReportGroupByParentOutcomeCategoryId;
 import am.ik.moneyger4u.domain.model.Family;
 
 public interface DailyOutcomeRepository extends

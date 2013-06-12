@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.domain.repository.outcome;
+package am.ik.moneyger4u.domain.model;
 
 import java.util.Date;
 
