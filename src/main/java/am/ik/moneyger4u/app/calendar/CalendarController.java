@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import am.ik.moneyger4u.domain.model.DailyOutcome;
+import am.ik.moneyger4u.domain.model.DailyOutcomeReportGroupByOutcomeDate;
+import am.ik.moneyger4u.domain.model.DailyOutcomeReportGroupByParentOutcomeCategoryId;
 import am.ik.moneyger4u.domain.model.Payment;
 import am.ik.moneyger4u.domain.model.User;
-import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByOutcomeDate;
-import am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByParentOutcomeCategoryId;
 import am.ik.moneyger4u.domain.service.calendar.CalendarService;
 import am.ik.moneyger4u.domain.service.outcome.DailyOutcomeService;
 import am.ik.moneyger4u.domain.service.user_details.UserDetailsUtils;
