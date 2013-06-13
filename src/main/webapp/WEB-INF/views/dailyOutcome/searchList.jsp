@@ -7,6 +7,7 @@
     <th>支出名</th>
     <th>金額</th>
     <th>登録ユーザ</th>
+    <th>コピーして登録</th>
   </tr>
   <c:forEach items="${outcomes}" var="outcome">
     <tr>
@@ -26,6 +27,9 @@
         円</td>
       <td>${f:h(outcome.userId.lastName)}
         ${f:h(outcome.userId.firstName)}</td>
+      <td><a class="btn btn-info"
+        href="${pageContext.request.contextPath}/dailyOutcome/?form&copyFrom=${f:h(outcome.dailyOutcomeId)}">コピー</a>
+      </td>
     </tr>
   </c:forEach>
 </table>

@@ -82,8 +82,14 @@ public class DailyOutcomeController {
     @ModelAttribute
     public DailyOutcomeForm setUpForm(
             @RequestParam(value = "date", required = false) Date date,
+            @RequestParam(value = "copyFrom", required = false) Integer copyFrom,
             Model model) {
         DailyOutcomeForm form = new DailyOutcomeForm();
+        if (copyFrom != null) {
+            DailyOutcome src = dailyOutcomeService.findOne(copyFrom);
+            beanConverter.convert(src, form);
+            form.setOutcomeDate(null);
+        }
         if (date != null) {
             form.setOutcomeDate(date);
             model.addAttribute("date", new DateTime(date));
