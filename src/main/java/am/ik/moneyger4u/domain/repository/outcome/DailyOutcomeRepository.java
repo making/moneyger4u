@@ -23,12 +23,12 @@ public interface DailyOutcomeRepository extends
             @Param("outcomeName") String outcomeName,
             @Param("family") Family family);
 
-    @Query("SELECT NEW am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByOutcomeDate(x.outcomeDate, SUM(x.amount * x.quantity)) FROM DailyOutcome x WHERE x.userId.familyId = :family AND x.outcomeDate BETWEEN :start AND :end GROUP BY x.outcomeDate ORDER BY x.outcomeDate ASC")
+    @Query("SELECT NEW am.ik.moneyger4u.domain.model.DailyOutcomeReportGroupByOutcomeDate(x.outcomeDate, SUM(x.amount * x.quantity)) FROM DailyOutcome x WHERE x.userId.familyId = :family AND x.outcomeDate BETWEEN :start AND :end GROUP BY x.outcomeDate ORDER BY x.outcomeDate ASC")
     List<DailyOutcomeReportGroupByOutcomeDate> findFamilyReportGroupByOutcomeDate(
             @Param("family") Family family, @Param("start") Date start,
             @Param("end") Date end);
 
-    @Query("SELECT NEW am.ik.moneyger4u.domain.repository.outcome.DailyOutcomeReportGroupByParentOutcomeCategoryId(x.dailyOutcomeCategoryId.parentOutcomeCategoryId, SUM(x.amount * x.quantity)) FROM DailyOutcome x WHERE x.userId.familyId = :family AND x.outcomeDate BETWEEN :start AND :end GROUP BY x.dailyOutcomeCategoryId.parentOutcomeCategoryId ORDER BY x.dailyOutcomeCategoryId.parentOutcomeCategoryId.parentOutcomeCategoryId ASC")
+    @Query("SELECT NEW am.ik.moneyger4u.domain.model.DailyOutcomeReportGroupByParentOutcomeCategoryId(x.dailyOutcomeCategoryId.parentOutcomeCategoryId, SUM(x.amount * x.quantity)) FROM DailyOutcome x WHERE x.userId.familyId = :family AND x.outcomeDate BETWEEN :start AND :end GROUP BY x.dailyOutcomeCategoryId.parentOutcomeCategoryId ORDER BY x.dailyOutcomeCategoryId.parentOutcomeCategoryId.parentOutcomeCategoryId ASC")
     List<DailyOutcomeReportGroupByParentOutcomeCategoryId> findFamilyReportGroupByParentOutcomeCategoryId(
             @Param("family") Family family, @Param("start") Date start,
             @Param("end") Date end);
