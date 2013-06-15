@@ -1,9 +1,10 @@
-<%-- <c:redirect url="/user/list" /> --%>
 <h3>メニュー</h3>
 <ul>
   <li><a href="${pageContext.request.contextPath}/calendar">カレンダー</a></li>
   <li><a
     href="${pageContext.request.contextPath}/dailyOutcome?form">支出登録</a></li>
+  <li><a
+    href="${pageContext.request.contextPath}/monthlyOutcome?form">固定支出登録</a></li>
   <li><a href="${pageContext.request.contextPath}/user/list">ユーザー管理</a></li>
 </ul>
 <h3>支出検索</h3>

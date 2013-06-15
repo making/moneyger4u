@@ -78,6 +78,20 @@
   </div>
   <div class="tab-pane" id="monthly">
     <p>固定</p>
+    <table class="table table-bordered table-striped table-condensed">
+      <tr>
+        <th>固定支出名</th>
+        <th>金額</th>
+      </tr>
+      <c:forEach items="${monthlyOutcomes}" var="monthlyOutcome">
+        <tr>
+          <td>${f:h(monthlyOutcome.outcomeName)}</td>
+          <td><fmt:formatNumber
+              value="${f:h(monthlyOutcome.amount * monthlyOutcome.quantity)}"
+              pattern="###,###" />円</td>
+        </tr>
+      </c:forEach>
+    </table>
   </div>
   <div class="tab-pane" id="income">
     <p>収入</p>

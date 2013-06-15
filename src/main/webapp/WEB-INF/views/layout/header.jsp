@@ -11,6 +11,8 @@
             href="${pageContext.request.contextPath}/">Home</a></li>
           <li><a
             href="${pageContext.request.contextPath}/dailyOutcome?form">支出登録</a></li>
+          <li><a
+            href="${pageContext.request.contextPath}/monthlyOutcome?form">固定支出登録</a></li>
         </ul>
         <ul class="nav navbar-nav pull-right">
           <li class="divider-vertical"></li>

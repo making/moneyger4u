@@ -1,5 +1,6 @@
 package am.ik.moneyger4u.app.daily_outcome;
 
+import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -130,8 +131,9 @@ public class DailyOutcomeController {
 
     @RequestMapping(method = RequestMethod.GET, params = "outcomeName")
     public String searchByOutcomeName(
-            @RequestParam("outcomeName") String outcomeName, Model model) {
-        User user = UserDetailsUtils.getUserDetails().getUser();
+            @RequestParam("outcomeName") String outcomeName, Model model,
+            Principal principal) {
+        User user = UserDetailsUtils.getUserDetails(principal).getUser();
         List<DailyOutcome> outcomes = dailyOutcomeService
                 .findFamilyDailyOutcomeLikeOutcomeName(outcomeName, user);
         model.addAttribute("outcomes", outcomes);
@@ -142,13 +144,14 @@ public class DailyOutcomeController {
     @RequestMapping(method = RequestMethod.POST)
     public String create(@Validated({ Default.class,
             DailyOutcomeCreateGroup.class }) DailyOutcomeForm form,
-            BindingResult result, RedirectAttributes attributes) {
+            BindingResult result, RedirectAttributes attributes,
+            Principal principal) {
         logger.debug("register {}", form);
         if (result.hasErrors()) {
             return "dailyOutcome/createForm";
         }
 
-        User user = UserDetailsUtils.getUserDetails().getUser();
+        User user = UserDetailsUtils.getUserDetails(principal).getUser();
         DailyOutcome dailyOutcome = beanConverter.populate(form,
                 DailyOutcome.class);
         dailyOutcome.setIsWaste(form.isWaste()); // TODO
@@ -182,13 +185,14 @@ public class DailyOutcomeController {
     public String update(
             @PathVariable("dailyOutcomeId") Integer dailyOutcomeId,
             @Validated({ Default.class, DailyOutcomeUpdateGroup.class }) DailyOutcomeForm form,
-            BindingResult result, RedirectAttributes attributes) {
+            BindingResult result, RedirectAttributes attributes,
+            Principal principal) {
         logger.debug("update {}", form);
         if (result.hasErrors()) {
             return "dailyOutcome/updateForm";
         }
 
-        User user = UserDetailsUtils.getUserDetails().getUser();
+        User user = UserDetailsUtils.getUserDetails(principal).getUser();
         DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
         beanConverter.convert(form, dailyOutcome, IgnoreOption.NULL_SOURCE);
         dailyOutcome.setIsWaste(form.isWaste()); // TODO
