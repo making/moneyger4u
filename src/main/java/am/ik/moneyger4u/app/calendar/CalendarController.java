@@ -60,6 +60,9 @@ public class CalendarController {
 
         User user = UserDetailsUtils.getUserDetails(principal).getUser();
 
+        model.addAttribute("firstDayOfMonth", firstDayOfMonth);
+        model.addAttribute("lastDayOfMonth", lastDayOfMonth);
+        model.addAttribute("today", today);
         // dailyOutcome
         calenderHelper.addDailyOutcomeToModelForMonth(today, firstDayOfMonth,
                 lastDayOfMonth, user, model);
