@@ -189,7 +189,7 @@ CREATE TABLE `monthly_outcome` (
   `MONTHLY_OUTCOME_CATEGORY_ID` int(3) unsigned NOT NULL,
   `OUTCOME_NAME` varchar(100) DEFAULT NULL,
   `AMOUNT` int(10) unsigned NOT NULL,
-  `QUANTITY` decimal(5,3) unsigned DEFAULT NULL,
+  `QUANTITY` decimal(8,3) unsigned DEFAULT NULL,
   `REMARKS` varchar(256) DEFAULT NULL,
   `FAMILY_ID` int(10) unsigned NOT NULL,
   `CREATED_AT` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

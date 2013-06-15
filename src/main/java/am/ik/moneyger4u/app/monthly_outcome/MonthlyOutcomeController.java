@@ -72,12 +72,6 @@ public class MonthlyOutcomeController {
 
     @RequestMapping(method = RequestMethod.GET, params = "form")
     public String createForm(MonthlyOutcomeForm form, Model model) {
-        if (form.getOutcomeDate() == null) {
-            form.setOutcomeDate(new Date());
-        }
-        if (form.getQuantity() == null) {
-            form.setQuantity(1);
-        }
         return "monthlyOutcome/createForm";
     }
 

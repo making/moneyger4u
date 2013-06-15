@@ -80,15 +80,20 @@
     <p>固定</p>
     <table class="table table-bordered table-striped table-condensed">
       <tr>
+        <th>支出日</th>
+        <th>カテゴリ</th>
         <th>固定支出名</th>
         <th>金額</th>
+        <th>使用量</th>
       </tr>
       <c:forEach items="${monthlyOutcomes}" var="monthlyOutcome">
         <tr>
+          <td><fmt:formatDate value="${monthlyOutcome.outcomeDate}" pattern="yyyy/MM/dd"/></td>
+          <td>${f:h(monthlyOutcome.monthlyOutcomeCategoryId.categoryName)}</td>
           <td>${f:h(monthlyOutcome.outcomeName)}</td>
           <td><fmt:formatNumber
-              value="${f:h(monthlyOutcome.amount * monthlyOutcome.quantity)}"
-              pattern="###,###" />円</td>
+              value="${f:h(monthlyOutcome.amount)}" pattern="###,###" />円</td>
+          <td>${f:h(monthlyOutcome.quantity)} ${f:h(monthlyOutcome.monthlyOutcomeCategoryId.unitName)}</td>
         </tr>
       </c:forEach>
     </table>

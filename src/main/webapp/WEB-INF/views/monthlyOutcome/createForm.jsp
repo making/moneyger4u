@@ -20,11 +20,6 @@
 						amount : {
 							required : true
 						},
-						quantity : {
-							required : true,
-							max : 1000,
-							min : 1
-						},
 						monthlyOutcomeCategoryId : {
 							required : true
 						}
@@ -72,13 +67,13 @@
       class="col col-lg-2 row-label control-label">固定支出名</form:label>
     <div class="col col-lg-6 controls">
       <form:input path="outcomeName" type="text"
-        class="input-with-feedback" placeholder="電気代等" />
+        class="input-with-feedback" placeholder="電気代 6月分等" />
       <form:errors path="outcomeName" cssClass="text-danger" />
     </div>
   </div>
   <div class="row control-group">
     <form:label path="amount"
-      class="col col-lg-2 row-label control-label">単価</form:label>
+      class="col col-lg-2 row-label control-label">料金</form:label>
     <div class="col col-lg-6 controls">
       <form:input path="amount" type="text" class="input-with-feedback" />
       円
@@ -87,11 +82,9 @@
   </div>
   <div class="row control-group">
     <form:label path="quantity"
-      class="col col-lg-2 row-label control-label">数量</form:label>
+      class="col col-lg-2 row-label control-label">使用量</form:label>
     <div class="col col-lg-6 controls">
-      <form:input path="quantity" type="number"
-        class="input-with-feedback" />
-      点
+      <form:input path="quantity" class="input-with-feedback" />
       <form:errors path="quantity" cssClass="text-danger" />
     </div>
   </div>
