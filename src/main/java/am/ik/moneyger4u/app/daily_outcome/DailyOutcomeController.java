@@ -1,8 +1,6 @@
 package am.ik.moneyger4u.app.daily_outcome;
 
 import java.security.Principal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -14,14 +12,11 @@ import javax.validation.groups.Default;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,14 +65,6 @@ public class DailyOutcomeController {
                 return source.getDailyOutcomeCategoryId();
             }
         });
-    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
-        CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
-        binder.registerCustomEditor(Date.class, dateEditor);
     }
 
     @ModelAttribute

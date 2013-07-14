@@ -1,4 +1,4 @@
-package am.ik.moneyger4u.app.common;
+package am.ik.moneyger4u.app.common.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

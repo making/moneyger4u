@@ -155,6 +155,22 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>1.0.9</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>src/generated-sources/java</outputDirectory>
+                            <processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <repositories>
@@ -165,11 +181,6 @@
             <id>central</id>
             <name>Maven Central repository</name>
             <url>http://repo1.maven.org/maven2/</url>
-        </repository>
-        <repository>
-            <id>amateras</id>
-            <name>Project Amateras Maven2 Repository</name>
-            <url>http://amateras.sourceforge.jp/mvn/</url>
         </repository>
         <repository>
             <releases>
@@ -251,21 +262,6 @@
             <version>${joda-time.joda-time-jsptags.version}</version>
         </dependency>
         <dependency>
-            <groupId>jp.sf.amateras.functions</groupId>
-            <artifactId>functions</artifactId>
-            <version>${jp.sf.amateras.functions.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jsonic</artifactId>
-                    <groupId>net.arnx</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>log4j</artifactId>
-                    <groupId>log4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <version>${org.aspectj.version}</version>
@@ -305,6 +301,20 @@
             <artifactId>hibernate-jpa-2.0-api</artifactId>
             <version>${org.hibernate.javax.persistence.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.mysema.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>${querydsl.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysema.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
@@ -596,6 +606,25 @@
             <version>${commons-dbcp.version}</version>
         </dependency>
         <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>${dozer.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
@@ -650,7 +679,7 @@
     </dependencies>
     <properties>
         <encoding>UTF-8</encoding>
-        <java-version>1.6</java-version>
+        <java-version>1.7</java-version>
         <maven-eclipse-plugin.version>2.6</maven-eclipse-plugin.version>
         <maven-jxr-plugin.version>2.1</maven-jxr-plugin.version>
         <org.apache.maven.plugins.maven-checkstyle-plugin.version>2.9.1</org.apache.maven.plugins.maven-checkstyle-plugin.version>
@@ -677,15 +706,16 @@
         <commons-lang.version>2.6</commons-lang.version>
         <javax.servlet.version>1.2</javax.servlet.version>
         <javax.transaction.version>1.1</javax.transaction.version>
+        <dozer.version>5.4.0</dozer.version>
         <joda-time.version>2.1</joda-time.version>
         <joda-time.joda-time-hibernate.version>1.3</joda-time.joda-time-hibernate.version>
         <joda-time.joda-time-jsptags.version>1.1.1</joda-time.joda-time-jsptags.version>
-        <jp.sf.amateras.functions.version>1.1.2</jp.sf.amateras.functions.version>
         <org.aspectj.version>1.6.12</org.aspectj.version>
         <org.codehaus.jackson.version>1.9.7</org.codehaus.jackson.version>
         <org.hibernate.version>4.1.4.Final</org.hibernate.version>
         <org.hibernate.hibernate-validator.version>4.3.0.Final</org.hibernate.hibernate-validator.version>
         <org.hibernate.javax.persistence.version>1.0.1.Final</org.hibernate.javax.persistence.version>
+        <querydsl.version>3.2.0</querydsl.version>
         <org.slf4j.version>1.6.2</org.slf4j.version>
         <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
         <org.springframework.data.version>1.5.0.RELEASE</org.springframework.data.version>

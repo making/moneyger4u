@@ -45,6 +45,8 @@
   src="${pageContext.request.contextPath}/resources/vendor/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
 <script class="include" language="javascript" type="text/javascript"
   src="${pageContext.request.contextPath}/resources/vendor/jqplot/plugins/jqplot.json2.min.js"></script>
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/vendor/js/button-disabler.js"></script>
 <c:set var="titleKey">
   <tiles:insertAttribute name="title" ignore="true" />
 </c:set>
