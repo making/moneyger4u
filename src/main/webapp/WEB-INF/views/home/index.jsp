@@ -13,7 +13,7 @@
 <form class="form-inline"
     action="${pageContext.request.contextPath}/dailyOutcome"
     method="get">
-    <input name="outcomeName" type="text" placeholder="支出名"
+    <input name="outcomeName" type="text" placeholder="支出名" class="form-control"
         style="width: 180px;">
     <button type="submit" class="btn btn-primary disable-double-submit">検索</button>
 </form>

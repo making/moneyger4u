@@ -4,7 +4,7 @@
   ${request}
   <div class="span12">
     <c:if test="${not empty errorMessage}">
-      <div class="alert alert-error">${f:h(errorMessage)}</div>
+      <div class="alert alert-danger">${f:h(errorMessage)}</div>
     </c:if>
 
     <div class="well">
@@ -12,9 +12,9 @@
         class="btn btn-primary">New User</a><br>
       <br>
       <form:form action="${pageContext.request.contextPath}/user/search"
-        method="get" modelAttribute="userSearchForm" class="form-search">
-        <form:input path="name" cssClass="input-medium search-query" />
-        <input type="submit" value="Search" class="btn" />
+        method="get" modelAttribute="userSearchForm" class="form-inline my-inline">
+        <form:input path="name" cssClass="form-control" />
+        <input type="submit" value="Search" class="btn btn-default" />
       </form:form>
     </div>
 
@@ -39,7 +39,7 @@
                 action="${pageContext.request.contextPath}/user"
                 class="form-inline">
                 <input type="hidden" name="userId" value="${f:h(user.userId)}" />
-                <input type="submit" class="btn" name="redirectToUpdate"
+                <input type="submit" class="btn btn-default" name="redirectToUpdate"
                   value="Update" />
                 <input type="submit" class="btn btn-danger"
                   name="redirectToDelete" value="Delete" />

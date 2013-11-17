@@ -25,7 +25,7 @@
 						}
 					},
 					highlight : function(element) {
-						$(element).closest('.control-group').removeClass(
+						$(element).closest('.form-group').removeClass(
 								'has-success').addClass('has-error');
 					}
 				});
@@ -53,48 +53,48 @@
 <form:form action="${pageContext.request.contextPath}/monthlyOutcome"
     method="POST" modelAttribute="monthlyOutcomeForm"
     class="form-horizontal">
-    <div class="row control-group">
+    <div class="form-group">
         <form:label path="outcomeDate"
-            class="col col-lg-2 row-label control-label">日付</form:label>
-        <div class="col col-lg-6 controls">
+            class="col col-sm-2 control-label">日付</form:label>
+        <div class="col col-sm-10 controls">
             <form:input path="outcomeDate" type="text"
-                class="input-with-feedback" placeholder="yyyy-MM-dd" />
+                class="form-control" placeholder="yyyy-MM-dd" />
             <form:errors path="outcomeDate" cssClass="text-danger" />
         </div>
     </div>
-    <div class="row control-group">
+    <div class="form-group">
         <form:label path="outcomeName"
-            class="col col-lg-2 row-label control-label">固定支出名</form:label>
-        <div class="col col-lg-6 controls">
+            class="col col-sm-2 control-label">固定支出名</form:label>
+        <div class="col col-sm-10 controls">
             <form:input path="outcomeName" type="text"
-                class="input-with-feedback" placeholder="電気代 6月分等" />
+                class="form-control" placeholder="電気代 6月分等" />
             <form:errors path="outcomeName" cssClass="text-danger" />
         </div>
     </div>
-    <div class="row control-group">
+    <div class="form-group">
         <form:label path="amount"
-            class="col col-lg-2 row-label control-label">料金</form:label>
-        <div class="col col-lg-6 controls">
+            class="col col-sm-2 control-label">料金</form:label>
+        <div class="col col-sm-10 controls">
             <form:input path="amount" type="text"
-                class="input-with-feedback" />
+                class="form-control" />
             円
             <form:errors path="amount" cssClass="text-danger" />
         </div>
     </div>
-    <div class="row control-group">
+    <div class="form-group">
         <form:label path="quantity"
-            class="col col-lg-2 row-label control-label">使用量</form:label>
-        <div class="col col-lg-6 controls">
-            <form:input path="quantity" class="input-with-feedback" />
+            class="col col-sm-2 control-label">使用量</form:label>
+        <div class="col col-sm-10 controls">
+            <form:input path="quantity" class="form-control" />
             <form:errors path="quantity" cssClass="text-danger" />
         </div>
     </div>
-    <div class="row control-group">
+    <div class="form-group">
         <form:label path="monthlyOutcomeCategoryId"
-            class="col col-lg-2 row-label control-label">カテゴリ</form:label>
-        <div class="col col-lg-6 controls">
+            class="col col-sm-2 control-label">カテゴリ</form:label>
+        <div class="col col-sm-10 controls">
             <form:select path="monthlyOutcomeCategoryId"
-                class="input-with-feedback">
+                class="form-control">
                 <form:option value="">--</form:option>
                 <form:options items="${monthlyOutcomeCategoryMap}" />
             </form:select>
@@ -102,16 +102,16 @@
                 cssClass="text-danger" />
         </div>
     </div>
-    <div class="row control-group">
+    <div class="form-group">
         <form:label path="remarks"
-            class="col col-lg-2 row-label control-label">備考</form:label>
-        <div class="col col-lg-6 controls">
-            <form:textarea path="remarks" class="input-with-feedback" />
+            class="col col-sm-2 control-label">備考</form:label>
+        <div class="col col-sm-10 controls">
+            <form:textarea path="remarks" class="form-control" />
             <form:errors path="remarks" cssClass="text-danger" />
         </div>
     </div>
-    <div class="row form-actions">
-        <div class="col col-lg-6 col-offset-2">
+    <div class="form-actions">
+        <div class="col col-sm-10 col-sm-offset-2">
             <input type="submit"
                 class="btn btn-primary disable-double-submit" value="登録" />
             <a href="${pageContext.request.contextPath}/"
