@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.groups.Default;
 
 import org.joda.time.DateTime;
@@ -15,8 +17,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,164 +46,175 @@ import am.ik.moneyger4u.domain.service.user_details.UserDetailsUtils;
 @Controller
 @RequestMapping("dailyOutcome")
 public class DailyOutcomeController {
-    private static final Logger logger = LoggerFactory
-            .getLogger(DailyOutcomeController.class);
+	private static final String LAST_PAYMENT = "lastPayment";
 
-    private BeanConverter beanConverter;
+	private static final Logger logger = LoggerFactory
+			.getLogger(DailyOutcomeController.class);
 
-    @Inject
-    protected DailyOutcomeService dailyOutcomeService;
+	private BeanConverter beanConverter;
 
-    @Inject
-    protected ParentOutcomeCategoryService parentOutcomeCategoryService;
+	@Inject
+	protected DailyOutcomeService dailyOutcomeService;
 
-    public DailyOutcomeController() {
-        beanConverter = new BeanConverter(new Converter<Integer, DailyOutcomeCategory>() {
-            @Override
-            public DailyOutcomeCategory convert(Integer source) {
-                return new DailyOutcomeCategory(source);
-            }
-        }, new Converter<DailyOutcomeCategory, Integer>() {
-            @Override
-            public Integer convert(DailyOutcomeCategory source) {
-                return source.getDailyOutcomeCategoryId();
-            }
-        });
-    }
+	@Inject
+	protected ParentOutcomeCategoryService parentOutcomeCategoryService;
 
-    @ModelAttribute
-    public DailyOutcomeForm setUpForm(
-            @RequestParam(value = "date", required = false) Date date,
-            @RequestParam(value = "copyFrom", required = false) Integer copyFrom,
-            Model model) {
-        DailyOutcomeForm form = new DailyOutcomeForm();
-        if (copyFrom != null) {
-            DailyOutcome src = dailyOutcomeService.findOne(copyFrom);
-            beanConverter.convert(src, form);
-            form.setOutcomeDate(null);
-        }
-        if (date != null) {
-            form.setOutcomeDate(date);
-            model.addAttribute("date", new DateTime(date));
-        }
-        return form;
-    }
+	public DailyOutcomeController() {
+		beanConverter = new BeanConverter(
+				new Converter<Integer, DailyOutcomeCategory>() {
+					@Override
+					public DailyOutcomeCategory convert(Integer source) {
+						return new DailyOutcomeCategory(source);
+					}
+				}, new Converter<DailyOutcomeCategory, Integer>() {
+					@Override
+					public Integer convert(DailyOutcomeCategory source) {
+						return source.getDailyOutcomeCategoryId();
+					}
+				});
+	}
 
-    @ModelAttribute("dailyOutcomeCategoryMap")
-    public Map<String, Map<Integer, String>> getDailyOutcomeCategories() {
-        List<ParentOutcomeCategory> parents = parentOutcomeCategoryService
-                .findAll();
-        Map<String, Map<Integer, String>> categoryMap = Maps.newLinkedHashMap();
-        for (ParentOutcomeCategory parent : parents) {
-            Map<Integer, String> m = Maps.newLinkedHashMap();
-            for (DailyOutcomeCategory c : parent.getDailyOutcomeCategoryList()) {
-                m.put(c.getDailyOutcomeCategoryId(), c.getCategoryName());
-            }
-            categoryMap.put(parent.getCategoryName(), m);
-        }
-        return categoryMap;
-    }
+	@ModelAttribute
+	public DailyOutcomeForm setUpForm(
+			@RequestParam(value = "date", required = false) Date date,
+			@RequestParam(value = "copyFrom", required = false) Integer copyFrom,
+			Model model) {
+		DailyOutcomeForm form = new DailyOutcomeForm();
+		if (copyFrom != null) {
+			DailyOutcome src = dailyOutcomeService.findOne(copyFrom);
+			beanConverter.convert(src, form);
+			form.setOutcomeDate(null);
+		}
+		if (date != null) {
+			form.setOutcomeDate(date);
+			model.addAttribute("date", new DateTime(date));
+		}
+		return form;
+	}
 
-    @ModelAttribute("payments")
-    public List<Payment> getPayments() {
-        return Arrays.asList(Payment.values());
-    }
+	@ModelAttribute("dailyOutcomeCategoryMap")
+	public Map<String, Map<Integer, String>> getDailyOutcomeCategories() {
+		List<ParentOutcomeCategory> parents = parentOutcomeCategoryService
+				.findAll();
+		Map<String, Map<Integer, String>> categoryMap = Maps.newLinkedHashMap();
+		for (ParentOutcomeCategory parent : parents) {
+			Map<Integer, String> m = Maps.newLinkedHashMap();
+			for (DailyOutcomeCategory c : parent.getDailyOutcomeCategoryList()) {
+				m.put(c.getDailyOutcomeCategoryId(), c.getCategoryName());
+			}
+			categoryMap.put(parent.getCategoryName(), m);
+		}
+		return categoryMap;
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = "form")
-    public String createForm(DailyOutcomeForm form, Model model) {
-        if (form.getOutcomeDate() == null) {
-            form.setOutcomeDate(new Date());
-        }
-        if (form.getQuantity() == null) {
-            form.setQuantity(1);
-        }
-        return "dailyOutcome/createForm";
-    }
+	@ModelAttribute("payments")
+	public List<Payment> getPayments() {
+		return Arrays.asList(Payment.values());
+	}
 
-    @RequestMapping(method = RequestMethod.GET, params = "outcomeName")
-    public String searchByOutcomeName(
-            @RequestParam("outcomeName") String outcomeName, Model model,
-            Principal principal) {
-        User user = UserDetailsUtils.getUserDetails(principal).getUser();
-        List<DailyOutcome> outcomes = dailyOutcomeService
-                .findFamilyDailyOutcomeLikeOutcomeName(outcomeName, user);
-        model.addAttribute("outcomes", outcomes);
-        model.addAttribute("outcomeName", outcomeName);
-        return "dailyOutcome/searchList";
-    }
+	@RequestMapping(method = RequestMethod.GET, params = "form")
+	public String createForm(DailyOutcomeForm form, Model model,
+			@CookieValue(LAST_PAYMENT) String lastPayment) {
+		if (form.getOutcomeDate() == null) {
+			form.setOutcomeDate(new Date());
+		}
+		if (form.getQuantity() == null) {
+			form.setQuantity(1);
+		}
+		if (StringUtils.hasText(lastPayment)) {
+			form.setPayment(Payment.valueOf(lastPayment));
+		}
+		return "dailyOutcome/createForm";
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String create(@Validated({ Default.class,
-            DailyOutcomeCreateGroup.class }) DailyOutcomeForm form,
-            BindingResult result, RedirectAttributes attributes,
-            Principal principal) {
-        logger.debug("register {}", form);
-        if (result.hasErrors()) {
-            return "dailyOutcome/createForm";
-        }
+	@RequestMapping(method = RequestMethod.GET, params = "outcomeName")
+	public String searchByOutcomeName(
+			@RequestParam("outcomeName") String outcomeName, Model model,
+			Principal principal) {
+		User user = UserDetailsUtils.getUserDetails(principal).getUser();
+		List<DailyOutcome> outcomes = dailyOutcomeService
+				.findFamilyDailyOutcomeLikeOutcomeName(outcomeName, user);
+		model.addAttribute("outcomes", outcomes);
+		model.addAttribute("outcomeName", outcomeName);
+		return "dailyOutcome/searchList";
+	}
 
-        User user = UserDetailsUtils.getUserDetails(principal).getUser();
-        DailyOutcome dailyOutcome = beanConverter.populate(form,
-                DailyOutcome.class);
-        dailyOutcome.setIsWaste(form.isWaste()); // TODO
-        dailyOutcomeService.save(dailyOutcome, user);
-        attributes.addFlashAttribute("created", dailyOutcome.getOutcomeName());
-        attributes.addAttribute("date", new DateTime(dailyOutcome
-                .getOutcomeDate()).toString("yyyy-MM-dd"));
-        return "redirect:/dailyOutcome?form";
-    }
+	@RequestMapping(method = RequestMethod.POST)
+	public String create(@Validated({ Default.class,
+			DailyOutcomeCreateGroup.class }) DailyOutcomeForm form,
+			BindingResult result, RedirectAttributes attributes,
+			HttpServletResponse response, Principal principal) {
+		logger.debug("register {}", form);
+		if (result.hasErrors()) {
+			return "dailyOutcome/createForm";
+		}
+		Cookie cookie = new Cookie(LAST_PAYMENT, form.getPayment().name());
+		response.addCookie(cookie);
 
-    @RequestMapping(value = "{dailyOutcomeId}", method = RequestMethod.GET)
-    public String read(@PathVariable("dailyOutcomeId") Integer dailyOutcomeId,
-            Model model) {
-        DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
-        model.addAttribute(dailyOutcome);
-        model.addAttribute("date", new DateTime(dailyOutcome.getOutcomeDate()));
-        return "dailyOutcome/read";
-    }
+		User user = UserDetailsUtils.getUserDetails(principal).getUser();
+		DailyOutcome dailyOutcome = beanConverter.populate(form,
+				DailyOutcome.class);
+		dailyOutcome.setIsWaste(form.isWaste()); // TODO
+		dailyOutcomeService.save(dailyOutcome, user);
+		attributes.addFlashAttribute("created", dailyOutcome.getOutcomeName());
+		attributes.addAttribute("date",
+				new DateTime(dailyOutcome.getOutcomeDate())
+						.toString("yyyy-MM-dd"));
+		return "redirect:/dailyOutcome?form";
+	}
 
-    @RequestMapping(value = "{dailyOutcomeId}", method = RequestMethod.GET, params = "form")
-    public String updateForm(
-            @PathVariable("dailyOutcomeId") Integer dailyOutcomeId,
-            DailyOutcomeForm form, Model model) {
-        DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
-        beanConverter.convert(dailyOutcome, form, IgnoreOption.NOT_NULL_TARGET);
-        form.setWaste(dailyOutcome.getIsWaste());
-        return "dailyOutcome/updateForm";
-    }
+	@RequestMapping(value = "{dailyOutcomeId}", method = RequestMethod.GET)
+	public String read(@PathVariable("dailyOutcomeId") Integer dailyOutcomeId,
+			Model model) {
+		DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
+		model.addAttribute(dailyOutcome);
+		model.addAttribute("date", new DateTime(dailyOutcome.getOutcomeDate()));
+		return "dailyOutcome/read";
+	}
 
-    @RequestMapping(value = "{dailyOutcomeId}", method = RequestMethod.PUT)
-    public String update(
-            @PathVariable("dailyOutcomeId") Integer dailyOutcomeId,
-            @Validated({ Default.class, DailyOutcomeUpdateGroup.class }) DailyOutcomeForm form,
-            BindingResult result, RedirectAttributes attributes,
-            Principal principal) {
-        logger.debug("update {}", form);
-        if (result.hasErrors()) {
-            return "dailyOutcome/updateForm";
-        }
+	@RequestMapping(value = "{dailyOutcomeId}", method = RequestMethod.GET, params = "form")
+	public String updateForm(
+			@PathVariable("dailyOutcomeId") Integer dailyOutcomeId,
+			DailyOutcomeForm form, Model model) {
+		DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
+		beanConverter.convert(dailyOutcome, form, IgnoreOption.NOT_NULL_TARGET);
+		form.setWaste(dailyOutcome.getIsWaste());
+		return "dailyOutcome/updateForm";
+	}
 
-        User user = UserDetailsUtils.getUserDetails(principal).getUser();
-        DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
-        beanConverter.convert(form, dailyOutcome, IgnoreOption.NULL_SOURCE);
-        dailyOutcome.setIsWaste(form.isWaste()); // TODO
+	@RequestMapping(value = "{dailyOutcomeId}", method = RequestMethod.PUT)
+	public String update(
+			@PathVariable("dailyOutcomeId") Integer dailyOutcomeId,
+			@Validated({ Default.class, DailyOutcomeUpdateGroup.class }) DailyOutcomeForm form,
+			BindingResult result, RedirectAttributes attributes,
+			Principal principal) {
+		logger.debug("update {}", form);
+		if (result.hasErrors()) {
+			return "dailyOutcome/updateForm";
+		}
 
-        dailyOutcomeService.save(dailyOutcome, user);
-        attributes.addFlashAttribute("updated", dailyOutcome.getOutcomeName());
-        attributes.addAttribute("dailyOutcomeId", dailyOutcome
-                .getDailyOutcomeId());
-        return "redirect:/dailyOutcome/{dailyOutcomeId}";
-    }
+		User user = UserDetailsUtils.getUserDetails(principal).getUser();
+		DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
+		beanConverter.convert(form, dailyOutcome, IgnoreOption.NULL_SOURCE);
+		dailyOutcome.setIsWaste(form.isWaste()); // TODO
 
-    @RequestMapping(value = "{dailyOutcomeId}", method = RequestMethod.DELETE)
-    public String delete(
-            @PathVariable("dailyOutcomeId") Integer dailyOutcomeId,
-            RedirectAttributes attributes) {
-        DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
-        DateTime date = new DateTime(dailyOutcome.getOutcomeDate());
-        dailyOutcomeService.delete(dailyOutcomeId);
-        attributes.addAttribute("year", date.getYear()).addAttribute("month",
-                date.toString("MM")).addAttribute("day", date.toString("dd"));
-        return "redirect:/calendar/{year}/{month}/{day}";
-    }
+		dailyOutcomeService.save(dailyOutcome, user);
+		attributes.addFlashAttribute("updated", dailyOutcome.getOutcomeName());
+		attributes.addAttribute("dailyOutcomeId",
+				dailyOutcome.getDailyOutcomeId());
+		return "redirect:/dailyOutcome/{dailyOutcomeId}";
+	}
+
+	@RequestMapping(value = "{dailyOutcomeId}", method = RequestMethod.DELETE)
+	public String delete(
+			@PathVariable("dailyOutcomeId") Integer dailyOutcomeId,
+			RedirectAttributes attributes) {
+		DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
+		DateTime date = new DateTime(dailyOutcome.getOutcomeDate());
+		dailyOutcomeService.delete(dailyOutcomeId);
+		attributes.addAttribute("year", date.getYear())
+				.addAttribute("month", date.toString("MM"))
+				.addAttribute("day", date.toString("dd"));
+		return "redirect:/calendar/{year}/{month}/{day}";
+	}
 }
