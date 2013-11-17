@@ -113,8 +113,10 @@ public class DailyOutcomeController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, params = "form")
-	public String createForm(DailyOutcomeForm form, Model model,
-			@CookieValue(LAST_PAYMENT) String lastPayment) {
+	public String createForm(
+			DailyOutcomeForm form,
+			Model model,
+			@CookieValue(value = LAST_PAYMENT, required = false) String lastPayment) {
 		if (form.getOutcomeDate() == null) {
 			form.setOutcomeDate(new Date());
 		}

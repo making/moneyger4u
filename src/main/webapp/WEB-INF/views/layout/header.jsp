@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand"
-                href="${pageContext.request.contextPath}">家計簿</a>
+                href="${pageContext.request.contextPath}/">家計簿</a>
         </div>
 
         <sec:authorize access="isAuthenticated()">

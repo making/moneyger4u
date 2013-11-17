@@ -20,52 +20,50 @@
     class="form-horizontal">
     <div class="row control-group">
         <form:label path="outcomeDateFrom"
-            class="col col-lg-2 row-label control-label">日付</form:label>
-        <div class="col col-lg-2 controls">
+            class="col col-sm-2 control-label">日付</form:label>
+        <div class="col col-sm-2 controls">
             <form:input path="outcomeDateFrom" type="text"
-                class="input-with-feedback" placeholder="yyyy-MM-dd" />
+                class="form-control" placeholder="yyyy-MM-dd" />
             <form:errors path="outcomeDateFrom" cssClass="text-danger" />
         </div>
-        <div class="col col-lg-1 controls">~</div>
-        <div class="col col-lg-2 controls">
+        <div class="col col-sm-1 controls">~</div>
+        <div class="col col-sm-2 controls">
             <form:input path="outcomeDateTo" type="text"
-                class="input-with-feedback" placeholder="yyyy-MM-dd" />
+                class="form-control" placeholder="yyyy-MM-dd" />
             <form:errors path="outcomeDateTo" cssClass="text-danger" />
         </div>
     </div>
 
     <div class="row control-group">
         <form:label path="outcomeName"
-            class="col col-lg-2 row-label control-label">支出名</form:label>
-        <div class="col col-lg-6 controls">
+            class="col col-sm-2 control-label">支出名</form:label>
+        <div class="col col-sm-10 controls">
             <form:input path="outcomeName" type="text"
-                class="input-with-feedback" placeholder="前方一致検索" />
+                class="form-control" placeholder="前方一致検索" />
             <form:errors path="outcomeName" cssClass="text-danger" />
         </div>
     </div>
     <div class="row control-group">
-        <form:label path="amountFrom"
-            class="col col-lg-2 row-label control-label">単価</form:label>
-        <div class="col col-lg-2 controls">
+        <form:label path="amountFrom" class="col col-sm-2 control-label">単価</form:label>
+        <div class="col col-sm-2 controls">
             <form:input path="amountFrom" type="text"
-                class="input-with-feedback" />
+                class="form-control" />
             円
             <form:errors path="amountFrom" cssClass="text-danger" />
         </div>
-        <div class="col col-lg-1 controls">~</div>
-        <div class="col col-lg-2 controls">
-            <form:input path="amountTo" type="text"
-                class="input-with-feedback" />
+        <div class="col col-sm-1 controls">~</div>
+        <div class="col col-sm-2 controls">
+            <form:input path="amountTo" type="text" class="form-control" />
             円
             <form:errors path="amountTo" cssClass="text-danger" />
         </div>
     </div>
     <div class="row control-group">
         <form:label path="dailyOutcomeCategoryIdList"
-            class="col col-lg-2 row-label control-label">カテゴリ</form:label>
-        <div class="col col-lg-6 controls">
+            class="col col-sm-2 control-label">カテゴリ</form:label>
+        <div class="col col-sm-10 controls">
             <form:select path="dailyOutcomeCategoryIdList"
-                class="input-with-feedback">
+                class="form-control">
                 <c:forEach var="categoryGroup"
                     items="${dailyOutcomeCategoryMap}">
                     <optgroup label="${f:h(categoryGroup.key)}">
@@ -80,20 +78,19 @@
 
     <div class="row control-group">
         <form:label path="paymentList"
-            class="col col-lg-2 row-label control-label">支払い方法</form:label>
-        <div class="col col-lg-6 controls">
-            <form:select path="paymentList" cssStyle="height:50px">
-                <form:options items="${payments}"
-                    class="input-with-feedback" />
+            class="col col-sm-2 control-label">支払い方法</form:label>
+        <div class="col col-sm-10 controls">
+            <form:select path="paymentList" cssStyle="height:50px"
+                cssClass="form-control">
+                <form:options items="${payments}" class="form-control" />
             </form:select>
             <form:errors path="paymentList" cssClass="text-danger" />
         </div>
     </div>
     <div class="row control-group">
-        <form:label path="wasteList"
-            class="col col-lg-2 row-label control-label">無駄</form:label>
-        <div class="col col-lg-6 controls">
-            <form:select path="wasteList" class="input-with-feedback"
+        <form:label path="wasteList" class="col col-sm-2 control-label">無駄</form:label>
+        <div class="col col-sm-10 controls">
+            <form:select path="wasteList" class="form-control"
                 cssStyle="height:50px">
                 <form:option value="false">NO</form:option>
                 <form:option value="true">YES</form:option>
@@ -102,10 +99,9 @@
         </div>
     </div>
     <div class="row control-group">
-        <form:label path="userIdList"
-            class="col col-lg-2 row-label control-label">登録ユーザ</form:label>
-        <div class="col col-lg-6 controls">
-            <form:select path="userIdList" class="input-with-feedback"
+        <form:label path="userIdList" class="col col-sm-2 control-label">登録ユーザ</form:label>
+        <div class="col col-sm-10 controls">
+            <form:select path="userIdList" class="form-control"
                 cssStyle="height:50px">
                 <form:options items="${userIdMap}" />
             </form:select>
@@ -113,7 +109,7 @@
         </div>
     </div>
     <div class="row form-actions">
-        <div class="col col-lg-6 col-offset-2">
+        <div class="col col-sm-10 col-sm-offset-2">
             <input type="submit"
                 class="btn btn-primary disable-double-submit" value="検索" />
         </div>
