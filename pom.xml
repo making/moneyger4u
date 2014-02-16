@@ -632,7 +632,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>0.11.6</version>
+            <version>1.12.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
