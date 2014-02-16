@@ -13,8 +13,8 @@
 
 ## Run
 
-    $ export DATABASE_URL=mysql://user:pass@hostname:port/databasename
-    (or "set DATABASE_URL=mysql://user:pass@hostname:port/databasename" for windows)
+    $ export DATABASE_URL_M=mysql://user:pass@hostname:port/databasename
+    (or "set DATABASE_URL_M=mysql://user:pass@hostname:port/databasename" for windows)
     $ mvn jetty:run
     or
     $ mvm tomcat7:run
