@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <sec:http auto-config="true" use-expressions="true">
-        <sec:intercept-url pattern="/apple-touch-icon.png" access="permitAll" />
-        <sec:intercept-url pattern="/login" access="permitAll" />
-        <sec:intercept-url pattern="/resources/**" access="permitAll" />
-        <sec:intercept-url pattern="/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/apple-touch-icon.png" access="permitAll"/>
+        <sec:intercept-url pattern="/login" access="permitAll"/>
+        <sec:intercept-url pattern="/resources/**" access="permitAll"/>
+        <sec:intercept-url pattern="/**" access="isAuthenticated()"/>
         <sec:form-login login-page="/login"
-            default-target-url="/" authentication-failure-url="/login?error=true" />
-        <sec:logout logout-url="/logout" logout-success-url="/" />
-        <sec:remember-me key="moneyger4u_remember_me" />
+                        default-target-url="/" authentication-failure-url="/login?error=true"
+                        always-use-default-target="true"/>
+        <sec:logout logout-url="/logout" logout-success-url="/"/>
+        <sec:remember-me key="moneyger4u_remember_me"/>
     </sec:http>
 
     <sec:authentication-manager>
         <sec:authentication-provider
-            user-service-ref="moneygerUserDetailsService">
+                user-service-ref="moneygerUserDetailsService">
             <sec:password-encoder ref="passwordEncoder">
-                <sec:salt-source user-property="username" />
+                <sec:salt-source user-property="username"/>
             </sec:password-encoder>
         </sec:authentication-provider>
     </sec:authentication-manager>
