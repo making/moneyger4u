@@ -40,6 +40,7 @@
 
         new TaxAddView($('#amount'),
                 $('#btn-add-8percent'),
+                $('#btn-minus-8percent'),
                 $('#btn-add-5percent'),
                 $('#btn-minus-5percent'),
                 $('#btn-revert'));
@@ -83,6 +84,7 @@
             <form:errors path="amount" cssClass="text-danger"/>
 
             <button class="btn btn-default" id="btn-add-8percent">+8%</button>
+            <button class="btn btn-default" id="btn-minus-8percent">-8%</button>
             <button class="btn btn-default" id="btn-add-5percent">+5%</button>
             <button class="btn btn-default" id="btn-minus-5percent">-5%</button>
             <button class="btn btn-default" id="btn-revert">+0%</button>

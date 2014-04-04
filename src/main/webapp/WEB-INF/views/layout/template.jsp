@@ -63,10 +63,11 @@
             return Math.floor((this.tax + 100) * Number(value) / 100);
         };
 
-        var TaxAddView = function ($amount, $add8percent, $add5percent, $minus5percent, $revert) {
+        var TaxAddView = function ($amount, $add8percent, $minus8percent, $add5percent, $minus5percent, $revert) {
             var fivePercentAdder = new TaxAdder(5);
             var eightPercentAdder = new TaxAdder(8);
             var minusFivePercentAdder = new TaxAdder(-5);
+            var minusEightPercentAdder = new TaxAdder(-8);
             var currentAmount = null;
 
             var setCurrentAmount = function () {
@@ -91,6 +92,11 @@
                 e.preventDefault();
                 setCurrentAmount();
                 $amount.val(minusFivePercentAdder.add(currentAmount));
+            });
+            $minus8percent.on('click', function (e) {
+                e.preventDefault();
+                setCurrentAmount();
+                $amount.val(minusEightPercentAdder.add(currentAmount));
             });
             $revert.on('click', function (e) {
                 e.preventDefault();
