@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <custom-converters>
+            <!-- these are always bi-directional -->
+            <converter
+                    type="moneyger4u.infra.converter.DailyOutcomeCateogryIdToDailyOutcomeCateogryConverter">
+                <class-a>java.lang.Integer</class-a>
+                <class-b>moneyger4u.domain.model.DailyOutcomeCategory</class-b>
+            </converter>
+            <converter
+                    type="moneyger4u.infra.converter.MonthlyOutcomeCateogryIdToMonthlyOutcomeCateogryConverter">
+                <class-a>java.lang.Integer</class-a>
+                <class-b>moneyger4u.domain.model.MonthlyOutcomeCategory</class-b>
+            </converter>
+            <converter
+                    type="moneyger4u.infra.converter.FamilyIdToFamilyConverter">
+                <class-a>java.lang.Integer</class-a>
+                <class-b>moneyger4u.domain.model.Family</class-b>
+            </converter>
+        </custom-converters>
+    </configuration>
+
+    <mapping map-id="user-exclude-password">
+        <class-a>moneyger4u.domain.model.User</class-a>
+        <class-b>moneyger4u.app.user.UserForm</class-b>
+        <field-exclude>
+            <a>password</a>
+            <b>password</b>
+        </field-exclude>
+    </mapping>
+</mappings>

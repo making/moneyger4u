@@ -118,7 +118,7 @@
     <tiles:insertAttribute name="body"/>
     <hr>
     <p style="text-align: center; background: #e5eCf9;">Copyright
-        &copy; 2013 moneyger4u</p>
+        &copy; 2014 moneyger4u</p>
 </div>
 </body>
 </html>
