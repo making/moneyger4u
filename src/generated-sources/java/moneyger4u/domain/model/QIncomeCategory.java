@@ -1,12 +1,13 @@
 package moneyger4u.domain.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
 import com.mysema.query.types.path.*;
 
+import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
 
 
 /**
@@ -37,7 +38,7 @@ public class QIncomeCategory extends EntityPathBase<IncomeCategory> {
 
     @SuppressWarnings("all")
     public QIncomeCategory(Path<? extends IncomeCategory> path) {
-        super((Class) path.getType(), path.getMetadata());
+        super((Class)path.getType(), path.getMetadata());
     }
 
     public QIncomeCategory(PathMetadata<?> metadata) {

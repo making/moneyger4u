@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<body>
+<div layout:fragment="content">
+    <h2><span th:text="${today.toString('yyyy-MM-dd')}"></span>の支出</h2>
+    <ul class="pager">
+        <li class="previous"><a
+                th:href="@{/calendar/}+${today.minusDays(1).toString('yyyy/MM/dd')}">前日</a>
+        </li>
+        <li class="next"><a
+                th:href="@{/calendar/}+${today.plusDays(1).toString('yyyy/MM/dd')}">翌日</a>
+        </li>
+    </ul>
+    <p>
+        <a th:href="@{/dailyOutcome?form&date=}+${today.toString('yyyy-MM-dd')}"
+           class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> 支出登録する</a> <a
+            th:href="@{/calendar/}+${today.toString('yyyy/MM')}"
+            class="btn btn-success"><span class="glyphicon glyphicon-list"></span>
+        <span th:text="${today.toString('yyyy-MM')}"></span>の支出</a>
+    </p>
+    <table class="table table-bordered table-striped table-condensed">
+        <tr>
+            <th>カテゴリ</th>
+            <th>支出名</th>
+            <th>金額</th>
+            <th>登録ユーザ</th>
+        </tr>
+        <tr th:each="outcome : ${outcomes}">
+            <td>
+                <span th:text="${outcome.dailyOutcomeCategoryId.parentOutcomeCategoryId.categoryName}"></span>(<span
+                    th:text="${outcome.dailyOutcomeCategoryId.categoryName}"></span>)
+            </td>
+            <td><a th:href="@{/dailyOutcome/}+${outcome.dailyOutcomeId}"><span
+                    th:text="${outcome.outcomeName}"></span></a>
+          <span th:if="${outcome.payment == 'CREDITCARD'}" class="label label-info"><i
+                  class="glyphicon glyphicon-check"></i> クレジットカード</span>
+          <span th:if="${outcome.isWaste}" class="label label-warning"><i
+                  class="glyphicon glyphicon-warning-sign"></i> 無駄</span>
+            </td>
+            <td>
+                <span th:text="${#numbers.formatInteger(outcome.amount * outcome.quantity, 3, 'COMMA')}"></span>円
+            </td>
+            <td>
+                <span th:text="${outcome.userId.lastName}+' '+${outcome.userId.firstName}"></span>
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered table-condensed">
+        <tr>
+            <th>支出合計</th>
+            <td>
+                <span th:if="${total != null}" th:text="${#numbers.formatInteger(total, 3, 'COMMA')}"></span>円
+            </td>
+        </tr>
+        <tr>
+            <th>内、カード</th>
+            <td>
+                <span th:if="${cardTotal != null}" th:text="${#numbers.formatInteger(cardTotal, 3, 'COMMA')}"></span>円
+            </td>
+        </tr>
+        <tr>
+            <th>内、無駄</th>
+            <td>
+                <span th:if="${wasteTotal != null}" th:text="${#numbers.formatInteger(wasteTotal, 3, 'COMMA')}"></span>円
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

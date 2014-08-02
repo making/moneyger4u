@@ -1,12 +1,13 @@
 package moneyger4u.domain.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
 import com.mysema.query.types.path.*;
 
+import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
 
 
 /**
@@ -51,7 +52,7 @@ public class QMonthlyOutcome extends EntityPathBase<MonthlyOutcome> {
 
     @SuppressWarnings("all")
     public QMonthlyOutcome(Path<? extends MonthlyOutcome> path) {
-        this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
+        this((Class)path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
 
     public QMonthlyOutcome(PathMetadata<?> metadata) {

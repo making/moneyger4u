@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class="row" layout:fragment="content">
+    <div class="span12">
+        <p class="alert alert-success">
+           Deleted Successfully!<br> <a
+                th:href="@{/user/list}" class="btn btn-default">Back
+            to List</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

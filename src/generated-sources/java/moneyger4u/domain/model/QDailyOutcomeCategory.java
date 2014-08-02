@@ -1,12 +1,13 @@
 package moneyger4u.domain.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
 import com.mysema.query.types.path.*;
 
+import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
 
 
 /**
@@ -41,7 +42,7 @@ public class QDailyOutcomeCategory extends EntityPathBase<DailyOutcomeCategory> 
 
     @SuppressWarnings("all")
     public QDailyOutcomeCategory(Path<? extends DailyOutcomeCategory> path) {
-        this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
+        this((Class)path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
 
     public QDailyOutcomeCategory(PathMetadata<?> metadata) {

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <h2>User List</h2>
+
+    <div class="span12">
+        <div class="alert alert-danger" th:unless="${#strings.isEmpty(errorMessage)}" th:text="${errorMessage}">hoge
+        </div>
+
+        <div class="well">
+            <a th:href="@{/user/create?form}"
+               class="btn btn-primary">New User</a><br>
+            <br>
+
+            <form th:action="@{/user/search}"
+                  method="get" th:objcet="${userSearchForm}" class="form-inline my-inline">
+                <input id="name" type="text" class="form-control"/>
+                <input type="submit" value="Search" class="btn btn-default"/>
+            </form>
+        </div>
+
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+            <tr>
+                <th>User Id</th>
+                <th>User Name</th>
+                <th>Family Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${page.content}">
+                <td th:text="${user.userId}">hoge</td>
+                <td th:text="${user.lastName}+' '+${user.firstName}">hoge</td>
+                <td th:text="${user.familyId.familyName}">hoge</td>
+                <td th:text="${user.email}">hoge</td>
+                <td>
+                    <form th:action="@{/user}" class="form-inline">
+                        <input type="hidden" name="userId" th:value="${user.userId}"/>
+                        <input type="submit" class="btn btn-default" name="redirectToUpdate"
+                               value="Update"/>
+                        <input type="submit" class="btn btn-danger"
+                               name="redirectToDelete" value="Delete"/>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <!-- util:pagination page="${page}" query="name=${f:h(param.name)}"/ -->
+        </div>
+    </div>
+</div>
+</body>
+</html>

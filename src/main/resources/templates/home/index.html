@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <h3>メニュー</h3>
+    <ul>
+        <li><a th:href="@{/calendar}">カレンダー</a></li>
+        <li><a th:href="@{/dailyOutcome/search?form}">支出詳細検索</a></li>
+        <li><a th:href="@{/dailyOutcome?form}">支出登録</a></li>
+        <li><a th:href="@{/monthlyOutcome?form}">固定支出登録</a></li>
+        <li><a th:href="@{/user/list}">ユーザー管理</a></li>
+    </ul>
+    <h3>支出簡易検索</h3>
+
+    <form class="form-inline"
+          th:action="@{/dailyOutcome}"
+          method="get">
+        <input name="outcomeName" type="text" placeholder="支出名" class="form-control"
+               style="width: 180px;">
+        <button type="submit" class="btn btn-primary disable-double-submit">検索</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        <!--
+        $(function () {
+            $('#command').on('submit', function () {
+                return confirm('削除してよいですか？');
+            });
+        });
+        //-->
+    </script>
+    <script th:if="${updated != null &&updated != ''}" type="text/javascript"
+            th:inline="javascript">
+        <!--
+        $(function () {
+            var updated = /*[[${updated}]]*/ null;
+            $('.top-right').notify({
+                message: {
+                    text: updated + 'を更新しました！'
+                },
+                fadeOut: {
+                    enabled: false
+                }
+            }).show();
+        });
+        //-->
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="span12">
+            <h2>支出詳細</h2>
+
+            <div class='notifications top-right'></div>
+
+            <table class="table table-bordered table-striped table-condensed">
+                <tr>
+                    <th>支出日</th>
+                    <td th:text="${date.toString('yyyy-MM-dd')}"></td>
+                </tr>
+                <tr>
+                    <th>支出名</th>
+                    <td th:text="${dailyOutcome.outcomeName}"></td>
+                </tr>
+                <tr>
+                    <th>カテゴリ</th>
+                    <td>
+                        <span th:text="${dailyOutcome.dailyOutcomeCategoryId.parentOutcomeCategoryId.categoryName}"></span>
+                        (<span th:text="${dailyOutcome.dailyOutcomeCategoryId.categoryName}"></span>)
+                    </td>
+                </tr>
+                <tr>
+                    <th>単価</th>
+                    <td>
+                        <span th:text="${#numbers.formatInteger(dailyOutcome.amount, 3, 'COMMA')}"></span>
+                        円
+                    </td>
+                </tr>
+                <tr>
+                    <th>数量</th>
+                    <td>
+                        <span th:text="${dailyOutcome.quantity}"></span>
+                        点
+                    </td>
+                </tr>
+                <tr>
+                    <th>支払い方法</th>
+                    <td th:text="${dailyOutcome.payment}"></td>
+                </tr>
+                <tr>
+                    <th>無駄</th>
+                    <td th:text="${dailyOutcome.isWaste}"></td>
+                </tr>
+                <tr>
+                    <th>備考</th>
+                    <td th:text="${dailyOutcome.remarks}"></td>
+                </tr>
+                <tr>
+                    <th>作成時刻</th>
+                    <td th:text="${dailyOutcome.createdAt}"></td>
+                </tr>
+                <tr>
+                    <th>更新時刻</th>
+                    <td th:text="${dailyOutcome.updatedAt}"></td>
+                </tr>
+                <tr>
+                    <th>作成ユーザ</th>
+                    <td><span th:text="${dailyOutcome.userId.lastName}"></span>
+                        <span th:text="${dailyOutcome.userId.firstName}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>更新ユーザ</th>
+                    <td><span th:text="${dailyOutcome.updatedBy.lastName}"></span>
+                        <span th:text="${dailyOutcome.updatedBy.firstName}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>変更回数</th>
+                    <td th:text="${dailyOutcome.version}"></td>
+                </tr>
+            </table>
+            <p>
+
+            <form method="POST"
+                  th:action="@{/dailyOutcome/}+${dailyOutcome.dailyOutcomeId}">
+                <input type="hidden" name="_method" value="DELETE"/>
+                <a th:href="@{/calendar/}+${date.toString('yyyy/MM/dd')}"
+                   class="btn btn-success"><span
+                        class="glyphicon glyphicon-list"></span>
+                    <span th:text="${date.toString('yyyy-MM-dd')}"></span>の支出</a>
+                <a th:href="@{/dailyOutcome/}+${dailyOutcome.dailyOutcomeId}+'?form'"
+                   class="btn btn-info"><span
+                        class="glyphicon glyphicon-edit"></span>
+                    修正</a>
+                <button type="submit" class="btn btn-danger">
+          <span
+                  class="glyphicon glyphicon-remove"></span>
+                    削除
+                </button>
+                <a th:href="@{/}"
+                   class="btn btn-default"><span
+                        class="glyphicon glyphicon-home"></span> HOME</a>
+            </form>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

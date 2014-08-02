@@ -5,6 +5,7 @@ import moneyger4u.domain.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface UserService {
@@ -21,4 +22,5 @@ public interface UserService {
 
     List<User> findByFamilyId(Family familyId);
 
+    User getLoginUser(Principal principal);
 }

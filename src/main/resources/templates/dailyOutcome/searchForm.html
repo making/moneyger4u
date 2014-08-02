@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<body>
+<div layout:fragment="content">
+    <h2>支出詳細検索</h2>
+
+    <form th:action="@{/dailyOutcome/search}"
+          method="GET"
+          th:object="${dailyOutcomeSearchCriteria}" class="form-horizontal">
+
+        <div class="row control-group">
+            <label path="outcomeDateFrom"
+                   class="col col-sm-2 control-label">日付
+            </label>
+
+            <div class="col col-sm-2 controls">
+                <input id="outcomeDateFrom"
+                       th:field="*{outcomeDateFrom}"
+                       type="date"
+                       class="form-control"
+                       placeholder="yyyy-MM-dd"/>
+                <span th:if="${#fields.hasErrors('outcomeDateFrom')}" th:errors="*{outcomeDateFrom}"
+                      class="text-danger"></span>
+            </div>
+            <div class="col col-sm-1 controls">~</div>
+            <div class="col col-sm-2 controls">
+                <input id="outcomeDateTo"
+                       th:field="*{outcomeDateTo}"
+                       type="date"
+                       class="form-control"
+                       placeholder="yyyy-MM-dd"/>
+                <span th:if="${#fields.hasErrors('outcomeDateTo')}" th:errors="*{outcomeDateTo}"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row control-group">
+            <label for="outcomeName"
+                   class="col col-sm-2 row-label control-label">支出名
+            </label>
+
+            <div class="col col-sm-10 controls">
+                <input id="outcomeName"
+                       th:field="*{outcomeName}"
+                       type="text"
+                       class="form-control"
+                       placeholder="前方一致検索"/>
+                <span th:if="${#fields.hasErrors('outcomeName')}" th:errors="*{outcomeName}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row control-group">
+            <label for="amountFrom"
+                   class="col col-sm-2 row-label control-label">単価
+            </label>
+
+            <div class="col col-sm-2 controls">
+                <input id="amountFrom"
+                       th:field="*{amountFrom}"
+                       type="text"
+                       class="form-control"/>
+                円
+                <span th:if="${#fields.hasErrors('amountFrom')}" th:errors="*{amountFrom}" class="text-danger"></span>
+            </div>
+            <div class="col col-sm-1 controls">~</div>
+            <div class="col col-sm-2 controls">
+                <input id="amountTo"
+                       th:field="*{amountTo}"
+                       type="text"
+                       class="form-control"/>
+                円
+                <span th:if="${#fields.hasErrors('amountTo')}" th:errors="*{amountTo}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row control-group">
+            <label for="dailyOutcomeCategoryIdList"
+                   class="col col-sm-2 row-label control-label">カテゴリ
+            </label>
+
+            <div class="col col-sm-10 controls">
+                <select id="dailyOutcomeCategoryIdList"
+                        th:field="*{dailyOutcomeCategoryIdList}" style="height: 100px"
+                        class="form-control" multiple="multiple">
+                    <optgroup th:each="categoryGroup : ${dailyOutcomeCategoryMap}"
+                              th:label="${categoryGroup.key}">
+                        <option th:each="value : ${categoryGroup.value}"
+                                th:label="${value.value}"
+                                th:value="${value.key}"></option>
+                    </optgroup>
+                </select>
+                <span th:if="${#fields.hasErrors('dailyOutcomeCategoryIdList')}"
+                      th:errors="*{dailyOutcomeCategoryIdList}"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row control-group">
+            <label for="paymentList" class="col col-sm-2 row-label control-label">支払い方法
+            </label>
+
+            <div class="col col-sm-10 controls">
+                <select id="paymentList" th:field="*{paymentList}" style="height: 50px" class="form-control"
+                        multiple="multiple">
+                    <option th:each="payment : ${payments}" th:label="${payment}" th:value="${payment}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('paymentList')}" th:errors="*{paymentList}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row control-group">
+            <label for="wasteList"
+                   class="col col-sm-2 row-label control-label">無駄
+            </label>
+
+            <div class="col col-sm-10 controls">
+                <select id="wasteList" th:field="*{wasteList}" class="form-control" style="height:50px"
+                        multiple="multiple">
+                    <option value="false">NO</option>
+                    <option value="true">YES</option>
+                </select>
+                <span th:if="${#fields.hasErrors('wasteList')}" th:errors="*{wasteList}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row control-group">
+            <label for="userIdList" class="col col-sm-2 control-label">登録ユーザ</label>
+
+            <div class="col col-sm-10 controls">
+                <select id="userIdList" th:field="*{userIdList}" class="form-control"
+                        style="height:50px" multiple="multiple">
+                    <option th:each="value : ${userIdMap}"
+                            th:label="${value.value}"
+                            th:value="${value.key}"></option>
+                    </option>
+                </select>
+                <span th:if="${#fields.hasErrors('userIdList')}" th:errors="*{userIdList}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row form-actions">
+            <div class="col col-sm-10 col-sm-offset-2">
+                <input type="submit"
+                       class="btn btn-primary disable-double-submit" value="検索"/>
+            </div>
+        </div>
+    </form>
+
+
+    <table class="table table-bordered table-striped table-condensed">
+        <tr>
+            <th>購入日</th>
+            <th>カテゴリ</th>
+            <th>支出名</th>
+            <th>金額</th>
+            <th>登録ユーザ</th>
+            <th>コピーして登録</th>
+        </tr>
+        <tr th:each="outcome : ${result.page.content}">
+            <td>
+                <span th:text="${outcome.outcomeDate}"></span>
+            </td>
+            <td>
+                <span th:text="${outcome.dailyOutcomeCategoryId.parentOutcomeCategoryId.categoryName}"></span>(<span
+                    th:text="${outcome.dailyOutcomeCategoryId.categoryName}"></span>)
+            </td>
+            <td><a th:href="@{/dailyOutcome/}+${outcome.dailyOutcomeId}"><span
+                    th:text="${outcome.outcomeName}"></span></a>
+          <span th:if="${outcome.payment == 'CREDITCARD'}" class="label label-info"><i
+                  class="glyphicon glyphicon-check"></i> クレジットカード</span>
+          <span th:if="${outcome.isWaste}" class="label label-warning"><i
+                  class="glyphicon glyphicon-warning-sign"></i> 無駄</span>
+            </td>
+            <td>
+                <span th:text="${#numbers.formatInteger(outcome.amount * outcome.quantity, 3, 'COMMA')}"></span>円
+            </td>
+            <td>
+                <span th:text="${outcome.userId.lastName}+' '+${outcome.userId.firstName}"></span>
+            </td>
+            <td>
+                <a class="btn btn-info"
+                   th:href="@{'/dailyOutcome/?form&copyFrom=' + ${outcome.dailyOutcomeId}}">コピー</a>
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered table-condensed">
+        <tr>
+            <th>合計</th>
+            <td><span th:text="${#numbers.formatInteger(result.sum, 3, 'COMMA')}"></span> 円
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

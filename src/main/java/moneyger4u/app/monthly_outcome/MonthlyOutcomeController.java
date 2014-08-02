@@ -6,7 +6,7 @@ import moneyger4u.domain.model.MonthlyOutcomeCategory;
 import moneyger4u.domain.model.User;
 import moneyger4u.domain.service.outcome.MonthlyOutcomeCategoryService;
 import moneyger4u.domain.service.outcome.MonthlyOutcomeService;
-import moneyger4u.domain.service.user_details.UserDetailsUtils;
+import moneyger4u.domain.service.user.UserService;
 import org.dozer.Mapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +29,9 @@ public class MonthlyOutcomeController {
 
     @Inject
     MonthlyOutcomeCategoryService monthlyOutcomeCategoryService;
+
+    @Inject
+    UserService userService;
 
     @Inject
     Mapper beanMapper;
@@ -63,7 +66,7 @@ public class MonthlyOutcomeController {
         if (result.hasErrors()) {
             return "monthlyOutcome/createForm";
         }
-        User user = UserDetailsUtils.getUserDetails(principal).getUser();
+        User user = userService.getLoginUser(principal);
         MonthlyOutcome monthlyOutcome = beanMapper.map(form,
                 MonthlyOutcome.class);
         monthlyOutcomeService.save(monthlyOutcome, user);

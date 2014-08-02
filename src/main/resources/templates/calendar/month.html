@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        @media ( min-width: 500px) {
+            #chart1 {
+                height: 300px;
+                width: 500px;
+            }
+        }
+
+        @media ( max-width: 499px) {
+            #chart1 {
+                height: 200px;
+                width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2><span th:text="${today.toString('yyyy-MM')}">2014-06</span>の家計簿</h2>
+
+    <ul class="pager">
+        <li class="previous"><a th:href="@{/calendar/}+${today.minusMonths(1).toString('yyyy/MM')}">前月</a>
+        </li>
+        <li class="next"><a th:href="@{/calendar/}+${today.plusMonths(1).toString('yyyy/MM')}">翌月</a>
+        </li>
+    </ul>
+    <ul class="nav nav-tabs" id="monthTab">
+        <li class="active"><a href="#list">一覧</a></li>
+        <li><a href="#monthly">固定支出</a></li>
+        <li><a href="#income">収入</a></li>
+        <li><a href="#graph">グラフ</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="list">
+            <table class="table table-bordered table-striped table-condensed">
+                <tr>
+                    <th>日付</th>
+                    <th>金額</th>
+                </tr>
+                <tr th:each="report : ${reportsByOutcomeDate}">
+                    <td><a th:href="@{/calendar/}+${report.date.toString('yyyy/MM/dd')}"
+                           th:text="${report.date.toString('yyyy-MM-dd')}">2014-06-01 (<span
+                            th:text="${weekArray[report.date.dayOfWeek]}">月</span>)</a></td>
+                    <td>
+                        <span th:if="${report.amount != null}"
+                              th:text="${#numbers.formatInteger(report.amount, 3, 'COMMA')}"></span>円
+                    </td>
+                </tr>
+            </table>
+            <div id="chart1"></div>
+            <table class="table table-bordered table-striped table-condensed">
+                <tr>
+                    <th>カテゴリ</th>
+                    <th>金額</th>
+                </tr>
+                <tr th:each="report : ${reportsByParentOutcomeCategoryId}">
+                    <td><span th:text="${report.parentOutcomeCategory.categoryName}"></span></td>
+                    <td><span th:if="${report.amount != null}"
+                              th:text="${#numbers.formatInteger(report.amount, 3, 'COMMA')}"></span>円
+                    </td>
+                </tr>
+            </table>
+            <span id="graph-data"></span>
+            <table class="table table-bordered table-condensed">
+                <tr>
+                    <th>支出合計</th>
+                    <td>
+                        <span th:if="${total != null}" th:text="${#numbers.formatInteger(total, 3, 'COMMA')}"></span>円
+                    </td>
+                </tr>
+                <tr>
+                    <th>内、無駄</th>
+                    <td>
+                        <span th:if="${wasteTotal != null}"
+                              th:text="${#numbers.formatInteger(wasteTotal, 3, 'COMMA')}"></span>円
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="tab-pane" id="monthly">
+            <p>固定</p>
+            <table class="table table-bordered table-striped table-condensed">
+                <tr>
+                    <th>支出日</th>
+                    <th>カテゴリ</th>
+                    <th>固定支出名</th>
+                    <th>金額</th>
+                    <th>使用量</th>
+                </tr>
+                <tr th:each="monthlyOutcome : ${monthlyOutcomes}">
+                    <td>
+                        <span th:text="${#calendars.format(monthlyOutcome.outcomeDate, 'yyyy/MM/dd')}">2014/06/01</span>
+                    </td>
+                    <td><span th:text="${monthlyOutcome.monthlyOutcomeCategoryId.categoryName}"></span></td>
+                    <td><span th:text="${monthlyOutcome.outcomeName}"></span></td>
+                    <td>
+                        <span th:if="${monthlyOutcome.amount != null}"
+                              th:text="${#numbers.formatInteger(monthlyOutcome.amount, 3, 'COMMA')}"></span>円
+                    </td>
+                    <td><span
+                            th:text="${monthlyOutcome.quantity}+${monthlyOutcome.monthlyOutcomeCategoryId.unitName}"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="tab-pane" id="income">
+            <p>収入</p>
+        </div>
+        <div class="tab-pane" id="graph">
+            <p>グラフ</p>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('#monthTab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+
+            // pie chart
+            var ajaxDataRenderer = function (url, plot, options) {
+                var ret = null;
+                $.ajax({
+                    async: false,
+                    url: url,
+                    dataType: 'json',
+                    success: function (data) {
+                        //console.log(data);
+                        ret = [ _.map(data,
+                                function (x) {
+                                    return [ x.categoryName,
+                                        x.amount ];
+                                }) ];
+                    }
+                });
+                //console.log(ret);
+                return ret;
+            };
+
+            var jsonurl = location.href + '.json';
+            try {
+                $.jqplot('chart1', jsonurl, {
+                    dataRenderer: ajaxDataRenderer,
+                    seriesDefaults: {
+                        renderer: $.jqplot.PieRenderer,
+                        rendererOptions: {
+                            showDataLabels: true
+                        }
+                    },
+                    legend: {
+                        show: true,
+                        location: 'e'
+                    }
+                });
+            } catch (e) {
+                // no data
+            }
+        });
+    </script>
+</div>
+</body>
+</html>

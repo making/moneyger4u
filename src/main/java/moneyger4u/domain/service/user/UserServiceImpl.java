@@ -3,6 +3,7 @@ package moneyger4u.domain.service.user;
 import moneyger4u.domain.model.Family;
 import moneyger4u.domain.model.User;
 import moneyger4u.domain.repository.user.UserRepository;
+import moneyger4u.domain.service.user_details.UserDetailsUtils;
 import org.joda.time.DateTime;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -73,4 +75,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByFamilyId(familyId);
     }
 
+
+    @Override
+    public User getLoginUser(Principal principal) {
+        return UserDetailsUtils.getUserDetails(principal).getUser();
+        //return userRepository.findOne(1);
+    }
 }

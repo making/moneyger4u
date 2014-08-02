@@ -9,7 +9,6 @@ import moneyger4u.domain.model.User;
 import moneyger4u.domain.service.user.FamilyService;
 import moneyger4u.domain.service.user.UserService;
 import org.dozer.Mapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

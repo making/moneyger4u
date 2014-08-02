@@ -6,7 +6,7 @@ import moneyger4u.app.daily_outcome.DailyOutcomeForm.DailyOutcomeUpdateGroup;
 import moneyger4u.domain.model.*;
 import moneyger4u.domain.service.outcome.DailyOutcomeService;
 import moneyger4u.domain.service.outcome.ParentOutcomeCategoryService;
-import moneyger4u.domain.service.user_details.UserDetailsUtils;
+import moneyger4u.domain.service.user.UserService;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -25,10 +25,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.groups.Default;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("dailyOutcome")
@@ -46,6 +43,9 @@ public class DailyOutcomeController {
 
     @Inject
     ParentOutcomeCategoryService parentOutcomeCategoryService;
+
+    @Inject
+    UserService userService;
 
     @ModelAttribute
     public DailyOutcomeForm setUpForm(
@@ -107,7 +107,7 @@ public class DailyOutcomeController {
     public String searchByOutcomeName(
             @RequestParam("outcomeName") String outcomeName, Model model,
             Principal principal) {
-        User user = UserDetailsUtils.getUserDetails(principal).getUser();
+        User user = userService.getLoginUser(principal);
         List<DailyOutcome> outcomes = dailyOutcomeService
                 .findFamilyDailyOutcomeLikeOutcomeName(outcomeName, user);
         model.addAttribute("outcomes", outcomes);
@@ -127,16 +127,17 @@ public class DailyOutcomeController {
         Cookie cookie = new Cookie(LAST_PAYMENT, form.getPayment().name());
         response.addCookie(cookie);
 
-        User user = UserDetailsUtils.getUserDetails(principal).getUser();
+        User user = userService.getLoginUser(principal);
         DailyOutcome dailyOutcome = beanMapper.map(form,
                 DailyOutcome.class);
         dailyOutcome.setIsWaste(form.isWaste()); // TODO
         dailyOutcomeService.save(dailyOutcome, user);
-        attributes.addFlashAttribute("created", dailyOutcome.getOutcomeName());
-        attributes.addAttribute("date",
-                new DateTime(dailyOutcome.getOutcomeDate())
-                        .toString("yyyy-MM-dd")
-        );
+        attributes.addFlashAttribute("created", dailyOutcome.getOutcomeName())
+                .addAttribute("r", new Random(System.nanoTime()).nextInt(Integer.MAX_VALUE))
+                .addAttribute("date",
+                        new DateTime(dailyOutcome.getOutcomeDate())
+                                .toString("yyyy-MM-dd")
+                );
         return "redirect:/dailyOutcome?form";
     }
 
@@ -171,16 +172,17 @@ public class DailyOutcomeController {
             return "dailyOutcome/updateForm";
         }
 
-        User user = UserDetailsUtils.getUserDetails(principal).getUser();
+        User user = userService.getLoginUser(principal);
         DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
         //beanConverter.convert(form, dailyOutcome, IgnoreOption.NULL_SOURCE);
         beanMapper.map(form, dailyOutcome);
         dailyOutcome.setIsWaste(form.isWaste()); // TODO
 
         dailyOutcomeService.save(dailyOutcome, user);
-        attributes.addFlashAttribute("updated", dailyOutcome.getOutcomeName());
-        attributes.addAttribute("dailyOutcomeId",
-                dailyOutcome.getDailyOutcomeId());
+        attributes.addFlashAttribute("updated", dailyOutcome.getOutcomeName())
+                .addAttribute("r", new Random(System.nanoTime()).nextInt(Integer.MAX_VALUE))
+                .addAttribute("dailyOutcomeId",
+                        dailyOutcome.getDailyOutcomeId());
         return "redirect:/dailyOutcome/{dailyOutcomeId}";
     }
 
@@ -193,7 +195,8 @@ public class DailyOutcomeController {
         dailyOutcomeService.delete(dailyOutcomeId);
         attributes.addAttribute("year", date.getYear())
                 .addAttribute("month", date.toString("MM"))
-                .addAttribute("day", date.toString("dd"));
+                .addAttribute("day", date.toString("dd"))
+                .addAttribute("r", new Random(System.nanoTime()).nextInt(Integer.MAX_VALUE));
         return "redirect:/calendar/{year}/{month}/{day}";
     }
 }

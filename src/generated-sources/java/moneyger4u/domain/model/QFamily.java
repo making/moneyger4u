@@ -1,12 +1,13 @@
 package moneyger4u.domain.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
 import com.mysema.query.types.path.*;
 
+import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
 
 
 /**
@@ -41,7 +42,7 @@ public class QFamily extends EntityPathBase<Family> {
 
     @SuppressWarnings("all")
     public QFamily(Path<? extends Family> path) {
-        super((Class) path.getType(), path.getMetadata());
+        super((Class)path.getType(), path.getMetadata());
     }
 
     public QFamily(PathMetadata<?> metadata) {

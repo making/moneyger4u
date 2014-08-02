@@ -1,0 +1,22 @@
+moneyger4u:
+  db: MYSQL
+spring:
+  datasource:
+#    url: jdbc:h2:file:${moneyger4u.h2.datadir:/tmp}/moneyger4u
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/moneyger4u?zeroDateTimeBehavior=convertToNull
+    username: root
+    password: password
+  main:
+    show-banner: false
+  jpa.hibernate.ddl-auto: validate
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+  resources:
+    cache-period: #{60 * 60 * 24 * 3}
+security:
+  basic:
+    enabled: false
+server.tomcat.access_log_enabled: true
+flyway.locations: classpath:db/migration/${moneyger4u.db:H2}

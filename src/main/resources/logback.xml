@@ -1,91 +1,14 @@
-<!DOCTYPE logback>
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>
-                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
-        </encoder>
-    </appender>
-
-    <appender name="APPLICATION_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/moneyger4u-application.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/moneyger4u-application-%d{yyyyMMdd}.log</fileNamePattern>
-            <maxHistory>7</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern>
-                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
-        </encoder>
-    </appender>
-
-    <appender name="MONITORING_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/moneyger4u-monitoring.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/moneyger4u-monitoring-%d{yyyyMMdd}.log</fileNamePattern>
-            <maxHistory>7</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern>
-                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tX-Track:%X{X-Track}\tlevel:%-5level\tmessage:%msg%n]]></pattern>
-        </encoder>
-    </appender>
-
-    <!-- Application Loggers -->
-    <logger name="moneyger4u">
-        <level value="debug"/>
-    </logger>
-
-    <!-- TERASOLUNA -->
-    <logger name="org.terasoluna.gfw">
-        <level value="debug"/>
-    </logger>
-    <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor">
-        <level value="trace"/>
-    </logger>
-    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger">
-        <level value="info"/>
-    </logger>
-    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" additivity="false">
-        <level value="error"/>
-        <appender-ref ref="MONITORING_LOG_FILE"/>
-    </logger>
-
-    <!-- 3rdparty Loggers -->
-    <logger name="org.springframework">
-        <level value="warn"/>
-    </logger>
-
-    <logger name="org.springframework.web.servlet">
-        <level value="info"/>
-    </logger>
-
-    <logger name="org.hibernate.engine.transaction">
-        <level value="debug"/>
-    </logger>
-    <!--  REMOVE THIS LINE IF YOU USE MyBatis2
-    <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <level value="debug" />
-    </logger>
-          REMOVE THIS LINE IF YOU USE MyBatis2  -->
-    <!--  REMOVE THIS LINE IF YOU USE MyBatis3
-    <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <level value="debug" />
-    </logger>
-          REMOVE THIS LINE IF YOU USE MyBatis3  -->
-    <logger name="jdbc">
-        <level value="off"/>
-    </logger>
-    <logger name="jdbc.sqltiming">
-        <level value="debug"/>
-    </logger>
-
-    <root level="warn">
-        <appender-ref ref="STDOUT"/>
-        <appender-ref ref="APPLICATION_LOG_FILE"/>
-    </root>
-
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <logger name="org.hibernate.engine.transaction" level="WARN"/>
+    <logger name="moneyger4u" level="DEBUG"/>
+    <logger name="org.terasoluna" level="DEBUG"/>
+    <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="TRACE"/>
+    <logger name="jdbc" level="OFF"/>
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+    <logger name="jdbc.resultsettable" level="ERROR"/>
+    <logger name="org.hibernate.tool" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
 </configuration>
+

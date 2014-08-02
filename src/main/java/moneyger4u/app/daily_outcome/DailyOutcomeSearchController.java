@@ -7,7 +7,6 @@ import moneyger4u.domain.repository.outcome.DailyOutcomeSearchResult;
 import moneyger4u.domain.service.outcome.DailyOutcomeService;
 import moneyger4u.domain.service.outcome.ParentOutcomeCategoryService;
 import moneyger4u.domain.service.user.UserService;
-import moneyger4u.domain.service.user_details.UserDetailsUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -62,9 +61,7 @@ public class DailyOutcomeSearchController {
     @ModelAttribute("userIdMap")
     public Map<Integer, String> getUserIdMap(Principal principal) {
         Map<Integer, String> userIdMap = Maps.newLinkedHashMap();
-        MoneygerUserDetails userDetails = UserDetailsUtils
-                .getUserDetails(principal);
-        Family familyId = userDetails.getUser().getFamilyId();
+        Family familyId = userService.getLoginUser(principal).getFamilyId();
         List<User> users = userService.findByFamilyId(familyId);
         for (User user : users) {
             userIdMap.put(user.getUserId(),
@@ -86,7 +83,7 @@ public class DailyOutcomeSearchController {
 
     @RequestMapping(value = "search")
     public String search(DailyOutcomeSearchCriteria criteria,
-                         @PageableDefault Pageable pageable, Model model) {
+                         @PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, Model model) {
         logger.info("search={}", criteria);
 
         DailyOutcomeSearchResult result = dailyOutcomeService.search(criteria,

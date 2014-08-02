@@ -29,7 +29,7 @@ public class UserSearchController {
     }
 
     @RequestMapping("list")
-    public String list(@PageableDefault Pageable pageable, Model model) {
+    public String list(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, Model model) {
         Page<User> page = userService.findAll(pageable);
         model.addAttribute("page", page);
         return "user/list";
@@ -37,7 +37,7 @@ public class UserSearchController {
 
     @RequestMapping("search")
     public String search(@Valid UserSearchForm form, BindingResult result,
-                         @PageableDefault Pageable pageable, Model model) {
+                         @PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, Model model) {
         if (result.hasErrors()) {
             return "user/list";
         }
