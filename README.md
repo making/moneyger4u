@@ -4,8 +4,8 @@
 
 ## Build and Run
 
-  $ mvn package
-  $ java -jar target/*.jar
+    $ mvn package
+    $ java -jar target/*.jar
 
 Access http://localhost:8080
 
