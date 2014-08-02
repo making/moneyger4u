@@ -6,7 +6,7 @@
     <artifactId>moneyger4u</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <description>Blank project using TERASOLUNA Global Framework (JPA)</description>
+    <description>Moneyger4U</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
