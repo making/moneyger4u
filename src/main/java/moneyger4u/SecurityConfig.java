@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.inject.Inject;
 
@@ -31,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login", "/logout").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginProcessingUrl("/authentication")
@@ -41,7 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error=true")
                 .loginPage("/login").permitAll();
         http.logout()
-                .logoutUrl("/logout").permitAll();
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout=true")
+                .deleteCookies("JSESSIONID").permitAll();
         http.rememberMe().key("moneyger4u_remember_me");
     }
 

@@ -142,7 +142,7 @@
     </form>
 
 
-    <table class="table table-bordered table-striped table-condensed">
+    <table th:if="${result}" class="table table-bordered table-striped table-condensed">
         <tr>
             <th>購入日</th>
             <th>カテゴリ</th>
@@ -178,10 +178,10 @@
             </td>
         </tr>
     </table>
-    <table class="table table-bordered table-condensed">
+    <table th:if="${result}" class="table table-bordered table-condensed">
         <tr>
             <th>合計</th>
-            <td><span th:text="${#numbers.formatInteger(result.sum, 3, 'COMMA')}"></span> 円
+            <td><span th:if="${result.sum}" th:text="${#numbers.formatInteger(result.sum, 3, 'COMMA')}"></span> 円
             </td>
         </tr>
     </table>

@@ -15,7 +15,7 @@ spring:
     cache: false
     mode: LEGACYHTML5
   resources:
-    cache-period: #{60 * 60 * 24 * 3}
+    cache-period: 259200 # 60 * 60 * 24 * 3 sec
 security:
   basic:
     enabled: false

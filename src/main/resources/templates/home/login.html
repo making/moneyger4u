@@ -16,6 +16,10 @@
             <h4 class="alert-heading">Login error!</h4>
             Invalid username and password.
         </div>
+        <div th:if="${param.logout}" class="alert alert-success">
+            <a class="close" href="#" onclick="$(this).parent().hide()">x</a>
+            Logout successfully!
+        </div>
         <fieldset>
             <legend>ログイン</legend>
             <div class="form-group">
