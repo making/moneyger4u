@@ -6,6 +6,8 @@
 
 Download jar from [release page](https://github.com/making/moneyger4u/releases).
 
+    $ java -jar moneyger4u*.jar
+
 Access http://localhost:8080
 
 Login with user1@example.com/password
