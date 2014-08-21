@@ -14,7 +14,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener;
 import org.terasoluna.gfw.web.logging.TraceLoggingInterceptor;
 import org.terasoluna.gfw.web.logging.mdc.MDCClearFilter;
@@ -59,15 +58,6 @@ public class AppConfig {
     @Bean
     DataSource dataSource() {
         return new Log4jdbcProxyDataSource(this.dataSource);
-    }
-
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    CharacterEncodingFilter characterEncodingFilter() {
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
-        filter.setEncoding("UTF-8");
-        filter.setForceEncoding(true);
-        return filter;
     }
 
     @Bean
