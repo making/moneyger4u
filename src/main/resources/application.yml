@@ -8,6 +8,8 @@ spring:
 #    url: jdbc:mysql://localhost:3306/moneyger4u?zeroDateTimeBehavior=convertToNull
 #    username: root
 #    password: password
+    testOnBorrow: true
+    validationQuery: SELECT 1
   main:
     show-banner: false
   jpa.hibernate.ddl-auto: validate
