@@ -5,7 +5,7 @@
     <groupId>moneyger4u</groupId>
     <artifactId>moneyger4u</artifactId>
     <packaging>jar</packaging>
-    <version>0.9.1</version>
+    <version>0.9.2-SNAPSHOT</version>
     <description>Moneyger4U</description>
 
     <parent>
