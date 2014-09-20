@@ -2,10 +2,8 @@ package moneyger4u;
 
 import net.sf.log4jdbc.Log4jdbcProxyDataSource;
 import org.dozer.spring.DozerBeanMapperFactoryBean;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -42,8 +40,6 @@ public class AppConfig {
         return new ShaPasswordEncoder(512);
     }
 
-
-    @ConfigurationProperties(prefix = DataSourceAutoConfiguration.CONFIGURATION_PREFIX)
     @Bean
     DataSource realDataSource() {
         DataSourceBuilder factory = DataSourceBuilder

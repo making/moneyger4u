@@ -50,6 +50,8 @@
                     $('#btn-minus-8percent'),
                     $('#btn-add-5percent'),
                     $('#btn-minus-5percent'),
+                    $('#btn-add-10percent'),
+                    $('#btn-minus-10percent'),
                     $('#btn-revert'));
         });
         //-->
@@ -112,6 +114,8 @@
                 <button class="btn btn-default" id="btn-minus-8percent">-8%</button>
                 <button class="btn btn-default" id="btn-add-5percent">+5%</button>
                 <button class="btn btn-default" id="btn-minus-5percent">-5%</button>
+                <button class="btn btn-default" id="btn-add-10percent">+10%</button>
+                <button class="btn btn-default" id="btn-minus-10percent">-10%</button>
                 <button class="btn btn-default" id="btn-revert">+0%</button>
             </div>
         </div>
@@ -192,9 +196,17 @@
             <div class="col col-sm-10 col-sm-offset-2">
                 <input type="submit"
                        class="btn btn-primary disable-double-submit" value="修正"/>
+                <input id="version"
+                       th:field="*{version}"
+                       type="hidden"/>
+                <span th:if="${#fields.hasErrors('version')}" th:errors="*{version}" class="text-danger"></span>
                 <a th:href="@{/dailyOutcome/}+${dailyOutcomeForm.dailyOutcomeId}"
                    class="btn btn-success"><span
                         class="glyphicon glyphicon-th-list"></span> 詳細</a>
+                <a th:href="@{/calendar/}+${#dates.format(dailyOutcomeForm.outcomeDate, 'yyyy/MM/dd')}"
+                   class="btn btn-success"><span
+                        class="glyphicon glyphicon-list"></span>
+                    <span th:text="${#dates.format(dailyOutcomeForm.outcomeDate, 'yyyy-MM-dd')}"></span>の支出</a>
                 <a th:href="@{/}"
                    class="btn btn-default disable-double-submit"><span
                         class="glyphicon glyphicon-home"></span> HOME</a>

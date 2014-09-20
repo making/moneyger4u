@@ -50,6 +50,8 @@
                     $('#btn-minus-8percent'),
                     $('#btn-add-5percent'),
                     $('#btn-minus-5percent'),
+                    $('#btn-add-10percent'),
+                    $('#btn-minus-10percent'),
                     $('#btn-revert'));
         });
         //-->
@@ -126,6 +128,8 @@
                 <button class="btn btn-default" id="btn-minus-8percent">-8%</button>
                 <button class="btn btn-default" id="btn-add-5percent">+5%</button>
                 <button class="btn btn-default" id="btn-minus-5percent">-5%</button>
+                <button class="btn btn-default" id="btn-add-10percent">+10%</button>
+                <button class="btn btn-default" id="btn-minus-10percent">-10%</button>
                 <button class="btn btn-default" id="btn-revert">+0%</button>
             </div>
         </div>
@@ -190,6 +194,23 @@
             <div class="col col-sm-10 controls">
                 <input type="checkbox" id="waste" th:field="*{waste}" class="form-control"/>
                 <span th:if="${#fields.hasErrors('waste')}" th:errors="*{waste}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="createUserId"
+                   class="col col-sm-2 row-label control-label">登録ユーザー
+            </label>
+
+            <div class="col col-sm-10 controls">
+                <select id="createUserId"
+                        th:field="*{createUserId}"
+                        class="form-control">
+                    <option th:each="value : ${userNameMap}"
+                            th:label="${value.value}"
+                            th:value="${value.key}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('createUserId')}" th:errors="*{createUserId}"
+                      class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">

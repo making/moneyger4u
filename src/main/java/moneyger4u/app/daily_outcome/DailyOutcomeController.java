@@ -12,6 +12,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.groups.Default;
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("dailyOutcome")
@@ -81,6 +83,13 @@ public class DailyOutcomeController {
         return categoryMap;
     }
 
+    @ModelAttribute("userNameMap")
+    public Map<Integer, String> getUserNameMap(@AuthenticationPrincipal MoneygerUserDetails loginUser) {
+        Family family = loginUser.getUser().getFamilyId();
+        return userService.findByFamilyId(family).stream()
+                .collect(Collectors.toMap(User::getUserId, user -> user.getLastName() + " " + user.getFirstName()));
+    }
+
     @ModelAttribute("payments")
     public List<Payment> getPayments() {
         return Arrays.asList(Payment.values());
@@ -90,7 +99,8 @@ public class DailyOutcomeController {
     public String createForm(
             DailyOutcomeForm form,
             Model model,
-            @CookieValue(value = LAST_PAYMENT, required = false) String lastPayment) {
+            @CookieValue(value = LAST_PAYMENT, required = false) String lastPayment,
+            @AuthenticationPrincipal MoneygerUserDetails loginUser) {
         if (form.getOutcomeDate() == null) {
             form.setOutcomeDate(new Date());
         }
@@ -99,6 +109,9 @@ public class DailyOutcomeController {
         }
         if (StringUtils.hasText(lastPayment)) {
             form.setPayment(Payment.valueOf(lastPayment));
+        }
+        if (form.getCreateUserId() == null) {
+            form.setCreateUserId(loginUser.getUser().getUserId());
         }
         return "dailyOutcome/createForm";
     }
@@ -119,7 +132,7 @@ public class DailyOutcomeController {
     public String create(@Validated({Default.class,
             DailyOutcomeCreateGroup.class}) DailyOutcomeForm form,
                          BindingResult result, RedirectAttributes attributes,
-                         HttpServletResponse response, Principal principal) {
+                         HttpServletResponse response) {
         logger.debug("register {}", form);
         if (result.hasErrors()) {
             return "dailyOutcome/createForm";
@@ -127,7 +140,7 @@ public class DailyOutcomeController {
         Cookie cookie = new Cookie(LAST_PAYMENT, form.getPayment().name());
         response.addCookie(cookie);
 
-        User user = userService.getLoginUser(principal);
+        User user = new User(form.getCreateUserId());
         DailyOutcome dailyOutcome = beanMapper.map(form,
                 DailyOutcome.class);
         dailyOutcome.setIsWaste(form.isWaste()); // TODO
@@ -166,13 +179,13 @@ public class DailyOutcomeController {
             @PathVariable("dailyOutcomeId") Integer dailyOutcomeId,
             @Validated({Default.class, DailyOutcomeUpdateGroup.class}) DailyOutcomeForm form,
             BindingResult result, RedirectAttributes attributes,
-            Principal principal) {
+            @AuthenticationPrincipal MoneygerUserDetails userDetails) {
         logger.debug("update {}", form);
         if (result.hasErrors()) {
             return "dailyOutcome/updateForm";
         }
 
-        User user = userService.getLoginUser(principal);
+        User user = userDetails.getUser();
         DailyOutcome dailyOutcome = dailyOutcomeService.findOne(dailyOutcomeId);
         //beanConverter.convert(form, dailyOutcome, IgnoreOption.NULL_SOURCE);
         beanMapper.map(form, dailyOutcome);

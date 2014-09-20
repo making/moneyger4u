@@ -64,6 +64,10 @@ public class DailyOutcomeForm {
             DailyOutcomeCreateGroup.class})
     private Integer dailyOutcomeCategoryId;
 
+    @NotNull(groups = {DailyOutcomeCreateGroup.class})
+    @Min(0)
+    private Integer createUserId;
+
     @Null(groups = {DailyOutcomeCreateGroup.class})
     @NotNull(groups = {DailyOutcomeUpdateGroup.class})
     @Min(0)
