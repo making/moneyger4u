@@ -48,7 +48,7 @@ public class ParentOutcomeCategory implements Serializable {
     @Version
     @Column(name = "VERSION")
     private int version;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentOutcomeCategoryId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentOutcomeCategoryId", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<DailyOutcomeCategory> dailyOutcomeCategoryList;
 

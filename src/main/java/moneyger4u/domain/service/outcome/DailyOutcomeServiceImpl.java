@@ -47,6 +47,20 @@ public class DailyOutcomeServiceImpl implements DailyOutcomeService {
     }
 
     @Override
+    public void save(List<DailyOutcome> outcomes, User user) {
+        Date now = new Date();
+        outcomes.forEach(outcome -> {
+            if (outcome.getCreatedAt() == null) {
+                outcome.setCreatedAt(now);
+                outcome.setUserId(user);
+            }
+            outcome.setUpdatedAt(now);
+            outcome.setUpdatedBy(user);
+        });
+        dailyOutcomeRepository.save(outcomes);
+    }
+
+    @Override
     public void delete(Integer dailyOutcomeId) {
         logger.debug("delete dailyOutcomeId={}", dailyOutcomeId);
         dailyOutcomeRepository.delete(dailyOutcomeId);

@@ -17,6 +17,8 @@ public interface DailyOutcomeService {
 
     void save(DailyOutcome outcome, User user);
 
+    void save(List<DailyOutcome> outcomes, User user);
+
     void delete(Integer dailyOutcomeId);
 
     List<DailyOutcome> findFamilyDailyOutcomeByUserAndDate(User user, Date date);

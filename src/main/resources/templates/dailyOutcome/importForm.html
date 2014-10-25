@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+    <script th:if="${created != null &&created != ''}" type="text/javascript"
+            th:inline="javascript">
+        <!--
+        $(function () {
+            var created = /*[[${created}]]*/ null;
+            $('.top-right').notify({
+                message: {
+                    text: created + '件登録しました！'
+                },
+                fadeOut: {
+                    enabled: false
+                }
+            }).show();
+        });
+        //-->
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2>支出登録 (Excelインポート)</h2>
+
+    <div class='notifications top-right'></div>
+
+    <p>
+        <a th:href="@{/dailyOutcome/template.xlsx}" class="btn btn-default btn-xs">Excelテンプレートダウンロード</a>
+    </p>
+    <form th:action="@{/dailyOutcome/import}"
+          method="POST"
+          enctype="multipart/form-data"
+          th:object="${dailyOutcomeExcelImportForm}"
+          id="dailyOutcomeExcelImportForm"
+          class="form-horizontal">
+        <div class="form-group">
+            <label for="file"
+                   class="col col-sm-2 row-label control-label">エクセル選択
+            </label>
+
+            <div class="col col-sm-10 controls">
+                <input type="file" name="file" id="file"/>
+                <span th:if="${#fields.hasErrors('file')}" th:errors="*{file}"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="createUserId"
+                   class="col col-sm-2 row-label control-label">登録ユーザー
+            </label>
+
+            <div class="col col-sm-10 controls">
+                <select id="createUserId"
+                        th:field="*{createUserId}"
+                        class="form-control">
+                    <option th:each="value : ${userNameMap}"
+                            th:label="${value.value}"
+                            th:value="${value.key}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('createUserId')}" th:errors="*{createUserId}"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row form-actions">
+            <div class="col col-sm-10 col-sm-offset-2">
+                <input type="submit"
+                       class="btn btn-primary disable-double-submit" value="インポート"/>
+                <span th:if="${date != null}">
+                    <a th:href="@{/calendar/}+${date.toString('yyyy/MM/dd')}"
+                       class="btn btn-success"><span class="glyphicon glyphicon-list"></span>
+                        <span th:text="${date.toString('yyyy-MM-dd')}"></span>の支出</a>
+                </span>
+                <a th:href="@{/}"
+                   class="btn btn-default disable-double-submit"><span
+                        class="glyphicon glyphicon-home"></span> HOME</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

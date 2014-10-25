@@ -12,7 +12,15 @@ spring:
     validationQuery: SELECT 1
   main:
     show-banner: false
-  jpa.hibernate.ddl-auto: validate
+  jpa:
+    hibernate.ddl-auto: validate
+    properties:
+      hibernate:
+        use_sql_comments: true
+        connection.charSet: UTF-8
+        jdbc:
+          batch_size: 50
+          fetch_size: 100
   thymeleaf:
     cache: false
     mode: LEGACYHTML5
