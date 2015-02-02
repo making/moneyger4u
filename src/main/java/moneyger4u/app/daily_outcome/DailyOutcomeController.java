@@ -128,6 +128,28 @@ public class DailyOutcomeController {
         return "dailyOutcome/searchList";
     }
 
+    @RequestMapping(value = "{year}/{month}", method = RequestMethod.GET, params = "parentOutcomeCategoryId")
+    public String searchByCategoryParentId(
+            @RequestParam("parentOutcomeCategoryId") Integer parentOutcomeCategoryId,
+            @PathVariable("year") int year,
+            @PathVariable("month") int month,
+            Model model,
+            Principal principal) {
+        User user = userService.getLoginUser(principal);
+        DateTime start = new DateTime(year, month, 1, 0, 0);
+        DateTime end = start.dayOfMonth().withMaximumValue();
+        List<DailyOutcome> outcomes = dailyOutcomeService
+                .findFamilyDailyOutcomeByParentCategory(parentOutcomeCategoryId, user, start, end);
+        ParentOutcomeCategory parent = parentOutcomeCategoryService
+                .findAll().stream()
+                .filter(x -> Objects.equals(parentOutcomeCategoryId, x.getParentOutcomeCategoryId()))
+                .findFirst()
+                .get();
+        model.addAttribute("outcomes", outcomes);
+        model.addAttribute("outcomeName", year + "-" + month + "の" + parent.getCategoryName());
+        return "dailyOutcome/searchList";
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public String create(@Validated({Default.class,
             DailyOutcomeCreateGroup.class}) DailyOutcomeForm form,

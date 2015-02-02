@@ -61,7 +61,9 @@
                     <th>金額</th>
                 </tr>
                 <tr th:each="report : ${reportsByParentOutcomeCategoryId}">
-                    <td><span th:text="${report.parentOutcomeCategory.categoryName}"></span></td>
+                    <td><a th:href="@{'/dailyOutcome/'} + ${today.toString('yyyy/MM')} + '?parentOutcomeCategoryId=' + ${report.parentOutcomeCategory.parentOutcomeCategoryId}"><span
+                            th:text="${report.parentOutcomeCategory.categoryName}"></span></a>
+                    </td>
                     <td><span th:if="${report.amount != null}"
                               th:text="${#numbers.formatInteger(report.amount, 3, 'COMMA')}"></span>円
                     </td>
@@ -134,11 +136,11 @@
                     dataType: 'json',
                     success: function (data) {
                         //console.log(data);
-                        ret = [ _.map(data,
+                        ret = [_.map(data,
                                 function (x) {
-                                    return [ x.categoryName,
-                                        x.amount ];
-                                }) ];
+                                    return [x.categoryName,
+                                        x.amount];
+                                })];
                     }
                 });
                 //console.log(ret);

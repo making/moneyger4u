@@ -22,6 +22,19 @@ public interface DailyOutcomeRepository extends
             @Param("outcomeName") String outcomeName,
             @Param("family") Family family);
 
+    @Query("SELECT x FROM DailyOutcome x " +
+            "WHERE x.userId.familyId = :family  AND " +
+            " x.dailyOutcomeCategoryId.parentOutcomeCategoryId.parentOutcomeCategoryId = :parentOutcomeCategoryId AND " +
+            " (x.outcomeDate BETWEEN :start AND :end) " +
+            "ORDER BY " +
+            " x.dailyOutcomeCategoryId.dailyOutcomeCategoryId ASC," +
+            " x.dailyOutcomeCategoryId.parentOutcomeCategoryId.parentOutcomeCategoryId ASC," +
+            " x.outcomeDate DESC")
+    List<DailyOutcome> findFamilyDailyOutcomeByParentCategory(
+            @Param("parentOutcomeCategoryId") Integer parentOutcomeCategoryId,
+            @Param("family") Family family,
+            @Param("start") Date start, @Param("end") Date end);
+
     @Query("SELECT NEW moneyger4u.domain.model.DailyOutcomeReportGroupByOutcomeDate(x.outcomeDate, SUM(x.amount * x.quantity)) FROM DailyOutcome x WHERE x.userId.familyId = :family AND x.outcomeDate BETWEEN :start AND :end GROUP BY x.outcomeDate ORDER BY x.outcomeDate ASC")
     List<DailyOutcomeReportGroupByOutcomeDate> findFamilyReportGroupByOutcomeDate(
             @Param("family") Family family, @Param("start") Date start,

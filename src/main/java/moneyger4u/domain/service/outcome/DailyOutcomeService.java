@@ -26,6 +26,9 @@ public interface DailyOutcomeService {
     List<DailyOutcome> findFamilyDailyOutcomeLikeOutcomeName(
             String outcomeName, User user);
 
+    List<DailyOutcome> findFamilyDailyOutcomeByParentCategory(
+            Integer parentOutcomeCategoryId, User user, DateTime start, DateTime end);
+
     List<DailyOutcomeReportGroupByOutcomeDate> findFamilyReportGroupByOutcomeDate(
             User user, DateTime start, DateTime end);
 
