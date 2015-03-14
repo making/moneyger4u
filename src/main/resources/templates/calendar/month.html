@@ -32,7 +32,6 @@
     </ul>
     <ul class="nav nav-tabs" id="monthTab">
         <li class="active"><a href="#list">一覧</a></li>
-        <li><a href="#monthly">固定支出</a></li>
         <li><a href="#income">収入</a></li>
         <li><a href="#graph">グラフ</a></li>
     </ul>
@@ -82,32 +81,6 @@
                     <td>
                         <span th:if="${wasteTotal != null}"
                               th:text="${#numbers.formatInteger(wasteTotal, 3, 'COMMA')}"></span>円
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="tab-pane" id="monthly">
-            <p>固定</p>
-            <table class="table table-bordered table-striped table-condensed">
-                <tr>
-                    <th>支出日</th>
-                    <th>カテゴリ</th>
-                    <th>固定支出名</th>
-                    <th>金額</th>
-                    <th>使用量</th>
-                </tr>
-                <tr th:each="monthlyOutcome : ${monthlyOutcomes}">
-                    <td>
-                        <span th:text="${#calendars.format(monthlyOutcome.outcomeDate, 'yyyy/MM/dd')}">2014/06/01</span>
-                    </td>
-                    <td><span th:text="${monthlyOutcome.monthlyOutcomeCategoryId.categoryName}"></span></td>
-                    <td><span th:text="${monthlyOutcome.outcomeName}"></span></td>
-                    <td>
-                        <span th:if="${monthlyOutcome.amount != null}"
-                              th:text="${#numbers.formatInteger(monthlyOutcome.amount, 3, 'COMMA')}"></span>円
-                    </td>
-                    <td><span
-                            th:text="${monthlyOutcome.quantity}+${monthlyOutcome.monthlyOutcomeCategoryId.unitName}"></span>
                     </td>
                 </tr>
             </table>
