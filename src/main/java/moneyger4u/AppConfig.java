@@ -19,6 +19,7 @@ import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class AppConfig {
@@ -48,7 +49,19 @@ public class AppConfig {
                 .username(this.properties.getUsername())
                 .password(this.properties.getPassword());
         this.dataSource = factory.build();
+        setValidationQuery(this.dataSource);
         return this.dataSource;
+    }
+
+    static void setValidationQuery(DataSource dataSource) {
+        if (dataSource instanceof org.apache.tomcat.jdbc.pool.DataSource) {
+            org.apache.tomcat.jdbc.pool.DataSource ds = (org.apache.tomcat.jdbc.pool.DataSource) dataSource;
+            ds.setValidationQuery("SELECT 1");
+            ds.setTestOnBorrow(true);
+            ds.setTestWhileIdle(true);
+            ds.setValidationInterval(TimeUnit.MINUTES.toMillis(1));
+            ds.setTimeBetweenEvictionRunsMillis((int) TimeUnit.MINUTES.toMillis(5));
+        }
     }
 
     @Bean
