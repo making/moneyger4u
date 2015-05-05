@@ -3,8 +3,7 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <logger name="org.hibernate.engine.transaction" level="WARN"/>
     <logger name="moneyger4u" level="DEBUG"/>
-    <logger name="org.terasoluna" level="DEBUG"/>
-    <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="TRACE"/>
+    <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="${log.verbose:-TRACE}"/>
     <logger name="jdbc" level="OFF"/>
     <logger name="jdbc.sqltiming" level="DEBUG"/>
     <logger name="jdbc.resultsettable" level="ERROR"/>
