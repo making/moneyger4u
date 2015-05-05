@@ -20,18 +20,24 @@ Login with user1@example.com/password
 ### Build Docker image
 
     $ mvn clean package
-    $ mvn docker:build
+    $ cd target
+    $ docker build -t making/moneyger4u .
 
 
 ## Run with Docker
 
 ```
-docker run --rm --name moneyger4u \
- -e "_JAVA_OPTIONS=-Duser.timezone=JST \
- -Dlogging.level.jdbc.sqltiming=ERROR \
- -Dlogging.level.org=WARN \
- " \
- -v /tmp/moneyger4u:/tmp \
- -p 80:8080 \
- making/moneyger4u
+docker run -d \
+--name moneyger4u \
+-p 8080:8080 \
+-v /tmp/moneyger4u:/tmp \
+-e "_JAVA_OPTIONS=-Duser.timezone=JST -Dlog.verbose=WARN" \
+making/moneyger4u \
+--spring.thymeleaf.cache=true \
+--logging.level.moneyger4u.App=INFO \
+--logging.level.moneyger4u=WARN \
+--logging.level.jdbc.sqltiming=ERROR \
+--logging.level.org=WARN
 ```
+
+Go to `http://<Docker HOST IP>:8080`
