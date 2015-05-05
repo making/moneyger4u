@@ -2,10 +2,12 @@ package moneyger4u;
 
 import net.sf.log4jdbc.Log4jdbcProxyDataSource;
 import org.dozer.spring.DozerBeanMapperFactoryBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
@@ -19,6 +21,7 @@ import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
@@ -41,18 +44,6 @@ public class AppConfig {
         return new ShaPasswordEncoder(512);
     }
 
-    @Bean
-    DataSource realDataSource() {
-        DataSourceBuilder factory = DataSourceBuilder
-                .create(this.properties.getClassLoader())
-                .url(this.properties.getUrl())
-                .username(this.properties.getUsername())
-                .password(this.properties.getPassword());
-        this.dataSource = factory.build();
-        setValidationQuery(this.dataSource);
-        return this.dataSource;
-    }
-
     static void setValidationQuery(DataSource dataSource) {
         if (dataSource instanceof org.apache.tomcat.jdbc.pool.DataSource) {
             org.apache.tomcat.jdbc.pool.DataSource ds = (org.apache.tomcat.jdbc.pool.DataSource) dataSource;
@@ -64,9 +55,66 @@ public class AppConfig {
         }
     }
 
-    @Bean
-    DataSource dataSource() {
-        return new Log4jdbcProxyDataSource(this.dataSource);
+    @Configuration
+    @Profile("db.property")
+    public static class PropertyDbConfiguration {
+        @Inject
+        DataSourceProperties dataSourceProperties;
+
+        @Bean
+        DataSourceBuilder realDataSourceBuilder() throws URISyntaxException {
+            String url = this.dataSourceProperties.getUrl();
+            String username = this.dataSourceProperties.getUsername();
+            String password = this.dataSourceProperties.getPassword();
+
+            DataSourceBuilder factory = DataSourceBuilder
+                    .create(this.dataSourceProperties.getClassLoader())
+                    .url(url)
+                    .username(username)
+                    .password(password);
+            return factory;
+        }
+
+        @Bean
+        DataSource dataSource(DataSourceBuilder factory) {
+            DataSource dataSource = factory.build();
+            setValidationQuery(dataSource);
+            return new Log4jdbcProxyDataSource(dataSource);
+        }
+    }
+
+    @Configuration
+    @Profile("db.docker")
+    public static class DockerDbConfiguration {
+        @Value("#{systemEnvironment['MYSQL_PORT_3306_TCP_ADDR']}")
+        String mysqlHost;
+        @Value("#{systemEnvironment['MYSQL_PORT_3306_TCP_PORT']}")
+        int mysqlPort;
+        @Value("${spring.datasource.database:moneyger4u}")
+        String database;
+        @Inject
+        DataSourceProperties dataSourceProperties;
+
+        @Bean
+        DataSourceBuilder realDataSourceBuilder() {
+            String url = "jdbc:mysql://" + mysqlHost + ":" + mysqlPort + "/" + database + "?zeroDateTimeBehavior=convertToNull";
+            String username = this.dataSourceProperties.getUsername();
+            String password = this.dataSourceProperties.getPassword();
+
+            DataSourceBuilder factory = DataSourceBuilder
+                    .create()
+                    .url(url)
+                    .username(username)
+                    .password(password);
+            return factory;
+        }
+
+        @Bean
+        DataSource dataSource(DataSourceBuilder factory) {
+            DataSource dataSource = factory.build();
+            setValidationQuery(dataSource);
+            return new Log4jdbcProxyDataSource(dataSource);
+        }
     }
 
     @Bean

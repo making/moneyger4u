@@ -2,6 +2,8 @@ moneyger4u:
   db: H2
 #  db: MYSQL
 spring:
+  profiles:
+    active: db.property
   datasource:
     url: jdbc:h2:file:${moneyger4u.h2.datadir:/tmp}/moneyger4u
 #    driverClassName: com.mysql.jdbc.Driver
