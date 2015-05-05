@@ -21,6 +21,7 @@ docker run -d \
 --name moneyger4u \
 -p 8080:8080 \
 -v /tmp/moneyger4u:/tmp \
+-v /var/log/moneyger4u:/var/log/moneyger4u \
 -e "_JAVA_OPTIONS=-Duser.timezone=JST" \
 making/moneyger4u \
 --spring.thymeleaf.cache=true \
