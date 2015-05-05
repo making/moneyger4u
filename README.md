@@ -21,13 +21,16 @@ docker run -d \
 --name moneyger4u \
 -p 8080:8080 \
 -v /tmp/moneyger4u:/tmp \
--e "_JAVA_OPTIONS=-Duser.timezone=JST -Dlog.verbose=WARN" \
+-e "_JAVA_OPTIONS=-Duser.timezone=JST" \
 making/moneyger4u \
 --spring.thymeleaf.cache=true \
+--log.verbose=WARN \
+--logging.file=/var/log/moneyger4u/app.log \
 --logging.level.moneyger4u.App=INFO \
 --logging.level.moneyger4u=WARN \
 --logging.level.jdbc.sqltiming=ERROR \
---logging.level.org=WARN
+--logging.level.org=WARN \
+--logging.level./=WARN
 ```
 
 Go to `http://<Docker HOST IP>:8080`
