@@ -12,19 +12,9 @@ Access http://localhost:8080
 
 Login with user1@example.com/password
 
-## Build and Run
-
-    $ mvn package
-    $ java -jar target/*.jar
-
-### Build Docker image
-
-    $ mvn clean package
-    $ cd target
-    $ docker build -t making/moneyger4u .
-
-
 ## Run with Docker
+
+Docker image is already deployed. You can run Monger4u soon with Docker!
 
 ```
 docker run -d \
@@ -41,3 +31,14 @@ making/moneyger4u \
 ```
 
 Go to `http://<Docker HOST IP>:8080`
+
+## Build and Run
+
+    $ mvn package
+    $ java -jar target/*.jar
+
+### Build Docker image
+
+    $ mvn clean package
+    $ cd target
+    $ docker build -t making/moneyger4u .
