@@ -22,6 +22,7 @@
         <flyway.url>jdbc:mysql://localhost:3306/moneyger4u?zeroDateTimeBehavior=convertToNull</flyway.url>
         <flyway.user>root</flyway.user>
         <flyway.password>password</flyway.password>
+        <docker.image.prefix>making</docker.image.prefix>
     </properties>
 
     <dependencies>
@@ -129,6 +130,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -169,6 +171,22 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.2.3</version>
+                <configuration>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <dockerDirectory>${project.basedir}/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
             </plugin>
         </plugins>
     </build>

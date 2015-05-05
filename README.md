@@ -17,3 +17,21 @@ Login with user1@example.com/password
     $ mvn package
     $ java -jar target/*.jar
 
+### Build Docker image
+
+    $ mvn clean package
+    $ mvn docker:build
+
+
+## Run with Docker
+
+```
+docker run --rm --name moneyger4u \
+ -e "_JAVA_OPTIONS=-Duser.timezone=JST \
+ -Dlogging.level.jdbc.sqltiming=ERROR \
+ -Dlogging.level.org=WARN \
+ " \
+ -v /tmp/moneyger4u:/tmp \
+ -p 80:8080 \
+ making/moneyger4u
+```
