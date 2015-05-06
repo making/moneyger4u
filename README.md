@@ -19,11 +19,11 @@ Docker image is already deployed. You can run Monger4u soon with Docker!
 ```
 docker run -d \
 --name moneyger4u \
--p 8080:8080 \
+-p 80:80 \
 -v /tmp/moneyger4u:/tmp \
 -v /var/log/moneyger4u:/var/log/moneyger4u \
 -e "_JAVA_OPTIONS=-Duser.timezone=JST" \
-making/moneyger4u:0.11 \
+making/moneyger4u \
 --spring.thymeleaf.cache=true \
 --log.verbose=WARN \
 --logging.file=/var/log/moneyger4u/app.log \
@@ -34,7 +34,7 @@ making/moneyger4u:0.11 \
 --logging.level./=WARN
 ```
 
-Go to `http://<Docker HOST IP>:8080`
+Go to `http://<Docker HOST IP>`
 
 ## Build and Run
 
