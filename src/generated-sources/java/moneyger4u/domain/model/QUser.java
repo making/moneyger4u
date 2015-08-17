@@ -36,8 +36,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath lastName = createString("lastName");
 
-    public final ListPath<MonthlyOutcome, QMonthlyOutcome> monthlyOutcomeList = this.<MonthlyOutcome, QMonthlyOutcome>createList("monthlyOutcomeList", MonthlyOutcome.class, QMonthlyOutcome.class, PathInits.DIRECT2);
-
     public final StringPath password = createString("password");
 
     public final ListPath<Role, QRole> roleList = this.<Role, QRole>createList("roleList", Role.class, QRole.class, PathInits.DIRECT2);

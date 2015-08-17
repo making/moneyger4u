@@ -19,7 +19,7 @@ import java.util.List;
  * @author maki
  */
 @Entity
-@Table(name = "user")
+@Table(name = "\"user\"")
 @XmlRootElement
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -75,9 +75,6 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<DailyOutcome> dailyOutcomeList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<MonthlyOutcome> monthlyOutcomeList;
     @JoinColumn(name = "FAMILY_ID", referencedColumnName = "FAMILY_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Family familyId;
@@ -189,15 +186,6 @@ public class User implements Serializable {
 
     public void setDailyOutcomeList1(List<DailyOutcome> dailyOutcomeList1) {
         this.dailyOutcomeList1 = dailyOutcomeList1;
-    }
-
-    @XmlTransient
-    public List<MonthlyOutcome> getMonthlyOutcomeList() {
-        return monthlyOutcomeList;
-    }
-
-    public void setMonthlyOutcomeList(List<MonthlyOutcome> monthlyOutcomeList) {
-        this.monthlyOutcomeList = monthlyOutcomeList;
     }
 
     public Family getFamilyId() {

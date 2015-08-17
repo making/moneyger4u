@@ -70,8 +70,6 @@ public class CalendarController {
         // dailyOutcome
         calenderHelper.addDailyOutcomeToModelForMonth(today, firstDayOfMonth,
                 lastDayOfMonth, user, model);
-        // montlyOutcome
-        calenderHelper.addMonthlyOutcomeToModelForMonth(today, user, model);
         return "calendar/month";
     }
 

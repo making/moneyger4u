@@ -53,9 +53,6 @@ public class Family implements Serializable {
     private List<Income> incomeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "familyId", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<MonthlyOutcome> monthlyOutcomeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "familyId", fetch = FetchType.LAZY)
-    @JsonIgnore
     private List<User> userList;
 
     public Family() {
@@ -120,15 +117,6 @@ public class Family implements Serializable {
 
     public void setIncomeList(List<Income> incomeList) {
         this.incomeList = incomeList;
-    }
-
-    @XmlTransient
-    public List<MonthlyOutcome> getMonthlyOutcomeList() {
-        return monthlyOutcomeList;
-    }
-
-    public void setMonthlyOutcomeList(List<MonthlyOutcome> monthlyOutcomeList) {
-        this.monthlyOutcomeList = monthlyOutcomeList;
     }
 
     @XmlTransient

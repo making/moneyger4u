@@ -28,8 +28,6 @@ public class QFamily extends EntityPathBase<Family> {
 
     public final ListPath<Income, QIncome> incomeList = this.<Income, QIncome>createList("incomeList", Income.class, QIncome.class, PathInits.DIRECT2);
 
-    public final ListPath<MonthlyOutcome, QMonthlyOutcome> monthlyOutcomeList = this.<MonthlyOutcome, QMonthlyOutcome>createList("monthlyOutcomeList", MonthlyOutcome.class, QMonthlyOutcome.class, PathInits.DIRECT2);
-
     public final DateTimePath<java.util.Date> updatedAt = createDateTime("updatedAt", java.util.Date.class);
 
     public final ListPath<User, QUser> userList = this.<User, QUser>createList("userList", User.class, QUser.class, PathInits.DIRECT2);

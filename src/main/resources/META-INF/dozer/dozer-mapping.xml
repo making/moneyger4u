@@ -12,11 +12,6 @@
                 <class-b>moneyger4u.domain.model.DailyOutcomeCategory</class-b>
             </converter>
             <converter
-                    type="moneyger4u.infra.converter.MonthlyOutcomeCateogryIdToMonthlyOutcomeCateogryConverter">
-                <class-a>java.lang.Integer</class-a>
-                <class-b>moneyger4u.domain.model.MonthlyOutcomeCategory</class-b>
-            </converter>
-            <converter
                     type="moneyger4u.infra.converter.FamilyIdToFamilyConverter">
                 <class-a>java.lang.Integer</class-a>
                 <class-b>moneyger4u.domain.model.Family</class-b>
