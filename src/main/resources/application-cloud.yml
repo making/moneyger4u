@@ -1,0 +1,8 @@
+moneyger4u:
+ db: POSTGRES
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${cloud.services.${cloud.services.postgresql.id}..connection.jdbcurl}
+    username: ${cloud.services.${cloud.services.postgresql.id}.connection.username}
+    password: ${cloud.services.${cloud.services.postgresql.id}.connection.password}

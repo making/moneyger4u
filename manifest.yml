@@ -1,0 +1,11 @@
+---
+applications:
+  - name: moneyger4u
+    memory: 512M
+    buildpack: java_buildpack
+    path: target/moneyger4u.jar
+    services:
+      - moneyger4u-postgres
+
+# cf create-service elephantsql turtle moneyger4u-postgres
+# cf push
