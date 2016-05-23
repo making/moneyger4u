@@ -26,6 +26,9 @@ public class DailyOutcomeServiceImpl implements DailyOutcomeService {
 
     @Inject
     protected DailyOutcomeRepository dailyOutcomeRepository;
+    @Inject
+    protected Trainer trainer;
+
 
     @Override
     @Transactional(readOnly = true)
@@ -44,6 +47,7 @@ public class DailyOutcomeServiceImpl implements DailyOutcomeService {
         outcome.setUpdatedAt(now);
         outcome.setUpdatedBy(user);
         dailyOutcomeRepository.save(outcome);
+        trainer.train(outcome.getOutcomeName(), outcome.getDailyOutcomeCategoryId().getDailyOutcomeCategoryId());
     }
 
     @Override
@@ -58,6 +62,9 @@ public class DailyOutcomeServiceImpl implements DailyOutcomeService {
             outcome.setUpdatedBy(user);
         });
         dailyOutcomeRepository.save(outcomes);
+        outcomes.forEach(o -> {
+            trainer.train(o.getOutcomeName(), o.getDailyOutcomeCategoryId().getDailyOutcomeCategoryId());
+        });
     }
 
     @Override

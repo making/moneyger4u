@@ -72,6 +72,26 @@
         });
         //-->
     </script>
+    <script>
+        function predict(input) {
+            $.ajax({
+                type: 'post',
+                url: 'https://predict.cfapps.pez.pivotal.io/api/predict',
+                data: {outcomeName: input.value},
+                success: function (res) {
+                    var predicted = _(res).sortBy(function (x) {
+                        return -x.probability;
+                    })[0];
+                    var categoryId = document.querySelector("#dailyOutcomeCategoryId");
+                    if (predicted) {
+                        categoryId.value = predicted.categoryId;
+                    } else {
+                        categoryId.value = '';
+                    }
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -107,6 +127,7 @@
                        th:field="*{outcomeName}"
                        type="text"
                        class="form-control"
+                       onblur="predict(this)"
                        placeholder="にんじん等"/>
                 <span th:if="${#fields.hasErrors('outcomeName')}" th:errors="*{outcomeName}" class="text-danger"></span>
             </div>

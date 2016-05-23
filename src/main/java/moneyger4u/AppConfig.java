@@ -18,6 +18,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.web.client.AsyncRestTemplate;
 import org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener;
 import org.terasoluna.gfw.web.logging.TraceLoggingInterceptor;
 import org.terasoluna.gfw.web.logging.mdc.MDCClearFilter;
@@ -50,6 +51,11 @@ public class AppConfig {
     @Bean
     PasswordEncoder passwordEncoder() {
         return new ShaPasswordEncoder(512);
+    }
+
+    @Bean
+    AsyncRestTemplate restTemplate() {
+        return new AsyncRestTemplate();
     }
 
     static void setValidationQuery(DataSource dataSource) {
